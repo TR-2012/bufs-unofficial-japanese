@@ -1,0 +1,17 @@
+{
+  "name": "BUFS 비공식 일본어 학습",
+  "short_name": "BUFS 일본어",
+  "description": "부산외국어대학교 일본어융합학부 학생을 위한 4년 JLPT N1 학습 앱(비공식)",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#3E2F23",
+  "background_color": "#FBF5E8",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

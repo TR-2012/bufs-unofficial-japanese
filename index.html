@@ -8,7 +8,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BUFS 일본어">
-<link rel="apple-touch-icon" href="haruko.jpg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon-180.png">
+<script src="./pwa.js"></script>
 <script src="./support.js"></script>
 <script src="./combo_check.js"></script>
 </head>
@@ -207,6 +210,16 @@
       <!-- ===== HOME ===== -->
       <sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
+          <sc-if value="{{ showInstall }}" hint-placeholder-val="">
+            <div class="hh-card" style="background:var(--yellow); color:#3E2F23; border-radius:5px; padding:14px 18px; margin-bottom:18px; display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+              <div style="flex:1; min-width:220px;">
+                <div style="font-weight:900; font-size:15px;">📲 앱으로 설치해서 쓰세요</div>
+                <div style="font-size:var(--fs-sm); line-height:1.6; margin-top:4px;">바탕화면·홈 화면에서 바로 열리고, 인터넷이 없어도 쓸 수 있어요. 학습 기록도 더 안전하게 보관돼요.</div>
+              </div>
+              <button onClick="{{ installApp }}" style="background:#3E2F23; color:#F2C14E; border:2px solid #3E2F23; border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit;">설치하기</button>
+              <button onClick="{{ dismissInstall }}" style="background:#FBF5E8; color:#3E2F23; border:2px solid #3E2F23; border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit;">나중에</button>
+            </div>
+          </sc-if>
           <sc-if value="{{ showA2hs }}" hint-placeholder-val="">
             <div class="hh-card" style="background:var(--yellow); color:#3E2F23; border-radius:5px; padding:14px 18px; margin-bottom:18px; display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
               <div style="flex:1; min-width:220px;">
@@ -995,6 +1008,7 @@ class Component extends DCLogic {
   }
   componentDidMount(){
     this.loadBaseData();
+    try{ this._installH=()=>this.setState({nudgeTick:(this.state.nudgeTick||0)+1}); window.addEventListener('bufs-install-ready',this._installH); window.addEventListener('bufs-install-done',this._installH); }catch(e){}
     // 라우팅: 첫 진입 시 주소를 현재 화면과 맞추고, 뒤로/앞으로(해시 변경)에 반응.
     try{
       this._syncHash(this.state.screen);
@@ -1437,15 +1451,23 @@ class Component extends DCLogic {
     const hadBackup=!!this._ls('tj.nudge.backupAt');
     const days=base>0?Math.floor((now-base)/DAY):0;
     const text=hadBackup?('마지막 백업 후 '+days+'일이 지났어요. 기기를 바꾸거나 브라우저 데이터를 지우면 기록이 사라지니, 파일로 한 번 더 저장해 두세요.'):('아직 백업한 적이 없어요. 기록을 시작한 지 '+days+'일이 지났어요. 파일로 저장해 두면 기기를 바꿔도 이어서 할 수 있어요.');
-    return {a2hs, due, text};
+    const install=!!window.__bip&&!standalone&&this._ls('tj.nudge.install')!=='1';
+    return {a2hs, due, text, install};
   }
+  async installApp(){
+    const e=window.__bip; if(!e) return;
+    try{ e.prompt(); const r=await e.userChoice; if(r&&r.outcome==='accepted'){ this._lsSet('tj.nudge.install','1'); } }catch(x){}
+    window.__bip=null; this.setState({nudgeTick:(this.state.nudgeTick||0)+1});
+  }
+  dismissInstall(){ this._lsSet('tj.nudge.install','1'); this.setState({nudgeTick:(this.state.nudgeTick||0)+1}); }
   dismissA2hs(){ this._lsSet('tj.nudge.a2hs','1'); this.setState({nudgeTick:(this.state.nudgeTick||0)+1}); }
   snoozeBackup(){ this._lsSet('tj.nudge.snooze',String(Date.now()+2*86400000)); this.setState({nudgeTick:(this.state.nudgeTick||0)+1}); }
 
   importData(){
     const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json,.json';
-    inp.onchange=()=>{ const f=inp.files&&inp.files[0]; if(!f) return; const rd=new FileReader();
-      rd.onload=()=>{ try{ const o=JSON.parse(rd.result); if(!o||o.app!=='bufs-japanese'||!o.data) throw 0;
+    inp.onchange=()=>{ const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>5*1024*1024){ this.setState({backupMsg:'파일이 너무 커요(5MB 이하만 불러올 수 있어요).'}); return; } const rd=new FileReader();
+      rd.onload=()=>{ try{ const o=JSON.parse(rd.result); if(!o||o.app!=='bufs-japanese'||!o.data||typeof o.data!=='object'||Array.isArray(o.data)) throw 0;
+          Object.keys(o.data).forEach(k=>{ if(typeof o.data[k]!=='string') throw 0; });
           Object.keys(o.data).forEach(k=>{ if(k.startsWith('tj.')&&!k.startsWith('tj.nudge.')) localStorage.setItem(k,o.data[k]); });
           this._lsSet('tj.nudge.backupAt',String(Date.now()));
           this.setState({backupMsg:'불러왔어요. 화면을 새로 고칩니다…'}); setTimeout(()=>location.reload(),600);
@@ -1892,7 +1914,7 @@ class Component extends DCLogic {
       is, screenTitle:screens[s.screen][0], screenTag:screens[s.screen][1],
       level, rankName, xp:s.xp, xpInLevel, xpForNext:per, xpRemain, xpMaxed:xpRemain===0, xpBarLabel:xpRemain===0?('누적 '+this._formatCount(s.xp)+' XP · 최고 계급'):('XP '+this._formatCount(xpInLevel)+' / '+this._formatCount(per)), xpNextLabel:xpRemain===0?'최고 계급 달성':'다음 계급('+((this.RANKS()[level]||[])[1]||'')+')까지', xpNextValue:xpRemain===0?'':this._formatCount(xpRemain)+' XP', xpPercent,
       streak:s.streak, solvedCount:s.solved, dayNo:s.day,
-      navItems, progressCards, catChips, exportData:()=>this.exportData(), importData:()=>this.importData(), showA2hs:this._nudges().a2hs, showBackupNudge:this._nudges().due, backupNudgeText:this._nudges().text, dismissA2hs:()=>this.dismissA2hs(), snoozeBackup:()=>this.snoozeBackup(), backupMsg:s.backupMsg||'', backupMsgShown:!!s.backupMsg,
+      navItems, progressCards, catChips, exportData:()=>this.exportData(), importData:()=>this.importData(), showA2hs:this._nudges().a2hs&&!this._nudges().install, showInstall:this._nudges().install, installApp:()=>this.installApp(), dismissInstall:()=>this.dismissInstall(), showBackupNudge:this._nudges().due, backupNudgeText:this._nudges().text, dismissA2hs:()=>this.dismissA2hs(), snoozeBackup:()=>this.snoozeBackup(), backupMsg:s.backupMsg||'', backupMsgShown:!!s.backupMsg,
       goKanji:()=>this.setScreen('kanji'), goQuiz:()=>this.setScreen('quiz'),
       // day (일일 학습)
       day:s.day, dayTotal, quizJlptChips, quizLevelLabel:this._quizLevelLabel(s.quizLevel), quizLevelCount:this._formatCount(this._levelList().length), prevDay:()=>this.prevDay(), nextDay:()=>this.nextDay(), dayMsg:s.dayMsg||'', dayMsgShown:!!s.dayMsg,
