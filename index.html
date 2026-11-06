@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#3E2F23">
+<meta name="theme-color" content="var(--ink)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,9 +16,6 @@
 <x-dc>
 <helmet>
 <title>BUFS 비공식 일본어 학습</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&family=Noto+Serif+KR:wght@600;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
      BUFS 비공식 일본어 학습 — NEO-BRUTALIST / HIGH-CONTRAST MAXIMALIST (LIGHT)
@@ -26,21 +23,34 @@
      특징: 굵은 검정 테두리(3px) · 하드 오프셋 그림자(6px 6px 0) · 대형 볼드 타이포
      ============================================================ */
   :root{
-    --paper:#FBF5E8; --paper2:#F3E9D2; --ink:#3E2F23;
-    --red:#C13B3B; --blue:#B87333; --yellow:#F2C14E; --green:#1FA95B;
+    /* 글꼴: 기기 기본 글꼴(외부 로딩 없음). 일본어는 일본식 글리프가 나오도록 일본어 글꼴을 앞에 둔다. */
+    --font-ko: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', 'Noto Sans CJK KR', sans-serif;
+    --font-ja: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', 'Noto Sans CJK JP', 'Noto Sans JP', sans-serif;
+    --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', 'AppleMyungjo', 'Batang', 'Noto Serif CJK KR', 'Noto Serif KR', serif;
+    --font-ja-serif: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif CJK JP', 'Noto Serif JP', serif;
+    --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    /* 작은 글씨 최소 크기 */
+    --fs-xs: 12px; --fs-sm: 13px;
+    /* 라이트 팔레트 */
+    --paper:#FBF5E8; --paper2:#F3E9D2; --card:#FFFDF6; --white-bg:#fff;
+    --ink:#3E2F23; --ink-bg:#3E2F23; --ink2:#6B5B4A; --ink3:#8A7A66; --line:#D9C39A; --shadow:#3E2F23;
+    --on-dark:#FBF5E8; --on-dark2:#F3E9D2; --on-dark-mute:#D9C39A;
+    --red:#C13B3B; --red-dark:#9E2F2F; --blue:#B87333; --yellow:#F2C14E; --tan:#B08D57;
+    --green:#1FA95B; --green-text:#0C7A3C; --tint-green:#C8F4D2; --tint-pink:#F3E2D2; --tint-pink2:#FCE7D9;
+    --dot:rgba(176,141,87,.22); --grid:rgba(176,141,87,.12); --scheme: light;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { background: var(--paper); font-family: 'Noto Sans KR', sans-serif; }
+  body { background: var(--paper); font-family: var(--font-ko); }
   /* 배경: 굵은 도트 + 옅은 격자 = '울트라코어' 페이퍼 텍스처 */
   .hh-root { background-color: var(--paper) !important;
-    background-image: radial-gradient(rgba(176,141,87,.22) 2px, transparent 2.4px) !important;
+    background-image: radial-gradient(var(--dot) 2px, transparent 2.4px) !important;
     background-size: 26px 26px !important; }
   /* 본문 영역: 굵은 격자 */
   .hh-content {
     background-image:
-      repeating-linear-gradient(0deg, rgba(176,141,87,.12) 0 1.5px, transparent 1.5px 34px),
-      repeating-linear-gradient(90deg, rgba(176,141,87,.12) 0 1.5px, transparent 1.5px 34px);
+      repeating-linear-gradient(0deg, var(--grid) 0 1.5px, transparent 1.5px 34px),
+      repeating-linear-gradient(90deg, var(--grid) 0 1.5px, transparent 1.5px 34px);
   }
   /* 카드: 굵은 검정 테두리 + 하드 오프셋 그림자. 호버 시 살짝 눌리는 촉각 효과 */
   .hh-card { border: 3px solid var(--ink) !important; box-shadow: 6px 6px 0 var(--ink);
@@ -48,7 +58,7 @@
   .hh-card:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
   .hh-card:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
   /* 헤더 세리프(케이스 파일 느낌) — 굵게 */
-  .hh-serif { font-family: 'Noto Serif KR', 'Noto Serif JP', serif; letter-spacing:-.5px; }
+  .hh-serif { font-family: var(--font-serif); letter-spacing:-.5px; }
   ::-webkit-scrollbar { width: 14px; height: 14px; }
   ::-webkit-scrollbar-thumb { background: var(--ink); border: 3px solid var(--paper); border-radius: 0; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -62,13 +72,20 @@
     border: 3px solid var(--ink); border-radius: 0; padding: 10px 18px; font-size: 13px; font-weight: 900;
     box-shadow: 5px 5px 0 var(--ink); animation: hh-fade .2s ease; }
   .hh-speaking .dot { width: 10px; height: 10px; border-radius: 50%; border: 3px solid var(--ink); border-top-color: transparent; animation: hh-spin .7s linear infinite; }
-  /* ===== 다크 모드(선택) — 인라인 스타일 구조라 필터 반전 방식으로 구현 ===== */
-  html.hh-dark, html.hh-dark body { background: #050505; }
-  /* invert로 반전 + brightness(.92) → 순백 눈부심 완화. 검정 테두리는 흰 테두리로,
-     종이 바탕은 잉크빛으로 반전됨. 이미지/아이콘/캔버스는 부모 필터를 역으로 되돌려 원색 유지. */
-  html.hh-dark .hh-root { filter: invert(1) hue-rotate(180deg) brightness(0.92); }
-  html.hh-dark .hh-root img, html.hh-dark .hh-root svg, html.hh-dark .hh-root canvas { filter: brightness(1.087) hue-rotate(180deg) invert(1); }
-  html.hh-dark .hh-speaking { filter: none; }
+  /* ===== 다크 모드 — 같은 변수를 어두운 값으로 바꿔 쓴다(색 반전 필터 없음) ===== */
+  html.hh-dark {
+    --paper:#17120E; --paper2:#231C16; --card:#2B231C; --white-bg:#2B231C;
+    --ink:#EFE3CC; --ink-bg:#0F0B08; --ink2:#BFAE95; --ink3:#9C8D78; --line:#4D3F31; --shadow:#050302;
+    --on-dark:#F4EBDA; --on-dark2:#E6D8BC; --on-dark-mute:#BFAE95;
+    --red:#C94C47; --red-dark:#F08A84; --blue:#D08A45; --yellow:#F2C14E; --tan:#8C7348;
+    --green:#2FBF72; --green-text:#7BE0A5; --tint-green:#1D3A29; --tint-pink:#3B2723; --tint-pink2:#402A22;
+    --dot:rgba(240,220,180,.07); --grid:rgba(240,220,180,.05); --scheme: dark;
+    color-scheme: dark;
+  }
+  html.hh-dark body { background: var(--paper); }
+  /* 노란 바탕 위 글자는 다크 모드에서도 진한 갈색으로(밝은 노랑 + 밝은 글자 방지) */
+  html.hh-dark [style*="background:var(--yellow)"], html.hh-dark [style*="background: var(--yellow)"], html.hh-dark .hh-speaking {
+    --ink:#3E2F23; --ink2:#6B5B4A; --shadow:#3E2F23; }
   /* ===== 모바일 반응형 ===== */
   @media (max-width: 768px) {
     /* body 스크롤로 전환: 100vh 컨테이너 안의 inner-overflow 패턴은
@@ -97,23 +114,23 @@
   @media (max-width: 768px) {
     html { -webkit-text-size-adjust: 100%; }
     body { -webkit-tap-highlight-color: transparent; }
-    .hh-aside { padding: calc(env(safe-area-inset-top) + 8px) calc(env(safe-area-inset-right) + 12px) 8px calc(env(safe-area-inset-left) + 12px) !important; overflow: visible !important; box-shadow: none !important; border-bottom: 3px solid #C13B3B !important; }
+    .hh-aside { padding: calc(env(safe-area-inset-top) + 8px) calc(env(safe-area-inset-right) + 12px) 8px calc(env(safe-area-inset-left) + 12px) !important; overflow: visible !important; box-shadow: none !important; border-bottom: 3px solid var(--red) !important; }
     .hh-aside > div:first-child { margin: 0 !important; padding: 6px 10px !important; box-shadow: none !important; border-width: 2px !important; }
-    .hh-aside nav { position: fixed !important; left: 0; right: 0; bottom: 0; z-index: 60; background: #3E2F23; flex-direction: row !important; gap: 2px !important;
+    .hh-aside nav { position: fixed !important; left: 0; right: 0; bottom: 0; z-index: 60; background: var(--ink-bg); flex-direction: row !important; gap: 2px !important;
       overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
       padding: 6px calc(env(safe-area-inset-right) + 6px) calc(env(safe-area-inset-bottom) + 6px) calc(env(safe-area-inset-left) + 6px);
-      border-top: 3px solid #C13B3B; box-shadow: 0 -4px 14px rgba(0,0,0,.18); }
+      border-top: 3px solid var(--red); box-shadow: 0 -4px 14px rgba(0,0,0,.18); }
     .hh-aside nav::-webkit-scrollbar { display: none; }
     .hh-aside nav button { flex: 1 1 0 !important; min-width: 0; min-height: 54px; flex-direction: column !important; justify-content: center !important; gap: 3px !important;
-      padding: 5px 1px !important; font-size: 10px !important; line-height: 1.15 !important; text-align: center; white-space: normal !important; word-break: keep-all; letter-spacing: -.3px;
+      padding: 5px 1px !important; font-size: 11px !important; line-height: 1.15 !important; text-align: center; white-space: normal !important; word-break: keep-all; letter-spacing: -.3px;
       border-width: 2px !important; box-shadow: none !important; }
     .hh-aside nav button svg { width: 20px; height: 20px; }
     .hh-darkbtn { margin: 0 0 0 auto !important; padding: 8px 10px !important; font-size: 12px !important; border-width: 2px !important; box-shadow: none !important; white-space: nowrap; }
     .hh-credit { display: none; }
     .hh-topbar { position: static !important; }
     .hh-content { padding-bottom: calc(env(safe-area-inset-bottom) + 96px) !important; padding-left: calc(env(safe-area-inset-left) + 13px) !important; padding-right: calc(env(safe-area-inset-right) + 13px) !important; }
-    .hh-content::after { content: "부산외대 공식 서비스가 아닙니다"; display: block; margin-top: 28px; font-size: 11px; color: #8A7A66; text-align: center; }
-    .hh-voice-credit { order: 3; width: 100%; font-size: 10.5px !important; padding-bottom: 6px; }
+    .hh-content::after { content: "부산외대 공식 서비스가 아닙니다"; display: block; margin-top: 28px; font-size:var(--fs-sm); color: var(--ink3); text-align: center; }
+    .hh-voice-credit { order: 3; width: 100%; font-size: 12px !important; padding-bottom: 6px; }
     /* iOS: 16px 미만 입력창은 누를 때 화면이 확대됨 → 16px 고정 */
     input, textarea, select { font-size: 16px !important; }
     button { touch-action: manipulation; }
@@ -127,61 +144,61 @@
 <script src="./tts.js"></script>
 </helmet>
 
-<div class="hh-root" style="display:flex; height:100vh; width:100%; overflow:hidden; color:#3E2F23; background:#FBF5E8;">
+<div class="hh-root" style="display:flex; height:100vh; width:100%; overflow:hidden; color:var(--ink); background:var(--paper);">
 
   <!-- ============ SIDEBAR ============ -->
-  <aside class="hh-aside" style="width:248px; flex:none; background:#3E2F23; color:#FBF5E8; display:flex; flex-direction:column; padding:22px 16px; border-right:3px solid #3E2F23; box-shadow:6px 0 0 rgba(193,59,59,.22); z-index:5;">
-    <div style="display:flex; align-items:center; gap:11px; padding:4px 6px 20px; margin:-6px -6px 14px; background:#C13B3B; border:3px solid #3E2F23; border-radius:5px; box-shadow:4px 4px 0 #3E2F23; padding:12px 12px;">
-      <div style="flex:none; width:34px; height:34px; border-radius:50%; overflow:hidden; border:2px solid #3E2F23; background:#FCE7D9;"><img src="haruko.jpg" alt="하루코" style="width:100%; height:100%; object-fit:cover;"></div>
+  <aside class="hh-aside" style="width:248px; flex:none; background:var(--ink-bg); color:var(--on-dark); display:flex; flex-direction:column; padding:22px 16px; border-right:3px solid var(--ink); box-shadow:6px 0 0 rgba(193,59,59,.22); z-index:5;">
+    <div style="display:flex; align-items:center; gap:11px; padding:4px 6px 20px; margin:-6px -6px 14px; background:var(--red); border:3px solid var(--ink); border-radius:5px; box-shadow:4px 4px 0 var(--shadow); padding:12px 12px;">
+      <div style="flex:none; width:34px; height:34px; border-radius:50%; overflow:hidden; border:2px solid var(--ink); background:var(--tint-pink2);"><img src="haruko.jpg" alt="하루코" style="width:100%; height:100%; object-fit:cover;"></div>
       <div style="line-height:1.1;">
-        <div class="hh-serif" style="font-weight:900; font-size:14px; letter-spacing:-.5px; color:#FBF5E8; white-space:nowrap;">BUFS 비공식 일본어 학습</div>
-        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.6px; color:#3E2F23; font-weight:700; white-space:nowrap; margin-top:3px;">BUFS UNOFFICIAL JAPANESE</div>
+        <div class="hh-serif" style="font-weight:900; font-size:14px; letter-spacing:-.5px; color:var(--on-dark); white-space:nowrap;">BUFS 비공식 일본어 학습</div>
+        <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:.3px; color:var(--on-dark); font-weight:700; white-space:nowrap; margin-top:3px;">BUFS UNOFFICIAL JAPANESE</div>
       </div>
     </div>
 
     <nav style="display:flex; flex-direction:column; gap:6px;">
       <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
-        <button onClick="{{ item.go }}" style="{{ item.style }}" style-hover="background:#F2C14E; color:#3E2F23; border-color:#F2C14E;">
+        <button onClick="{{ item.go }}" style="{{ item.style }}" style-hover="background:var(--yellow); color:var(--ink); border-color:var(--yellow);">
           <span style="width:20px; display:flex; justify-content:center;">{{ item.icon }}</span>
           <span style="flex:1; text-align:left;">{{ item.label }}</span>
           <sc-if value="{{ item.badge }}" hint-placeholder-val="">
-            <span style="font-family:'DM Mono',monospace; font-size:10px; background:#C13B3B; color:#fff; border:2px solid #3E2F23; border-radius:0; padding:1px 7px; font-weight:700;">{{ item.badge }}</span>
+            <span style="font-family:var(--font-mono); font-size:var(--fs-xs); background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:0; padding:1px 7px; font-weight:700;">{{ item.badge }}</span>
           </sc-if>
         </button>
       </sc-for>
     </nav>
 
-    <div class="hh-xpbox" style="margin-top:auto; background:#F2C14E; color:#3E2F23; border:3px solid #FBF5E8; border-radius:5px; padding:14px; box-shadow:4px 4px 0 #C13B3B;">
+    <div class="hh-xpbox" style="margin-top:auto; background:var(--yellow); color:var(--ink); border:3px solid var(--on-dark); border-radius:5px; padding:14px; box-shadow:4px 4px 0 var(--red);">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
-        <span style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">학습 계급</span>
-        <span style="font-family:'DM Mono',monospace; font-size:12px; font-weight:700; color:#3E2F23;">Lv.{{ level }}</span>
+        <span style="font-size:var(--fs-sm); font-weight:800; text-transform:uppercase; letter-spacing:1px;">학습 계급</span>
+        <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; color:var(--ink);">Lv.{{ level }}</span>
       </div>
       <div style="font-weight:900; font-size:16px; margin-bottom:10px; letter-spacing:-.3px;">{{ rankName }}</div>
-      <div style="height:12px; background:#FBF5E8; border:2px solid #3E2F23; border-radius:0; overflow:hidden;">
-        <div style="height:100%; width: {{ xpPercent }}%; background:#C13B3B;"></div>
+      <div style="height:12px; background:var(--paper); border:2px solid var(--ink); border-radius:0; overflow:hidden;">
+        <div style="height:100%; width: {{ xpPercent }}%; background:var(--red);"></div>
       </div>
-      <div style="font-family:'DM Mono',monospace; font-size:10px; color:#3E2F23; font-weight:700; margin-top:7px;">{{ xpBarLabel }}</div>
+      <div style="font-family:var(--font-mono); font-size:var(--fs-xs); color:var(--ink); font-weight:700; margin-top:7px;">{{ xpBarLabel }}</div>
     </div>
-    <button class="hh-darkbtn" onClick="{{ toggleDark }}" style="margin-top:12px; background:#FBF5E8; border:3px solid #FBF5E8; color:#3E2F23; border-radius:4px; padding:10px 12px; cursor:pointer; font-family:inherit; font-size:12px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:3px 3px 0 #C13B3B;" style-hover="background:#F2C14E; border-color:#F2C14E;"><span>🌙</span><span>{{ darkLabel }}</span></button>
-    <div class="hh-credit" style="margin-top:10px; font-size:10px; color:#D9C39A; text-align:center; line-height:1.5;">음성 저작권 : 「VOICEVOX:春日部つむぎ」<br>부산외대 공식 서비스가 아닙니다</div>
+    <button class="hh-darkbtn" onClick="{{ toggleDark }}" style="margin-top:12px; background:var(--paper); border:3px solid var(--on-dark); color:var(--ink); border-radius:4px; padding:10px 12px; cursor:pointer; font-family:inherit; font-size:var(--fs-sm); font-weight:900; display:flex; align-items:center; justify-content:center; gap:7px; box-shadow:3px 3px 0 var(--red);" style-hover="background:var(--yellow); border-color:var(--yellow);"><span>🌙</span><span>{{ darkLabel }}</span></button>
+    <div class="hh-credit" style="margin-top:10px; font-size:var(--fs-xs); color:var(--on-dark-mute); text-align:center; line-height:1.5;">음성 저작권 : 「VOICEVOX:春日部つむぎ」<br>부산외대 공식 서비스가 아닙니다</div>
   </aside>
 
   <!-- ============ MAIN ============ -->
-  <main class="hh-main" style="flex:1; display:flex; flex-direction:column; min-width:0; background:#FBF5E8;">
+  <main class="hh-main" style="flex:1; display:flex; flex-direction:column; min-width:0; background:var(--paper);">
 
     <!-- topbar -->
-    <header class="hh-topbar" style="height:66px; flex:none; display:flex; align-items:center; gap:16px; padding:0 30px; background:#F3E9D2; border-bottom:3px solid #3E2F23; z-index:3;">
+    <header class="hh-topbar" style="height:66px; flex:none; display:flex; align-items:center; gap:16px; padding:0 30px; background:var(--paper2); border-bottom:3px solid var(--ink); z-index:3;">
       <div style="flex:1;">
-        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#3E2F23; font-weight:700;">{{ screenTag }}</div>
+        <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--ink); font-weight:700;">{{ screenTag }}</div>
         <div class="hh-serif" style="font-weight:900; font-size:21px; margin-top:1px; letter-spacing:-.5px;">{{ screenTitle }}</div>
       </div>
-      <div class="hh-voice-credit" style="font-size:11px; color:#6B5B4A; font-weight:700; white-space:nowrap;">음성 저작권 : 「VOICEVOX:春日部つむぎ」</div>
-      <div style="display:flex; align-items:center; gap:9px; background:#FBF5E8; border:3px solid #3E2F23; border-radius:4px; padding:5px 8px 5px 14px; box-shadow:3px 3px 0 #3E2F23;">
+      <div class="hh-voice-credit" style="font-size:var(--fs-sm); color:var(--ink2); font-weight:700; white-space:nowrap;">음성 저작권 : 「VOICEVOX:春日部つむぎ」</div>
+      <div style="display:flex; align-items:center; gap:9px; background:var(--paper); border:3px solid var(--ink); border-radius:4px; padding:5px 8px 5px 14px; box-shadow:3px 3px 0 var(--shadow);">
         <div style="text-align:right; line-height:1.1;">
-          <div style="font-size:11px; color:#6B5B4A; font-weight:700;">{{ rankName }}</div>
-          <div style="font-family:'DM Mono',monospace; font-size:12px; font-weight:700;">{{ xp }} XP</div>
+          <div style="font-size:var(--fs-sm); color:var(--ink2); font-weight:700;">{{ rankName }}</div>
+          <div style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700;">{{ xp }} XP</div>
         </div>
-        <div style="width:36px; height:36px; border-radius:4px; border:2px solid #3E2F23; background:#C13B3B; color:#FBF5E8; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-weight:700; font-size:14px;">{{ level }}</div>
+        <div style="width:36px; height:36px; border-radius:4px; border:2px solid var(--ink); background:var(--red); color:var(--on-dark); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-weight:700; font-size:14px;">{{ level }}</div>
       </div>
     </header>
 
@@ -191,61 +208,61 @@
       <sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
           <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px;">
-            <div style="flex:2; min-width:340px; background:#3E2F23; color:#FBF5E8; border:3px solid #3E2F23; border-radius:6px; padding:28px 30px; position:relative; overflow:hidden; box-shadow:8px 8px 0 #C13B3B;">
-              <div style="display:inline-block; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:#3E2F23; font-weight:700; background:#F2C14E; border:2px solid #3E2F23; padding:3px 9px;">오늘의 공부 — DAY {{ dayNo }} / 960</div>
-              <div class="hh-serif" style="font-size:32px; font-weight:900; margin:14px 0 6px; letter-spacing:-1px; color:#FBF5E8;">{{ termLabel }}, 오늘도 화이팅</div>
-              <div style="font-size:14px; color:#D9C39A; line-height:1.6; max-width:440px;">하루 15분이면 충분해요. 오늘의 단어 8개·한자 3자·퀴즈 5문제를 하루코와 함께 끝내요.</div>
+            <div style="flex:2; min-width:340px; background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:6px; padding:28px 30px; position:relative; overflow:hidden; box-shadow:8px 8px 0 var(--red);">
+              <div style="display:inline-block; font-family:var(--font-mono); font-size:var(--fs-sm); letter-spacing:2px; color:var(--ink); font-weight:700; background:var(--yellow); border:2px solid var(--ink); padding:3px 9px;">오늘의 공부 — DAY {{ dayNo }} / 960</div>
+              <div class="hh-serif" style="font-size:32px; font-weight:900; margin:14px 0 6px; letter-spacing:-1px; color:var(--on-dark);">{{ termLabel }}, 오늘도 화이팅</div>
+              <div style="font-size:14px; color:var(--on-dark-mute); line-height:1.6; max-width:440px;">하루 15분이면 충분해요. 오늘의 단어 8개·한자 3자·퀴즈 5문제를 하루코와 함께 끝내요.</div>
               <div style="display:flex; gap:12px; margin-top:22px;">
-                <button onClick="{{ goKanji }}" style="background:#C13B3B; color:#FBF5E8; border:2px solid #FBF5E8; border-radius:4px; padding:12px 18px; font-weight:900; font-size:14px; cursor:pointer; font-family:inherit; white-space:nowrap; box-shadow:4px 4px 0 #F2C14E;" style-hover="background:#F2C14E; color:#3E2F23; border-color:#F2C14E;">오늘 한자 시작</button>
-                <button onClick="{{ goQuiz }}" style="background:transparent; color:#FBF5E8; border:2px solid #FBF5E8; border-radius:4px; padding:12px 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit; white-space:nowrap;" style-hover="background:#FBF5E8; color:#3E2F23;">오늘의 학습 (DAY {{ dayNo }})</button>
+                <button onClick="{{ goKanji }}" style="background:var(--red); color:var(--on-dark); border:2px solid var(--on-dark); border-radius:4px; padding:12px 18px; font-weight:900; font-size:14px; cursor:pointer; font-family:inherit; white-space:nowrap; box-shadow:4px 4px 0 var(--yellow);" style-hover="background:var(--yellow); color:var(--ink); border-color:var(--yellow);">오늘 한자 시작</button>
+                <button onClick="{{ goQuiz }}" style="background:transparent; color:var(--on-dark); border:2px solid var(--on-dark); border-radius:4px; padding:12px 18px; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit; white-space:nowrap;" style-hover="background:var(--paper); color:var(--ink);">오늘의 학습 (DAY {{ dayNo }})</button>
               </div>
             </div>
-            <div style="flex:1; min-width:240px; background:#F2C14E; border:3px solid #3E2F23; border-radius:6px; padding:24px; box-shadow:8px 8px 0 #3E2F23;">
-              <div style="font-size:12px; color:#3E2F23; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">누적 경험치</div>
-              <div style="font-family:'DM Mono',monospace; font-size:40px; font-weight:700; color:#3E2F23; line-height:1;">{{ xp }}</div>
-              <div style="height:14px; background:#FBF5E8; border:2px solid #3E2F23; border-radius:0; overflow:hidden; margin:14px 0 8px;">
-                <div style="height:100%; width: {{ xpPercent }}%; background:#C13B3B;"></div>
+            <div style="flex:1; min-width:240px; background:var(--yellow); border:3px solid var(--ink); border-radius:6px; padding:24px; box-shadow:8px 8px 0 var(--shadow);">
+              <div style="font-size:var(--fs-sm); color:var(--ink); font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">누적 경험치</div>
+              <div style="font-family:var(--font-mono); font-size:40px; font-weight:700; color:var(--ink); line-height:1;">{{ xp }}</div>
+              <div style="height:14px; background:var(--paper); border:2px solid var(--ink); border-radius:0; overflow:hidden; margin:14px 0 8px;">
+                <div style="height:100%; width: {{ xpPercent }}%; background:var(--red);"></div>
               </div>
-              <div style="font-size:12px; color:#3E2F23; font-weight:600;">{{ xpNextLabel }} <b style="color:#3E2F23;">{{ xpNextValue }}</b></div>
-              <div style="margin-top:16px; padding-top:16px; border-top:3px solid #3E2F23; display:flex; justify-content:space-between;">
-                <div><div style="font-family:'DM Mono',monospace; font-size:22px; font-weight:700; color:#3E2F23;">{{ streak }}</div><div style="font-size:11px; color:#3E2F23; font-weight:700; white-space:nowrap;">연속 출석</div></div>
-                <div><div style="font-family:'DM Mono',monospace; font-size:22px; font-weight:700; color:#3E2F23;">{{ solvedCount }}</div><div style="font-size:11px; color:#3E2F23; font-weight:700; white-space:nowrap;">맞힌 퀴즈</div></div>
+              <div style="font-size:var(--fs-sm); color:var(--ink); font-weight:600;">{{ xpNextLabel }} <b style="color:var(--ink);">{{ xpNextValue }}</b></div>
+              <div style="margin-top:16px; padding-top:16px; border-top:3px solid var(--ink); display:flex; justify-content:space-between;">
+                <div><div style="font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink);">{{ streak }}</div><div style="font-size:var(--fs-sm); color:var(--ink); font-weight:700; white-space:nowrap;">연속 출석</div></div>
+                <div><div style="font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink);">{{ solvedCount }}</div><div style="font-size:var(--fs-sm); color:var(--ink); font-weight:700; white-space:nowrap;">맞힌 퀴즈</div></div>
               </div>
             </div>
           </div>
 
-          <div class="hh-serif" style="font-weight:900; font-size:18px; margin:6px 4px 14px; letter-spacing:-.5px; display:inline-block; border-bottom:4px solid #C13B3B; padding-bottom:2px;">오늘의 진도</div>
+          <div class="hh-serif" style="font-weight:900; font-size:18px; margin:6px 4px 14px; letter-spacing:-.5px; display:inline-block; border-bottom:4px solid var(--red); padding-bottom:2px;">오늘의 진도</div>
           <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-bottom:26px;">
             <sc-for list="{{ progressCards }}" as="p" hint-placeholder-count="4">
-              <button onClick="{{ p.go }}" class="hh-card" style="text-align:left; background:#FFFDF6; border:2px solid #3E2F23; border-radius:5px; padding:18px; cursor:pointer; font-family:inherit;" style-hover="border-color:#C13B3B;">
+              <button onClick="{{ p.go }}" class="hh-card" style="text-align:left; background:var(--card); border:2px solid var(--ink); border-radius:5px; padding:18px; cursor:pointer; font-family:inherit;" style-hover="border-color:var(--red);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                  <span style="font-weight:700; font-size:14px; color:#3E2F23;">{{ p.label }}</span>
-                  <span style="color:#C13B3B;">{{ p.icon }}</span>
+                  <span style="font-weight:700; font-size:14px; color:var(--ink);">{{ p.label }}</span>
+                  <span style="color:var(--red);">{{ p.icon }}</span>
                 </div>
-                <div style="font-family:'DM Mono',monospace; font-size:13px; color:#6B5B4A; margin-bottom:8px;">{{ p.done }} / {{ p.goal }}</div>
-                <div style="height:6px; background:#D9C39A; border-radius:5px; overflow:hidden;">
-                  <div style="height:100%; width: {{ p.pct }}%; background:#C13B3B; border-radius:5px;"></div>
+                <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink2); margin-bottom:8px;">{{ p.done }} / {{ p.goal }}</div>
+                <div style="height:6px; background:var(--line); border-radius:5px; overflow:hidden;">
+                  <div style="height:100%; width: {{ p.pct }}%; background:var(--red); border-radius:5px;"></div>
                 </div>
               </button>
             </sc-for>
           </div>
 
-          <div class="hh-card" style="background:#FFFDF6; border-radius:5px; padding:16px 18px; margin-bottom:24px; display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+          <div class="hh-card" style="background:var(--card); border-radius:5px; padding:16px 18px; margin-bottom:24px; display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
             <div style="flex:1; min-width:220px;">
               <div style="font-weight:900; font-size:15px;">학습 기록 백업</div>
-              <div style="font-size:12.5px; color:#6B5B4A; line-height:1.6; margin-top:4px;">기록은 이 기기의 브라우저에 자동 저장돼요. 기기를 바꾸거나 브라우저 데이터를 지우면 사라지니, 가끔 백업 파일을 받아 두세요.</div>
-              <sc-if value="{{ backupMsgShown }}" hint-placeholder-val=""><div style="font-size:12.5px; color:#0C7A3C; font-weight:700; margin-top:6px;">{{ backupMsg }}</div></sc-if>
+              <div style="font-size:var(--fs-sm); color:var(--ink2); line-height:1.6; margin-top:4px;">기록은 이 기기의 브라우저에 자동 저장돼요. 기기를 바꾸거나 브라우저 데이터를 지우면 사라지니, 가끔 백업 파일을 받아 두세요.</div>
+              <sc-if value="{{ backupMsgShown }}" hint-placeholder-val=""><div style="font-size:var(--fs-sm); color:var(--green-text); font-weight:700; margin-top:6px;">{{ backupMsg }}</div></sc-if>
             </div>
-            <button onClick="{{ exportData }}" style="background:#3E2F23; color:#F2C14E; border:2px solid #3E2F23; border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 #F2C14E;">백업 파일 받기</button>
-            <button onClick="{{ importData }}" style="background:#fff; color:#3E2F23; border:2px solid #3E2F23; border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit;">백업 불러오기</button>
+            <button onClick="{{ exportData }}" style="background:var(--ink-bg); color:var(--yellow); border:2px solid var(--ink); border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 var(--yellow);">백업 파일 받기</button>
+            <button onClick="{{ importData }}" style="background:var(--white-bg); color:var(--ink); border:2px solid var(--ink); border-radius:4px; padding:10px 14px; font-weight:800; cursor:pointer; font-family:inherit;">백업 불러오기</button>
           </div>
-          <div class="hh-serif" style="font-weight:900; font-size:18px; margin:6px 4px 14px; letter-spacing:-.5px; display:inline-block; border-bottom:4px solid #B87333; padding-bottom:2px;">학습 카테고리</div>
+          <div class="hh-serif" style="font-weight:900; font-size:18px; margin:6px 4px 14px; letter-spacing:-.5px; display:inline-block; border-bottom:4px solid var(--blue); padding-bottom:2px;">학습 카테고리</div>
           <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px;">
             <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="6">
-              <div class="hh-card" style="background:#FFFDF6; border-radius:4px; padding:14px 15px;">
-                <div style="display:inline-block; font-family:'DM Mono',monospace; font-size:10px; color:#FBF5E8; background:#3E2F23; letter-spacing:1px; padding:2px 6px; font-weight:700;">{{ c.tag }}</div>
+              <div class="hh-card" style="background:var(--card); border-radius:4px; padding:14px 15px;">
+                <div style="display:inline-block; font-family:var(--font-mono); font-size:var(--fs-xs); color:var(--on-dark); background:var(--ink-bg); letter-spacing:1px; padding:2px 6px; font-weight:700;">{{ c.tag }}</div>
                 <div style="font-weight:800; font-size:13.5px; margin-top:7px;">{{ c.name }}</div>
-                <div style="font-size:11px; color:#6B5B4A; margin-top:2px;">{{ c.count }}</div>
+                <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:2px;">{{ c.count }}</div>
               </div>
             </sc-for>
           </div>
@@ -256,49 +273,49 @@
       <sc-if value="{{ is.kanji }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
           <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
-            <span style="font-size:13px; color:#6B5B4A;">한자를 탭하면 뜻과 음·훈독이 공개됩니다. 상용한자 2,136자를 N5~N1로 나눴어요. 하루 3자씩, 3학년 말(DAY 712)에 끝납니다.</span>
-            <span style="margin-left:auto; font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A;">{{ kLevel }} {{ kanjiTotal }}字</span>
+            <span style="font-size:13px; color:var(--ink2);">한자를 탭하면 뜻과 음·훈독이 공개됩니다. 상용한자 2,136자를 N5~N1로 나눴어요. 하루 3자씩, 3학년 말(DAY 712)에 끝납니다.</span>
+            <span style="margin-left:auto; font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">{{ kLevel }} {{ kanjiTotal }}字</span>
           </div>
           <div style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px;">
             <sc-for list="{{ kLevels }}" as="kl" hint-placeholder-count="7"><button onClick="{{ kl.pick }}" style="{{ kl.style }}">{{ kl.label }}</button></sc-for>
           </div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
             <div style="position:relative; flex:1; min-width:220px; max-width:440px; display:flex; align-items:center;">
-              <input ref="{{ kanjiSearchRef }}" onInput="{{ kanjiSearchInput }}" onKeyDown="{{ kanjiSearchKey }}" placeholder="한자·음·훈·뜻 검색 (예: 推 / すい / 밀다)" style="width:100%; border:2px solid #3E2F23; border-radius:3px; padding:9px 38px 9px 12px; font-family:'Noto Sans JP',inherit; font-size:13px; background:#fff; color:#3E2F23; box-shadow:3px 3px 0 #3E2F23;" />
-              <button onClick="{{ clearKanjiSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid #3E2F23; border-radius:50%; background:#F2C14E; color:#3E2F23; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:#C13B3B; color:#fff;">×</button>
+              <input ref="{{ kanjiSearchRef }}" onInput="{{ kanjiSearchInput }}" onKeyDown="{{ kanjiSearchKey }}" placeholder="한자·음·훈·뜻 검색 (예: 推 / すい / 밀다)" style="width:100%; border:2px solid var(--ink); border-radius:3px; padding:9px 38px 9px 12px; font-family:var(--font-ja),inherit; font-size:13px; background:var(--white-bg); color:var(--ink); box-shadow:3px 3px 0 var(--shadow);" />
+              <button onClick="{{ clearKanjiSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid var(--ink); border-radius:50%; background:var(--yellow); color:var(--ink); cursor:pointer; font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:var(--red); color:#fff;">×</button>
             </div>
-            <sc-if value="{{ kanjiSearchActive }}" hint-placeholder-val=""><span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#3E2F23; color:#F2C14E; padding:3px 8px; border-radius:2px;">검색 결과 {{ kanjiTotal }}字</span></sc-if>
+            <sc-if value="{{ kanjiSearchActive }}" hint-placeholder-val=""><span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); padding:3px 8px; border-radius:2px;">검색 결과 {{ kanjiTotal }}字</span></sc-if>
           </div>
-          <sc-if value="{{ kanjiEmpty }}" hint-placeholder-val=""><div style="padding:24px; text-align:center; color:#6B5B4A; font-size:14px; background:#FFFDF6; border:2px dashed #3E2F23; border-radius:6px; margin-bottom:14px;">검색 결과가 없어요. 다른 검색어로 찾아보세요.</div></sc-if>
+          <sc-if value="{{ kanjiEmpty }}" hint-placeholder-val=""><div style="padding:24px; text-align:center; color:var(--ink2); font-size:14px; background:var(--card); border:2px dashed var(--ink); border-radius:6px; margin-bottom:14px;">검색 결과가 없어요. 다른 검색어로 찾아보세요.</div></sc-if>
           <div class="hh-kanji-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px;">
             <sc-for list="{{ kanjiCards }}" as="k" hint-placeholder-count="6">
-              <div class="hh-card" style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:6px; overflow:hidden;">
+              <div class="hh-card" style="background:var(--card); border:2px solid var(--ink); border-radius:6px; overflow:hidden;">
                 <div style="display:flex; gap:0;">
                   <!-- big char w/ stroke numbers -->
-                  <button onClick="{{ k.toggle }}" class="hh-kanji-char" style="width:140px; flex:none; aspect-ratio:1; border:none; border-right:3px solid #3E2F23; background:#F3E9D2; position:relative; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                    <span style="position:absolute; top:8px; left:10px; font-family:'DM Mono',monospace; font-size:10px; font-weight:700; color:#C13B3B;">{{ k.strokes }}획</span>
-                    <span style="font-family:'Noto Serif JP',serif; font-size:84px; font-weight:700; color:#3E2F23; line-height:1;">{{ k.char }}</span>
-                    <span style="position:absolute; bottom:8px; right:10px; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:1px; color:#6B5B4A;">획순 따라쓰기 ↗</span>
+                  <button onClick="{{ k.toggle }}" class="hh-kanji-char" style="width:140px; flex:none; aspect-ratio:1; border:none; border-right:3px solid var(--ink); background:var(--paper2); position:relative; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                    <span style="position:absolute; top:8px; left:10px; font-family:var(--font-mono); font-size:var(--fs-xs); font-weight:700; color:var(--red);">{{ k.strokes }}획</span>
+                    <span style="font-family:var(--font-ja-serif); font-size:84px; font-weight:700; color:var(--ink); line-height:1;">{{ k.char }}</span>
+                    <span style="position:absolute; bottom:8px; right:10px; font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:1px; color:var(--ink2);">획순 따라쓰기 ↗</span>
                   </button>
                   <div style="flex:1; padding:14px 16px; display:flex; flex-direction:column;">
                     <div style="display:flex; gap:7px; align-items:center; margin-bottom:8px;">
-                      <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:700; background:#F2C14E; color:#3E2F23; border:2px solid #3E2F23; padding:1px 7px; border-radius:0;">{{ k.jlpt }}</span>
-                      <button onClick="{{ k.play }}" title="발음 듣기" style="margin-left:auto; width:32px; height:32px; border-radius:50%; border:2px solid #3E2F23; background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="border-color:#C13B3B; background:#F3E2D2;">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="#C13B3B" stroke-width="2" stroke-linecap="round"></path></svg>
+                      <span style="font-family:var(--font-mono); font-size:var(--fs-xs); font-weight:700; background:var(--yellow); color:var(--ink); border:2px solid var(--ink); padding:1px 7px; border-radius:0;">{{ k.jlpt }}</span>
+                      <button onClick="{{ k.play }}" title="발음 듣기" style="margin-left:auto; width:32px; height:32px; border-radius:50%; border:2px solid var(--ink); background:var(--white-bg); cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="border-color:var(--red); background:var(--tint-pink);">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round"></path></svg>
                       </button>
                     </div>
                     <sc-if value="{{ k.revealed }}" hint-placeholder-val="">
                       <div style="animation:hh-pop .25s ease;">
-                        <div style="font-weight:800; font-size:16px; color:#3E2F23;">{{ k.meaning }}</div>
-                        <div style="font-size:12.5px; color:#6B5B4A; margin-top:5px; line-height:1.7;">음독 <b style="color:#C13B3B;">{{ k.on }}</b><br>훈독 <b style="color:#C13B3B;">{{ k.kun }}</b></div>
-                        <div style="margin-top:8px; font-family:'Noto Sans JP'; font-size:13px; color:#3E2F23;">예: {{ k.example }}</div>
+                        <div style="font-weight:800; font-size:16px; color:var(--ink);">{{ k.meaning }}</div>
+                        <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:5px; line-height:1.7;">음독 <b style="color:var(--red);">{{ k.on }}</b><br>훈독 <b style="color:var(--red);">{{ k.kun }}</b></div>
+                        <div style="margin-top:8px; font-family:var(--font-ja); font-size:13px; color:var(--ink);">예: {{ k.example }}</div>
                         <sc-if value="{{ k.mnemonic }}" hint-placeholder-val="">
-                          <div style="margin-top:8px; background:#F3E9D2; border:1.5px dashed #3E2F23; border-radius:3px; padding:7px 9px; font-size:12px; color:#6B5B4A; line-height:1.6;">💡 {{ k.mnemonic }}</div>
+                          <div style="margin-top:8px; background:var(--paper2); border:1.5px dashed var(--ink); border-radius:3px; padding:7px 9px; font-size:var(--fs-sm); color:var(--ink2); line-height:1.6;">💡 {{ k.mnemonic }}</div>
                         </sc-if>
                       </div>
                     </sc-if>
                     <sc-if value="{{ k.hidden }}" hint-placeholder-val="{{ true }}">
-                      <button onClick="{{ k.toggle }}" style="margin-top:auto; background:transparent; border:2px dashed #3E2F23; color:#6B5B4A; border-radius:3px; padding:14px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:#C13B3B; color:#C13B3B;">탭하여 뜻 보기</button>
+                      <button onClick="{{ k.toggle }}" style="margin-top:auto; background:transparent; border:2px dashed var(--ink); color:var(--ink2); border-radius:3px; padding:14px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red); color:var(--red);">탭하여 뜻 보기</button>
                     </sc-if>
                   </div>
                 </div>
@@ -306,9 +323,9 @@
             </sc-for>
           </div>
           <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:22px;">
-            <button onClick="{{ kanjiPrev }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">← 이전 묶음</button>
-            <span style="font-family:'DM Mono',monospace; font-size:13px; color:#6B5B4A;">묶음 {{ kanjiPageLabel }}</span>
-            <button onClick="{{ kanjiNext }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">다음 묶음 →</button>
+            <button onClick="{{ kanjiPrev }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">← 이전 묶음</button>
+            <span style="font-family:var(--font-mono); font-size:13px; color:var(--ink2);">묶음 {{ kanjiPageLabel }}</span>
+            <button onClick="{{ kanjiNext }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">다음 묶음 →</button>
           </div>
         </div>
       </sc-if>
@@ -316,86 +333,86 @@
       <!-- ===== MNEMONIC (연상 암기 — 상용한자 2,136자 연상법 학습) ===== -->
       <sc-if value="{{ is.mnemonic }}" hint-placeholder-val="">
         <div style="max-width:720px; margin:0 auto; animation:hh-fade .35s ease;">
-          <div style="background:#3E2F23; color:#FBF5E8; border:3px solid #3E2F23; border-radius:5px; padding:14px 18px; margin-bottom:14px; box-shadow:6px 6px 0 #F2C14E;">
-            <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#F2C14E; font-weight:700;">PARTS → STORY → MEANING</div>
-            <div style="font-size:13px; color:#D9C39A; line-height:1.7; margin-top:5px;">상용한자 2,136자를 「부품 → 이야기 → 뜻·음」 연상 사슬로 외워요. 연상법을 먼저 떠올리고, 정답 확인 후 스스로 채점하면 모르는 글자만 다시 돌아옵니다.</div>
+          <div style="background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:5px; padding:14px 18px; margin-bottom:14px; box-shadow:6px 6px 0 var(--yellow);">
+            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">PARTS → STORY → MEANING</div>
+            <div style="font-size:13px; color:var(--on-dark-mute); line-height:1.7; margin-top:5px;">상용한자 2,136자를 「부품 → 이야기 → 뜻·음」 연상 사슬로 외워요. 연상법을 먼저 떠올리고, 정답 확인 후 스스로 채점하면 모르는 글자만 다시 돌아옵니다.</div>
           </div>
           <div style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:10px;">
             <sc-for list="{{ mnLevels }}" as="ml" hint-placeholder-count="7"><button onClick="{{ ml.pick }}" style="{{ ml.style }}">{{ ml.label }}</button></sc-for>
           </div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
             <div style="position:relative; flex:1; min-width:220px; max-width:440px; display:flex; align-items:center;">
-              <input ref="{{ mnSearchRef }}" onInput="{{ mnSearchInput }}" onKeyDown="{{ mnSearchKey }}" placeholder="한자·음·훈·뜻 검색 (예: 推 / すい / 밀다)" style="width:100%; border:2px solid #3E2F23; border-radius:3px; padding:9px 38px 9px 12px; font-family:'Noto Sans JP',inherit; font-size:13px; background:#fff; color:#3E2F23; box-shadow:3px 3px 0 #3E2F23;" />
-              <button onClick="{{ clearMnSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid #3E2F23; border-radius:50%; background:#F2C14E; color:#3E2F23; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:#C13B3B; color:#fff;">×</button>
+              <input ref="{{ mnSearchRef }}" onInput="{{ mnSearchInput }}" onKeyDown="{{ mnSearchKey }}" placeholder="한자·음·훈·뜻 검색 (예: 推 / すい / 밀다)" style="width:100%; border:2px solid var(--ink); border-radius:3px; padding:9px 38px 9px 12px; font-family:var(--font-ja),inherit; font-size:13px; background:var(--white-bg); color:var(--ink); box-shadow:3px 3px 0 var(--shadow);" />
+              <button onClick="{{ clearMnSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid var(--ink); border-radius:50%; background:var(--yellow); color:var(--ink); cursor:pointer; font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:var(--red); color:#fff;">×</button>
             </div>
-            <sc-if value="{{ mnSearchActive }}" hint-placeholder-val=""><span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#3E2F23; color:#F2C14E; padding:3px 8px; border-radius:2px;">검색 결과 {{ mnSearchTotal }}字</span></sc-if>
+            <sc-if value="{{ mnSearchActive }}" hint-placeholder-val=""><span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); padding:3px 8px; border-radius:2px;">검색 결과 {{ mnSearchTotal }}字</span></sc-if>
           </div>
           <sc-if value="{{ mnSearchActive }}" hint-placeholder-val="">
-            <div style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:4px; padding:10px 12px; margin-bottom:12px;">
-              <sc-if value="{{ mnSearchEmpty }}" hint-placeholder-val=""><div style="font-size:13px; color:#6B5B4A;">검색 결과가 없어요. 위 등급 선택을 「전체」로 바꾸거나 다른 검색어로 찾아보세요.</div></sc-if>
+            <div style="background:var(--card); border:2px solid var(--ink); border-radius:4px; padding:10px 12px; margin-bottom:12px;">
+              <sc-if value="{{ mnSearchEmpty }}" hint-placeholder-val=""><div style="font-size:13px; color:var(--ink2);">검색 결과가 없어요. 위 등급 선택을 「전체」로 바꾸거나 다른 검색어로 찾아보세요.</div></sc-if>
               <div style="display:flex; gap:7px; flex-wrap:wrap;">
-                <sc-for list="{{ mnSearchResults }}" as="mr" hint-placeholder-count="6"><button onClick="{{ mr.pick }}" title="이 한자로 연상 암기 시작" style="{{ mr.style }}"><span style="font-family:'Noto Serif JP',serif; font-size:20px; font-weight:700;">{{ mr.char }}</span> <span style="font-size:11.5px; color:#6B5B4A;">{{ mr.meaning }}</span></button></sc-for>
+                <sc-for list="{{ mnSearchResults }}" as="mr" hint-placeholder-count="6"><button onClick="{{ mr.pick }}" title="이 한자로 연상 암기 시작" style="{{ mr.style }}"><span style="font-family:var(--font-ja-serif); font-size:20px; font-weight:700;">{{ mr.char }}</span> <span style="font-size:var(--fs-sm); color:var(--ink2);">{{ mr.meaning }}</span></button></sc-for>
               </div>
-              <sc-if value="{{ mnSearchMore }}" hint-placeholder-val=""><div style="font-size:11.5px; color:#6B5B4A; margin-top:6px;">앞 {{ mnSearchShown }}자만 보여 줘요. 검색어를 더 구체적으로 입력해 보세요.</div></sc-if>
+              <sc-if value="{{ mnSearchMore }}" hint-placeholder-val=""><div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:6px;">앞 {{ mnSearchShown }}자만 보여 줘요. 검색어를 더 구체적으로 입력해 보세요.</div></sc-if>
             </div>
           </sc-if>
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
-            <div style="flex:1; min-width:180px; height:12px; background:#FFFDF6; border:2px solid #3E2F23; overflow:hidden;">
-              <div style="height:100%; width: {{ mnPct }}%; background:#1FA95B;"></div>
+            <div style="flex:1; min-width:180px; height:12px; background:var(--card); border:2px solid var(--ink); overflow:hidden;">
+              <div style="height:100%; width: {{ mnPct }}%; background:var(--green);"></div>
             </div>
-            <span style="font-family:'DM Mono',monospace; font-size:11.5px; color:#6B5B4A; font-weight:700;">외움 {{ mnKnownCount }} / {{ mnTotalCount }}字 · 남은 카드 {{ mnRemain }}</span>
+            <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2); font-weight:700;">외움 {{ mnKnownCount }} / {{ mnTotalCount }}字 · 남은 카드 {{ mnRemain }}</span>
           </div>
 
           <sc-if value="{{ mnActive }}" hint-placeholder-val="{{ true }}">
-            <div class="hh-card" style="background:#FFFDF6; border:3px solid #3E2F23; border-radius:6px; padding:26px 24px; box-shadow:7px 7px 0 #3E2F23;">
+            <div class="hh-card" style="background:var(--card); border:3px solid var(--ink); border-radius:6px; padding:26px 24px; box-shadow:7px 7px 0 var(--shadow);">
               <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:700; background:#F2C14E; color:#3E2F23; border:2px solid #3E2F23; padding:1px 7px;">{{ mnJlpt }}</span>
-                <span style="font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A;">{{ mnStrokes }}획</span>
+                <span style="font-family:var(--font-mono); font-size:var(--fs-xs); font-weight:700; background:var(--yellow); color:var(--ink); border:2px solid var(--ink); padding:1px 7px;">{{ mnJlpt }}</span>
+                <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">{{ mnStrokes }}획</span>
                 <sc-if value="{{ mnShowAns }}" hint-placeholder-val="">
-                  <button onClick="{{ playMn }}" title="발음 듣기" style="margin-left:auto; width:32px; height:32px; border-radius:50%; border:2px solid #3E2F23; background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="border-color:#C13B3B; background:#F3E2D2;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
+                  <button onClick="{{ playMn }}" title="발음 듣기" style="margin-left:auto; width:32px; height:32px; border-radius:50%; border:2px solid var(--ink); background:var(--white-bg); cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="border-color:var(--red); background:var(--tint-pink);">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
                   </button>
                 </sc-if>
               </div>
               <div style="text-align:center; padding:18px 0 6px;">
-                <span style="font-family:'Noto Serif JP',serif; font-size:110px; font-weight:700; color:#3E2F23; line-height:1.15;">{{ mnChar }}</span>
+                <span style="font-family:var(--font-ja-serif); font-size:110px; font-weight:700; color:var(--ink); line-height:1.15;">{{ mnChar }}</span>
               </div>
               <sc-if value="{{ mnShowMn }}" hint-placeholder-val="">
-                <div style="background:#F3E9D2; border:2px dashed #3E2F23; border-radius:4px; padding:12px 14px; margin-top:10px; animation:hh-pop .22s ease;">
-                  <div style="font-family:'DM Mono',monospace; font-size:9.5px; letter-spacing:1.5px; color:#C13B3B; font-weight:700; margin-bottom:4px;">MNEMONIC</div>
-                  <div style="font-size:14.5px; color:#3E2F23; line-height:1.75; font-weight:600;">💡 {{ mnText }}</div>
+                <div style="background:var(--paper2); border:2px dashed var(--ink); border-radius:4px; padding:12px 14px; margin-top:10px; animation:hh-pop .22s ease;">
+                  <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:1.5px; color:var(--red); font-weight:700; margin-bottom:4px;">MNEMONIC</div>
+                  <div style="font-size:14.5px; color:var(--ink); line-height:1.75; font-weight:600;">💡 {{ mnText }}</div>
                 </div>
               </sc-if>
               <sc-if value="{{ mnShowAns }}" hint-placeholder-val="">
-                <div style="background:#FBF5E8; border:2px solid #3E2F23; border-radius:4px; padding:12px 14px; margin-top:10px; animation:hh-pop .22s ease;">
-                  <div style="font-weight:900; font-size:18px; color:#3E2F23;">{{ mnMeaning }}</div>
-                  <div style="font-size:13px; color:#6B5B4A; margin-top:6px; line-height:1.7;">음독 <b style="color:#C13B3B;">{{ mnOn }}</b> · 훈독 <b style="color:#C13B3B;">{{ mnKun }}</b></div>
-                  <sc-if value="{{ mnExample }}" hint-placeholder-val=""><div style="margin-top:5px; font-family:'Noto Sans JP'; font-size:13px; color:#3E2F23;">예: {{ mnExample }}</div></sc-if>
+                <div style="background:var(--paper); border:2px solid var(--ink); border-radius:4px; padding:12px 14px; margin-top:10px; animation:hh-pop .22s ease;">
+                  <div style="font-weight:900; font-size:18px; color:var(--ink);">{{ mnMeaning }}</div>
+                  <div style="font-size:13px; color:var(--ink2); margin-top:6px; line-height:1.7;">음독 <b style="color:var(--red);">{{ mnOn }}</b> · 훈독 <b style="color:var(--red);">{{ mnKun }}</b></div>
+                  <sc-if value="{{ mnExample }}" hint-placeholder-val=""><div style="margin-top:5px; font-family:var(--font-ja); font-size:13px; color:var(--ink);">예: {{ mnExample }}</div></sc-if>
                 </div>
               </sc-if>
               <div style="display:flex; gap:10px; margin-top:16px;">
                 <sc-if value="{{ mnStep0 }}" hint-placeholder-val="{{ true }}">
-                  <button onClick="{{ mnReveal }}" style="flex:1; background:#F2C14E; color:#3E2F23; border:2.5px solid #3E2F23; border-radius:4px; padding:14px; cursor:pointer; font-family:inherit; font-size:14.5px; font-weight:900; box-shadow:4px 4px 0 #3E2F23;" style-hover="background:#C13B3B; color:#fff;">💡 연상법 보기</button>
+                  <button onClick="{{ mnReveal }}" style="flex:1; background:var(--yellow); color:var(--ink); border:2.5px solid var(--ink); border-radius:4px; padding:14px; cursor:pointer; font-family:inherit; font-size:14.5px; font-weight:900; box-shadow:4px 4px 0 var(--shadow);" style-hover="background:var(--red); color:#fff;">💡 연상법 보기</button>
                 </sc-if>
                 <sc-if value="{{ mnStep1 }}" hint-placeholder-val="">
-                  <button onClick="{{ mnReveal }}" style="flex:1; background:#3E2F23; color:#F2C14E; border:2.5px solid #3E2F23; border-radius:4px; padding:14px; cursor:pointer; font-family:inherit; font-size:14.5px; font-weight:900; box-shadow:4px 4px 0 #F2C14E;" style-hover="color:#fff;">정답 보기</button>
+                  <button onClick="{{ mnReveal }}" style="flex:1; background:var(--ink-bg); color:var(--yellow); border:2.5px solid var(--ink); border-radius:4px; padding:14px; cursor:pointer; font-family:inherit; font-size:14.5px; font-weight:900; box-shadow:4px 4px 0 var(--yellow);" style-hover="color:#fff;">정답 보기</button>
                 </sc-if>
                 <sc-if value="{{ mnShowAns }}" hint-placeholder-val="">
-                  <button onClick="{{ mnAgain }}" style="{{ mnAgainStyle }}" style-hover="border-color:#C13B3B;">몰라요<br><span style="font-size:10.5px; font-weight:600;">3장 뒤 다시</span></button>
-                  <button onClick="{{ mnSoon }}" style="{{ mnSoonStyle }}" style-hover="border-color:#C13B3B;">애매해요<br><span style="font-size:10.5px; font-weight:600;">10장 뒤 다시</span></button>
-                  <button onClick="{{ mnKnownPick }}" style="{{ mnKnownStyle }}" style-hover="border-color:#1FA95B;">외웠어요<br><span style="font-size:10.5px; font-weight:600;">+3 XP · 졸업</span></button>
+                  <button onClick="{{ mnAgain }}" style="{{ mnAgainStyle }}" style-hover="border-color:var(--red);">몰라요<br><span style="font-size:var(--fs-xs); font-weight:600;">3장 뒤 다시</span></button>
+                  <button onClick="{{ mnSoon }}" style="{{ mnSoonStyle }}" style-hover="border-color:var(--red);">애매해요<br><span style="font-size:var(--fs-xs); font-weight:600;">10장 뒤 다시</span></button>
+                  <button onClick="{{ mnKnownPick }}" style="{{ mnKnownStyle }}" style-hover="border-color:var(--green);">외웠어요<br><span style="font-size:var(--fs-xs); font-weight:600;">+3 XP · 졸업</span></button>
                 </sc-if>
               </div>
             </div>
           </sc-if>
 
           <sc-if value="{{ mnDone }}" hint-placeholder-val="">
-            <div style="background:#FFFDF6; border:3px solid #3E2F23; border-radius:6px; padding:36px 24px; text-align:center; box-shadow:7px 7px 0 #1FA95B;">
+            <div style="background:var(--card); border:3px solid var(--ink); border-radius:6px; padding:36px 24px; text-align:center; box-shadow:7px 7px 0 var(--green);">
               <div style="font-size:38px;">🎉</div>
               <div class="hh-serif" style="font-weight:900; font-size:20px; margin-top:8px;">이 레벨의 카드를 전부 외웠어요!</div>
-              <div style="font-size:13px; color:#6B5B4A; margin-top:6px;">다른 레벨을 고르거나, 처음부터 다시 복습할 수 있어요.</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:6px;">다른 레벨을 고르거나, 처음부터 다시 복습할 수 있어요.</div>
               <sc-if value="{{ mnHasKnown }}" hint-placeholder-val="">
-                <button onClick="{{ mnResetKnown }}" style="margin-top:16px; background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:10px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">이 레벨 외운 기록 초기화</button>
+                <button onClick="{{ mnResetKnown }}" style="margin-top:16px; background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:10px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">이 레벨 외운 기록 초기화</button>
               </sc-if>
             </div>
           </sc-if>
@@ -406,60 +423,60 @@
       <sc-if value="{{ is.word }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px; flex-wrap:wrap;">
-            <span style="font-size:13px; color:#6B5B4A;">JLPT 등급이나 학년으로 어휘를 골라서 볼 수 있어요.</span>
-            <span style="font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A; margin-left:auto;">현재 {{ wordTrackLabel }} · {{ wordTotal }}개</span>
+            <span style="font-size:13px; color:var(--ink2);">JLPT 등급이나 학년으로 어휘를 골라서 볼 수 있어요.</span>
+            <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2); margin-left:auto;">현재 {{ wordTrackLabel }} · {{ wordTotal }}개</span>
             <div style="display:flex; gap:7px; flex-wrap:wrap;">
               <sc-for list="{{ wordTrackTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button></sc-for>
             </div>
-            <span style="font-size:12px; color:#6B5B4A;">하루 목표</span>
-            <div style="display:flex; background:#3E2F23; border:2px solid #3E2F23; border-radius:3px; padding:3px;">
+            <span style="font-size:var(--fs-sm); color:var(--ink2);">하루 목표</span>
+            <div style="display:flex; background:var(--ink-bg); border:2px solid var(--ink); border-radius:3px; padding:3px;">
               <button onClick="{{ setWord10 }}" style="{{ wordMode10Style }}">10개</button>
               <button onClick="{{ setWord20 }}" style="{{ wordMode20Style }}">20개</button>
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
             <div style="position:relative; flex:1; min-width:220px; max-width:440px; display:flex; align-items:center;">
-              <input ref="{{ wordSearchRef }}" onInput="{{ wordSearchInput }}" onKeyDown="{{ wordSearchKey }}" placeholder="단어·읽기·뜻 검색 (예: 大学 / だいがく / 대학)" style="width:100%; border:2px solid #3E2F23; border-radius:3px; padding:9px 38px 9px 12px; font-family:'Noto Sans JP',inherit; font-size:13px; background:#fff; color:#3E2F23; box-shadow:3px 3px 0 #3E2F23;" />
-              <button onClick="{{ clearWordSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid #3E2F23; border-radius:50%; background:#F2C14E; color:#3E2F23; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:#C13B3B; color:#fff;">×</button>
+              <input ref="{{ wordSearchRef }}" onInput="{{ wordSearchInput }}" onKeyDown="{{ wordSearchKey }}" placeholder="단어·읽기·뜻 검색 (예: 大学 / だいがく / 대학)" style="width:100%; border:2px solid var(--ink); border-radius:3px; padding:9px 38px 9px 12px; font-family:var(--font-ja),inherit; font-size:13px; background:var(--white-bg); color:var(--ink); box-shadow:3px 3px 0 var(--shadow);" />
+              <button onClick="{{ clearWordSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid var(--ink); border-radius:50%; background:var(--yellow); color:var(--ink); cursor:pointer; font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:var(--red); color:#fff;">×</button>
             </div>
-            <sc-if value="{{ wordSearchActive }}" hint-placeholder-val=""><span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#3E2F23; color:#F2C14E; padding:3px 8px; border-radius:2px;">검색 결과 {{ wordTotal }}개</span></sc-if>
+            <sc-if value="{{ wordSearchActive }}" hint-placeholder-val=""><span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); padding:3px 8px; border-radius:2px;">검색 결과 {{ wordTotal }}개</span></sc-if>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
             <sc-for list="{{ wordLevelChips }}" as="chip" hint-placeholder-count="6"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
           </div>
           <div class="hh-word-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px;">
             <sc-for list="{{ wordCards }}" as="w" hint-placeholder-count="8">
-              <button onClick="{{ w.toggle }}" class="hh-card" style="text-align:left; background:#FFFDF6; border:2px solid #3E2F23; border-radius:5px; padding:17px 18px; cursor:pointer; font-family:inherit; min-height:124px; display:flex; flex-direction:column;" style-hover="border-color:#3E2F23;">
+              <button onClick="{{ w.toggle }}" class="hh-card" style="text-align:left; background:var(--card); border:2px solid var(--ink); border-radius:5px; padding:17px 18px; cursor:pointer; font-family:inherit; min-height:124px; display:flex; flex-direction:column;" style-hover="border-color:var(--ink);">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-                  <span style="font-family:'DM Mono',monospace; font-size:9.5px; font-weight:700; background:#F2C14E; color:#3E2F23; border:1.5px solid #3E2F23; padding:1px 6px; border-radius:0;">{{ w.jlpt }}</span>
-                  <span style="font-family:'DM Mono',monospace; font-size:9.5px; color:#6B5B4A;">{{ w.pos }}</span>
-                  <span onClick="{{ w.play }}" title="발음 듣기" style="margin-left:auto; width:28px; height:28px; border-radius:50%; border:2px solid #3E2F23; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="border-color:#C13B3B; background:#F3E2D2;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-xs); font-weight:700; background:var(--yellow); color:var(--ink); border:1.5px solid var(--ink); padding:1px 6px; border-radius:0;">{{ w.jlpt }}</span>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-xs); color:var(--ink2);">{{ w.pos }}</span>
+                  <span onClick="{{ w.play }}" title="발음 듣기" style="margin-left:auto; width:28px; height:28px; border-radius:50%; border:2px solid var(--ink); background:var(--white-bg); display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="border-color:var(--red); background:var(--tint-pink);">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
                   </span>
                 </div>
-                <div style="font-family:'Noto Serif JP',serif; font-size:30px; font-weight:700; color:#3E2F23; line-height:1.2;">{{ w.word }}</div>
+                <div style="font-family:var(--font-ja-serif); font-size:30px; font-weight:700; color:var(--ink); line-height:1.2;">{{ w.word }}</div>
                 <sc-if value="{{ w.revealed }}" hint-placeholder-val="">
                   <div style="margin-top:auto; padding-top:8px; animation:hh-pop .22s ease;">
-                    <div style="font-family:'Noto Sans JP'; font-size:14px; color:#C13B3B; font-weight:500;">{{ w.reading }}</div>
-                    <div style="font-size:14px; font-weight:700; color:#3E2F23; margin-top:2px;">{{ w.meaning }}</div>
+                    <div style="font-family:var(--font-ja); font-size:14px; color:var(--red); font-weight:500;">{{ w.reading }}</div>
+                    <div style="font-size:14px; font-weight:700; color:var(--ink); margin-top:2px;">{{ w.meaning }}</div>
                   </div>
                 </sc-if>
                 <sc-if value="{{ w.hidden }}" hint-placeholder-val="{{ true }}">
-                  <div style="margin-top:auto; padding-top:8px; font-size:12px; color:#6B5B4A;">탭하여 읽기·뜻 보기</div>
+                  <div style="margin-top:auto; padding-top:8px; font-size:var(--fs-sm); color:var(--ink2);">탭하여 읽기·뜻 보기</div>
                 </sc-if>
               </button>
             </sc-for>
           </div>
           <sc-if value="{{ wordEmpty }}" hint-placeholder-val="">
-            <div style="background:#FFFDF6; border:2px dashed #3E2F23; border-radius:5px; padding:40px 20px; text-align:center;">
-              <div style="font-size:15px; font-weight:800; color:#3E2F23;">검색 결과가 없어요</div>
-              <div style="font-size:13px; color:#6B5B4A; margin-top:6px;">다른 검색어를 입력하거나 난이도·분야 필터를 바꿔 보세요.</div>
+            <div style="background:var(--card); border:2px dashed var(--ink); border-radius:5px; padding:40px 20px; text-align:center;">
+              <div style="font-size:15px; font-weight:800; color:var(--ink);">검색 결과가 없어요</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:6px;">다른 검색어를 입력하거나 난이도·분야 필터를 바꿔 보세요.</div>
             </div>
           </sc-if>
           <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:22px;">
-            <button onClick="{{ wordPrev }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">← 이전 묶음</button>
-            <span style="font-family:'DM Mono',monospace; font-size:13px; color:#6B5B4A;">묶음 {{ wordPageLabel }}</span>
-            <button onClick="{{ wordNext }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">다음 묶음 →</button>
+            <button onClick="{{ wordPrev }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">← 이전 묶음</button>
+            <span style="font-family:var(--font-mono); font-size:13px; color:var(--ink2);">묶음 {{ wordPageLabel }}</span>
+            <button onClick="{{ wordNext }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">다음 묶음 →</button>
           </div>
         </div>
       </sc-if>
@@ -467,75 +484,75 @@
       <!-- ===== PRACTICAL (4년 트랙 — 학년별 어휘) ===== -->
       <sc-if value="{{ is.practical }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
-          <div style="background:#3E2F23; color:#FBF5E8; border:3px solid #3E2F23; border-radius:5px; padding:16px 20px; margin-bottom:16px; box-shadow:6px 6px 0 #F2C14E;">
-            <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#F2C14E; font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · JLPT N1 만점</div>
-            <div style="font-size:13.5px; color:#D9C39A; line-height:1.7; margin-top:6px;">4년 동안 외울 어휘는 <b style="color:#F2C14E;">{{ prTotalCount }}개</b>뿐이에요. 평일 하루 8개 × 240일 × 4년(DAY 1~960)이면 끝나는 분량입니다. <b style="color:#F2C14E;">「인지」</b> 표시는 한국 한자음과 같은 단어(経済→경제)라서 외우지 않고 확인만 하면 돼요.</div>
+          <div style="background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:5px; padding:16px 20px; margin-bottom:16px; box-shadow:6px 6px 0 var(--yellow);">
+            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · JLPT N1 만점</div>
+            <div style="font-size:13.5px; color:var(--on-dark-mute); line-height:1.7; margin-top:6px;">4년 동안 외울 어휘는 <b style="color:var(--yellow);">{{ prTotalCount }}개</b>뿐이에요. 평일 하루 8개 × 240일 × 4년(DAY 1~960)이면 끝나는 분량입니다. <b style="color:var(--yellow);">「인지」</b> 표시는 한국 한자음과 같은 단어(経済→경제)라서 외우지 않고 확인만 하면 돼요.</div>
           </div>
           <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
             <sc-for list="{{ prStageCards }}" as="st" hint-placeholder-count="3">
-              <button onClick="{{ st.pick }}" style="{{ st.style }}" style-hover="border-color:#C13B3B;">
+              <button onClick="{{ st.pick }}" style="{{ st.style }}" style-hover="border-color:var(--red);">
                 <div style="display:flex; justify-content:space-between; align-items:baseline;">
                   <span class="hh-serif" style="font-weight:900; font-size:17px;">{{ st.label }}</span>
-                  <span style="font-family:'DM Mono',monospace; font-size:12px; font-weight:700;">{{ st.total }}개</span>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700;">{{ st.total }}개</span>
                 </div>
-                <div style="font-size:11.5px; margin:5px 0 9px; color: {{ st.descColor }};">{{ st.desc }}</div>
-                <div style="height:8px; background:#D9C39A; border:1.5px solid #3E2F23; overflow:hidden;">
-                  <div style="height:100%; width: {{ st.pct }}%; background:#C13B3B;"></div>
+                <div style="font-size:var(--fs-sm); margin:5px 0 9px; color: {{ st.descColor }};">{{ st.desc }}</div>
+                <div style="height:8px; background:var(--line); border:1.5px solid var(--ink); overflow:hidden;">
+                  <div style="height:100%; width: {{ st.pct }}%; background:var(--red);"></div>
                 </div>
-                <div style="font-family:'DM Mono',monospace; font-size:10px; margin-top:5px;">수집 {{ st.done }} · {{ st.pct }}%</div>
+                <div style="font-family:var(--font-mono); font-size:var(--fs-xs); margin-top:5px;">수집 {{ st.done }} · {{ st.pct }}%</div>
               </button>
             </sc-for>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; align-items:center;">
-            <span style="font-size:11px; color:#6B5B4A;">JLPT</span>
+            <span style="font-size:var(--fs-sm); color:var(--ink2);">JLPT</span>
             <sc-for list="{{ prJlptChips }}" as="chip" hint-placeholder-count="6"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
-            <span style="font-size:11px; color:#6B5B4A; margin-left:10px;">암기 부담</span>
+            <span style="font-size:var(--fs-sm); color:var(--ink2); margin-left:10px;">암기 부담</span>
             <sc-for list="{{ prCogChips }}" as="chip" hint-placeholder-count="3"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
           </div>
           <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
             <div style="position:relative; flex:1; min-width:220px; max-width:440px; display:flex; align-items:center;">
-              <input ref="{{ prSearchRef }}" onInput="{{ prSearchInput }}" onKeyDown="{{ prSearchKey }}" placeholder="단어·읽기·뜻 검색 (예: 大学 / だいがく / 대학)" style="width:100%; border:2px solid #3E2F23; border-radius:3px; padding:9px 38px 9px 12px; font-family:'Noto Sans JP',inherit; font-size:13px; background:#fff; color:#3E2F23; box-shadow:3px 3px 0 #3E2F23;" />
-              <button onClick="{{ clearPrSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid #3E2F23; border-radius:50%; background:#F2C14E; color:#3E2F23; cursor:pointer; font-family:'DM Mono',monospace; font-size:12px; font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:#C13B3B; color:#fff;">×</button>
+              <input ref="{{ prSearchRef }}" onInput="{{ prSearchInput }}" onKeyDown="{{ prSearchKey }}" placeholder="단어·읽기·뜻 검색 (예: 大学 / だいがく / 대학)" style="width:100%; border:2px solid var(--ink); border-radius:3px; padding:9px 38px 9px 12px; font-family:var(--font-ja),inherit; font-size:13px; background:var(--white-bg); color:var(--ink); box-shadow:3px 3px 0 var(--shadow);" />
+              <button onClick="{{ clearPrSearch }}" title="검색어 지우기" style="position:absolute; right:8px; width:22px; height:22px; border:2px solid var(--ink); border-radius:50%; background:var(--yellow); color:var(--ink); cursor:pointer; font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; line-height:1; display:flex; align-items:center; justify-content:center; padding:0;" style-hover="background:var(--red); color:#fff;">×</button>
             </div>
-            <span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#3E2F23; color:#F2C14E; padding:3px 8px; border-radius:2px;">{{ prListCount }}개</span>
+            <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); padding:3px 8px; border-radius:2px;">{{ prListCount }}개</span>
           </div>
           <div class="hh-word-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px;">
             <sc-for list="{{ prCards }}" as="w" hint-placeholder-count="8">
-              <button onClick="{{ w.toggle }}" class="hh-card" style="text-align:left; background:#FFFDF6; border:2px solid #3E2F23; border-radius:5px; padding:17px 18px; cursor:pointer; font-family:inherit; min-height:124px; display:flex; flex-direction:column;" style-hover="border-color:#3E2F23;">
+              <button onClick="{{ w.toggle }}" class="hh-card" style="text-align:left; background:var(--card); border:2px solid var(--ink); border-radius:5px; padding:17px 18px; cursor:pointer; font-family:inherit; min-height:124px; display:flex; flex-direction:column;" style-hover="border-color:var(--ink);">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
-                  <span style="font-family:'DM Mono',monospace; font-size:9.5px; font-weight:700; background:#F2C14E; color:#3E2F23; border:1.5px solid #3E2F23; padding:1px 6px; border-radius:0;">{{ w.jlpt }}</span>
-                  <span style="font-size:10px; font-weight:700; background:#3E2F23; color:#fff; border:1.5px solid #3E2F23; padding:1px 6px; border-radius:0;">{{ w.stageLabel }}</span>
-                  <sc-if value="{{ w.isCog }}" hint-placeholder-val=""><span style="font-size:10px; font-weight:700; background:#C8F4D2; color:#0C7A3C; border:1.5px solid #3E2F23; padding:1px 6px; border-radius:0;">인지</span></sc-if>
-                  <span onClick="{{ w.play }}" title="발음 듣기" style="margin-left:auto; width:28px; height:28px; border-radius:50%; border:2px solid #3E2F23; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="border-color:#C13B3B; background:#F3E2D2;">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-xs); font-weight:700; background:var(--yellow); color:var(--ink); border:1.5px solid var(--ink); padding:1px 6px; border-radius:0;">{{ w.jlpt }}</span>
+                  <span style="font-size:var(--fs-xs); font-weight:700; background:var(--ink-bg); color:#fff; border:1.5px solid var(--ink); padding:1px 6px; border-radius:0;">{{ w.stageLabel }}</span>
+                  <sc-if value="{{ w.isCog }}" hint-placeholder-val=""><span style="font-size:var(--fs-xs); font-weight:700; background:var(--tint-green); color:var(--green-text); border:1.5px solid var(--ink); padding:1px 6px; border-radius:0;">인지</span></sc-if>
+                  <span onClick="{{ w.play }}" title="발음 듣기" style="margin-left:auto; width:28px; height:28px; border-radius:50%; border:2px solid var(--ink); background:var(--white-bg); display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="border-color:var(--red); background:var(--tint-pink);">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
                   </span>
                 </div>
-                <div style="font-family:'Noto Serif JP',serif; font-size:30px; font-weight:700; color:#3E2F23; line-height:1.2;">{{ w.word }}</div>
+                <div style="font-family:var(--font-ja-serif); font-size:30px; font-weight:700; color:var(--ink); line-height:1.2;">{{ w.word }}</div>
                 <sc-if value="{{ w.revealed }}" hint-placeholder-val="">
                   <div style="margin-top:auto; padding-top:8px; animation:hh-pop .22s ease;">
-                    <div style="font-family:'Noto Sans JP'; font-size:14px; color:#C13B3B; font-weight:500;">{{ w.reading }}</div>
-                    <div style="font-size:14px; font-weight:700; color:#3E2F23; margin-top:2px;">{{ w.meaning }}</div>
+                    <div style="font-family:var(--font-ja); font-size:14px; color:var(--red); font-weight:500;">{{ w.reading }}</div>
+                    <div style="font-size:14px; font-weight:700; color:var(--ink); margin-top:2px;">{{ w.meaning }}</div>
                     <sc-if value="{{ w.mnemonic }}" hint-placeholder-val="">
-                      <div style="margin-top:7px; background:#F3E9D2; border:1.5px dashed #3E2F23; border-radius:3px; padding:6px 8px; font-size:11.5px; color:#6B5B4A; line-height:1.6; font-family:'Noto Sans JP',inherit;">💡 {{ w.mnemonic }}</div>
+                      <div style="margin-top:7px; background:var(--paper2); border:1.5px dashed var(--ink); border-radius:3px; padding:6px 8px; font-size:var(--fs-sm); color:var(--ink2); line-height:1.6; font-family:var(--font-ja),inherit;">💡 {{ w.mnemonic }}</div>
                     </sc-if>
                   </div>
                 </sc-if>
                 <sc-if value="{{ w.hidden }}" hint-placeholder-val="{{ true }}">
-                  <div style="margin-top:auto; padding-top:8px; font-size:12px; color:#6B5B4A;">탭하여 읽기·뜻 보기</div>
+                  <div style="margin-top:auto; padding-top:8px; font-size:var(--fs-sm); color:var(--ink2);">탭하여 읽기·뜻 보기</div>
                 </sc-if>
               </button>
             </sc-for>
           </div>
           <sc-if value="{{ prEmpty }}" hint-placeholder-val="">
-            <div style="background:#FFFDF6; border:2px dashed #3E2F23; border-radius:5px; padding:40px 20px; text-align:center;">
-              <div style="font-size:15px; font-weight:800; color:#3E2F23;">검색 결과가 없어요</div>
-              <div style="font-size:13px; color:#6B5B4A; margin-top:6px;">다른 검색어를 입력하거나 연차·JLPT·암기 부담 필터를 바꿔 보세요.</div>
+            <div style="background:var(--card); border:2px dashed var(--ink); border-radius:5px; padding:40px 20px; text-align:center;">
+              <div style="font-size:15px; font-weight:800; color:var(--ink);">검색 결과가 없어요</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:6px;">다른 검색어를 입력하거나 연차·JLPT·암기 부담 필터를 바꿔 보세요.</div>
             </div>
           </sc-if>
           <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:22px;">
-            <button onClick="{{ prPrev }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">← 이전 묶음</button>
-            <span style="font-family:'DM Mono',monospace; font-size:13px; color:#6B5B4A;">묶음 {{ prPageLabel }}</span>
-            <button onClick="{{ prNext }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 #3E2F23;" style-hover="border-color:#C13B3B;">다음 묶음 →</button>
+            <button onClick="{{ prPrev }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">← 이전 묶음</button>
+            <span style="font-family:var(--font-mono); font-size:13px; color:var(--ink2);">묶음 {{ prPageLabel }}</span>
+            <button onClick="{{ prNext }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:9px 18px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700; box-shadow:3px 3px 0 var(--shadow);" style-hover="border-color:var(--red);">다음 묶음 →</button>
           </div>
         </div>
       </sc-if>
@@ -543,45 +560,45 @@
       <!-- ===== NOTEBOOK ===== -->
       <sc-if value="{{ is.notebook }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
-          <div style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:5px; padding:14px 16px; margin-bottom:16px;">
+          <div style="background:var(--card); border:2px solid var(--ink); border-radius:5px; padding:14px 16px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
               <button onClick="{{ nbModeKanji }}" style="{{ nbModeKanjiStyle }}">한자 {{ nbKanjiCount }}자</button>
               <button onClick="{{ nbModeWord }}" style="{{ nbModeWordStyle }}">어휘 {{ nbWordCount }}개</button>
-              <span style="font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A;">전체에서 골라 따라쓰기</span>
+              <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">전체에서 골라 따라쓰기</span>
               <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
-                <button onClick="{{ playNb }}" style="display:flex; align-items:center; gap:6px; background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:#C13B3B;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg> 발음
+                <button onClick="{{ playNb }}" style="display:flex; align-items:center; gap:6px; background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg> 발음
                 </button>
-                <button onClick="{{ undoStroke }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:#C13B3B;">한 획 취소</button>
-                <button onClick="{{ clearNb }}" style="background:#3E2F23; color:#F2C14E; border:2px solid #3E2F23; border-radius:3px; padding:8px 14px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:800; box-shadow:3px 3px 0 #F2C14E;">전체 지우기</button>
+                <button onClick="{{ undoStroke }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:8px 12px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red);">한 획 취소</button>
+                <button onClick="{{ clearNb }}" style="background:var(--ink-bg); color:var(--yellow); border:2px solid var(--ink); border-radius:3px; padding:8px 14px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:800; box-shadow:3px 3px 0 var(--yellow);">전체 지우기</button>
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-              <span style="font-size:12px; color:#6B5B4A;">{{ nbLevelLabel }}</span>
+              <span style="font-size:var(--fs-sm); color:var(--ink2);">{{ nbLevelLabel }}</span>
               <sc-for list="{{ nbLevelChips }}" as="chip" hint-placeholder-count="7"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-              <button onClick="{{ nbPrev }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:#C13B3B;">◀</button>
+              <button onClick="{{ nbPrev }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red);">◀</button>
               <div style="flex:1; display:flex; gap:7px; flex-wrap:wrap;">
                 <sc-for list="{{ nbWords }}" as="n" hint-placeholder-count="9">
                   <button onClick="{{ n.pick }}" style="{{ n.style }}">{{ n.word }}</button>
                 </sc-for>
               </div>
-              <span style="font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A; white-space:nowrap;">{{ nbPageLabel }}</span>
-              <button onClick="{{ nbNext }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:#C13B3B;">▶</button>
-              <input ref="{{ nbJumpRef }}" onKeyDown="{{ nbJumpKey }}" placeholder="페이지" style="width:62px; border:2px solid #3E2F23; border-radius:3px; padding:6px 8px; font-family:'DM Mono',monospace; font-size:12px; background:#fff;" />
-              <button onClick="{{ nbJumpGo }}" style="background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px; white-space:nowrap;" style-hover="border-color:#C13B3B;">이동</button>
+              <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2); white-space:nowrap;">{{ nbPageLabel }}</span>
+              <button onClick="{{ nbNext }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red);">▶</button>
+              <input ref="{{ nbJumpRef }}" onKeyDown="{{ nbJumpKey }}" placeholder="페이지" style="width:62px; border:2px solid var(--ink); border-radius:3px; padding:6px 8px; font-family:var(--font-mono); font-size:var(--fs-sm); background:var(--white-bg);" />
+              <button onClick="{{ nbJumpGo }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px; white-space:nowrap;" style-hover="border-color:var(--red);">이동</button>
             </div>
           </div>
           <div style="display:flex; align-items:baseline; gap:10px; margin:0 4px 10px;">
-            <span style="font-family:'Noto Serif JP',serif; font-size:24px; font-weight:700;">{{ nbWord }}</span>
-            <span style="font-size:13px; color:#C13B3B;">{{ nbReading }}</span>
-            <span style="font-size:13px; color:#6B5B4A;">{{ nbMeaning }}</span>
-            <span style="margin-left:auto; font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A;">애플펜슬·펜 필압 지원 · 5회 따라쓰기</span>
+            <span style="font-family:var(--font-ja-serif); font-size:24px; font-weight:700;">{{ nbWord }}</span>
+            <span style="font-size:13px; color:var(--red);">{{ nbReading }}</span>
+            <span style="font-size:13px; color:var(--ink2);">{{ nbMeaning }}</span>
+            <span style="margin-left:auto; font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">애플펜슬·펜 필압 지원 · 5회 따라쓰기</span>
           </div>
-          <div style="background:#F3E9D2; border:2px solid #3E2F23; border-radius:5px; padding:10px; position:relative;">
+          <div style="background:var(--paper2); border:2px solid var(--ink); border-radius:5px; padding:10px; position:relative;">
             <canvas ref="{{ canvasRef }}" style="width:100%; height:540px; display:block; border-radius:3px; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; cursor:crosshair;"></canvas>
-            <div style="position:absolute; top:16px; right:18px; font-family:'DM Mono',monospace; font-size:10px; color:#3E2F23;">펜을 쓰면 손바닥 입력은 무시돼요</div>
+            <div style="position:absolute; top:16px; right:18px; font-family:var(--font-mono); font-size:var(--fs-xs); color:var(--ink);">펜을 쓰면 손바닥 입력은 무시돼요</div>
           </div>
         </div>
       </sc-if>
@@ -589,71 +606,71 @@
       <!-- ===== QUIZ ===== -->
       <sc-if value="{{ is.quiz }}" hint-placeholder-val="">
         <div style="max-width:680px; margin:0 auto; animation:hh-fade .35s ease;">
-          <div style="display:flex; align-items:center; gap:12px; background:#3E2F23; color:#FBF5E8; border:3px solid #3E2F23; border-radius:5px; padding:12px 16px; margin-bottom:16px; box-shadow:6px 6px 0 #F2C14E;">
-            <button onClick="{{ prevDay }}" style="background:transparent; color:#FBF5E8; border:2px solid #FBF5E8; border-radius:3px; padding:8px 13px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700;" style-hover="background:#FBF5E8; color:#3E2F23;">← 이전 DAY</button>
+          <div style="display:flex; align-items:center; gap:12px; background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:5px; padding:12px 16px; margin-bottom:16px; box-shadow:6px 6px 0 var(--yellow);">
+            <button onClick="{{ prevDay }}" style="background:transparent; color:var(--on-dark); border:2px solid var(--on-dark); border-radius:3px; padding:8px 13px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:700;" style-hover="background:var(--paper); color:var(--ink);">← 이전 DAY</button>
             <div style="flex:1; text-align:center;">
-              <div style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; color:#F2C14E; font-weight:700;">오늘의 학습</div>
-              <div style="font-weight:900; font-size:19px; letter-spacing:-.5px;">DAY {{ day }} <span style="color:#B08D57; font-weight:500; font-size:13px;">/ {{ dayTotal }}일 완성</span></div>
+              <div style="font-family:var(--font-mono); font-size:var(--fs-sm); letter-spacing:2px; color:var(--yellow); font-weight:700;">오늘의 학습</div>
+              <div style="font-weight:900; font-size:19px; letter-spacing:-.5px;">DAY {{ day }} <span style="color:var(--tan); font-weight:500; font-size:13px;">/ {{ dayTotal }}일 완성</span></div>
             </div>
-            <button onClick="{{ nextDay }}" style="background:#C13B3B; color:#fff; border:2px solid #FBF5E8; border-radius:3px; padding:8px 13px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:900;" style-hover="background:#F2C14E; color:#3E2F23; border-color:#F2C14E;">다음 DAY →</button>
+            <button onClick="{{ nextDay }}" style="background:var(--red); color:#fff; border:2px solid var(--on-dark); border-radius:3px; padding:8px 13px; cursor:pointer; font-family:inherit; font-size:13px; font-weight:900;" style-hover="background:var(--yellow); color:var(--ink); border-color:var(--yellow);">다음 DAY →</button>
           </div>
-          <div class="hh-card" style="background:#FBF5E8; border-radius:5px; padding:12px 14px; margin-bottom:16px;">
+          <div class="hh-card" style="background:var(--paper); border-radius:5px; padding:12px 14px; margin-bottom:16px;">
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
-              <span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; color:#6B5B4A; width:40px;">JLPT</span>
+              <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; color:var(--ink2); width:40px;">JLPT</span>
               <sc-for list="{{ quizJlptChips }}" as="chip" hint-placeholder-count="6"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
             </div>
-            <div style="font-size:12px; color:#6B5B4A; margin-top:8px;">선택: <b>{{ quizLevelLabel }}</b> · {{ quizLevelCount }}문항</div>
+            <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:8px;">선택: <b>{{ quizLevelLabel }}</b> · {{ quizLevelCount }}문항</div>
           </div>
           <sc-if value="{{ dayMsgShown }}" hint-placeholder-val="">
-            <div style="background:#F3E2D2; border:2px solid #3E2F23; color:#9E2F2F; border-radius:4px; padding:10px 14px; margin-bottom:14px; font-size:13px; font-weight:600;">{{ dayMsg }}</div>
+            <div style="background:var(--tint-pink); border:2px solid var(--ink); color:var(--red-dark); border-radius:4px; padding:10px 14px; margin-bottom:14px; font-size:13px; font-weight:600;">{{ dayMsg }}</div>
           </sc-if>
           <sc-if value="{{ quizDone }}" hint-placeholder-val="">
-            <div class="hh-card" style="background:#F2C14E; border-radius:6px; padding:46px 30px; text-align:center;">
-              <div style="display:inline-block; font-family:'DM Mono',monospace; font-size:12px; letter-spacing:2px; color:#FBF5E8; background:#3E2F23; padding:3px 10px; font-weight:700;">DAY {{ day }} 완료</div>
-              <div style="font-size:64px; font-family:'DM Mono',monospace; font-weight:700; color:#3E2F23; margin:14px 0; letter-spacing:-2px;">{{ quizScore }}/{{ quizTotal }}</div>
-              <div style="font-size:14px; color:#3E2F23; font-weight:700; margin-bottom:22px;">정답률 {{ quizPct }}% · +{{ quizXpEarned }} XP 획득</div>
+            <div class="hh-card" style="background:var(--yellow); border-radius:6px; padding:46px 30px; text-align:center;">
+              <div style="display:inline-block; font-family:var(--font-mono); font-size:var(--fs-sm); letter-spacing:2px; color:var(--on-dark); background:var(--ink-bg); padding:3px 10px; font-weight:700;">DAY {{ day }} 완료</div>
+              <div style="font-size:64px; font-family:var(--font-mono); font-weight:700; color:var(--ink); margin:14px 0; letter-spacing:-2px;">{{ quizScore }}/{{ quizTotal }}</div>
+              <div style="font-size:14px; color:var(--ink); font-weight:700; margin-bottom:22px;">정답률 {{ quizPct }}% · +{{ quizXpEarned }} XP 획득</div>
               <div style="display:flex; gap:12px; justify-content:center;">
-                <button onClick="{{ restartQuiz }}" style="background:#fff; color:#3E2F23; border:2.5px solid #3E2F23; border-radius:4px; padding:12px 22px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 #3E2F23;" style-hover="background:#F2C14E;">다시 풀기</button>
-                <button onClick="{{ nextDay }}" style="background:#C13B3B; color:#fff; border:2.5px solid #3E2F23; border-radius:4px; padding:12px 24px; font-weight:900; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 #3E2F23;" style-hover="background:#F2C14E; color:#3E2F23;">다음 DAY →</button>
+                <button onClick="{{ restartQuiz }}" style="background:var(--white-bg); color:var(--ink); border:2.5px solid var(--ink); border-radius:4px; padding:12px 22px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 var(--shadow);" style-hover="background:var(--yellow);">다시 풀기</button>
+                <button onClick="{{ nextDay }}" style="background:var(--red); color:#fff; border:2.5px solid var(--ink); border-radius:4px; padding:12px 24px; font-weight:900; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 var(--shadow);" style-hover="background:var(--yellow); color:var(--ink);">다음 DAY →</button>
               </div>
             </div>
           </sc-if>
           <sc-if value="{{ quizActive }}" hint-placeholder-val="{{ true }}">
             <div>
               <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                <div style="flex:1; height:7px; background:#D9C39A; border-radius:6px; overflow:hidden;">
-                  <div style="height:100%; width: {{ quizProgress }}%; background:#C13B3B;"></div>
+                <div style="flex:1; height:7px; background:var(--line); border-radius:6px; overflow:hidden;">
+                  <div style="height:100%; width: {{ quizProgress }}%; background:var(--red);"></div>
                 </div>
-                <span style="font-family:'DM Mono',monospace; font-size:12px; color:#6B5B4A;">{{ quizNum }}/{{ quizTotal }}</span>
+                <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">{{ quizNum }}/{{ quizTotal }}</span>
               </div>
-              <div style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:6px; padding:30px;">
+              <div style="background:var(--card); border:2px solid var(--ink); border-radius:6px; padding:30px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-                  <span style="font-family:'DM Mono',monospace; font-size:11px; color:#6B5B4A;">{{ quizPrompt }}</span>
-                  <button onClick="{{ playQuiz }}" style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:2px solid #3E2F23; background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-sm); color:var(--ink2);">{{ quizPrompt }}</span>
+                  <button onClick="{{ playQuiz }}" style="margin-left:auto; width:34px; height:34px; border-radius:50%; border:2px solid var(--ink); background:var(--white-bg); cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg>
                   </button>
                 </div>
-                <div style="font-family:'Noto Serif JP',serif; font-size:50px; font-weight:700; text-align:center; padding:12px 0 22px; color:#3E2F23;">{{ quizWord }}</div>
+                <div style="font-family:var(--font-ja-serif); font-size:50px; font-weight:700; text-align:center; padding:12px 0 22px; color:var(--ink);">{{ quizWord }}</div>
                 <div style="display:flex; flex-direction:column; gap:10px;">
                   <sc-for list="{{ quizOptions }}" as="o" hint-placeholder-count="4">
                     <button onClick="{{ o.choose }}" style="{{ o.style }}">
-                      <span style="font-family:'DM Mono',monospace; font-size:12px; opacity:.6; margin-right:10px;">{{ o.letter }}</span>{{ o.text }}
+                      <span style="font-family:var(--font-mono); font-size:var(--fs-sm); opacity:.6; margin-right:10px;">{{ o.letter }}</span>{{ o.text }}
                     </button>
                   </sc-for>
                 </div>
                 <sc-if value="{{ quizAnswered }}" hint-placeholder-val="">
                   <div style="margin-top:16px; display:flex; align-items:flex-start; gap:9px;">
-                    <div style="flex:none; width:54px; height:54px; border-radius:4px; background:#3E2F23; overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="haruko.jpg" alt="하루코" loading="lazy" style="width:100%; height:100%; object-fit:cover;"></div>
-                    <div style="background:#F3E9D2; border:2px solid #3E2F23; border-radius:5px; border-top-left-radius:4px; padding:10px 14px;">
-                      <div style="font-family:'Noto Sans JP'; font-size:14.5px; color:#3E2F23; line-height:1.5;">{{ quizHaruJp }}</div>
-                      <div style="font-size:12.5px; color:#3E2F23; margin-top:3px;">{{ quizHaruKr }}</div>
+                    <div style="flex:none; width:54px; height:54px; border-radius:4px; background:var(--ink-bg); overflow:hidden; display:flex; align-items:center; justify-content:center;"><img src="haruko.jpg" alt="하루코" loading="lazy" style="width:100%; height:100%; object-fit:cover;"></div>
+                    <div style="background:var(--paper2); border:2px solid var(--ink); border-radius:5px; border-top-left-radius:4px; padding:10px 14px;">
+                      <div style="font-family:var(--font-ja); font-size:14.5px; color:var(--ink); line-height:1.5;">{{ quizHaruJp }}</div>
+                      <div style="font-size:var(--fs-sm); color:var(--ink); margin-top:3px;">{{ quizHaruKr }}</div>
                     </div>
                   </div>
-                  <div style="margin-top:12px; background:#F3E9D2; border:2px solid #3E2F23; border-radius:4px; padding:13px 15px;">
-                    <div style="font-size:12px; font-weight:700; color:#C13B3B; margin-bottom:5px;">{{ quizResultLabel }}</div>
-                    <div style="font-size:14px; color:#3E2F23; line-height:1.65;">{{ quizExplain }}</div>
+                  <div style="margin-top:12px; background:var(--paper2); border:2px solid var(--ink); border-radius:4px; padding:13px 15px;">
+                    <div style="font-size:var(--fs-sm); font-weight:700; color:var(--red); margin-bottom:5px;">{{ quizResultLabel }}</div>
+                    <div style="font-size:14px; color:var(--ink); line-height:1.65;">{{ quizExplain }}</div>
                   </div>
-                  <button onClick="{{ nextQuiz }}" style="margin-top:14px; width:100%; background:#3E2F23; color:#F2C14E; border:2.5px solid #3E2F23; border-radius:4px; padding:14px; font-weight:900; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 #C13B3B;">{{ quizNextLabel }}</button>
+                  <button onClick="{{ nextQuiz }}" style="margin-top:14px; width:100%; background:var(--ink-bg); color:var(--yellow); border:2.5px solid var(--ink); border-radius:4px; padding:14px; font-weight:900; cursor:pointer; font-family:inherit; box-shadow:4px 4px 0 var(--red);">{{ quizNextLabel }}</button>
                 </sc-if>
               </div>
             </div>
@@ -665,7 +682,7 @@
       <sc-if value="{{ is.grammar }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease; display:flex; gap:22px;">
           <div style="width:150px; flex:none;">
-            <div style="font-size:12px; color:#6B5B4A; margin-bottom:10px; padding-left:4px;">레벨</div>
+            <div style="font-size:var(--fs-sm); color:var(--ink2); margin-bottom:10px; padding-left:4px;">레벨</div>
             <div style="display:flex; flex-direction:column; gap:6px;">
               <sc-for list="{{ grammarLevels }}" as="g" hint-placeholder-count="5">
                 <button onClick="{{ g.pick }}" style="{{ g.style }}">{{ g.label }}</button>
@@ -674,53 +691,53 @@
           </div>
           <div style="flex:1; min-width:0;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
-              <span style="font-size:12px; color:#6B5B4A;">{{ grammarLevel }} 단원 · 전체 {{ grammarUnitCount }}개</span>
+              <span style="font-size:var(--fs-sm); color:var(--ink2);">{{ grammarLevel }} 단원 · 전체 {{ grammarUnitCount }}개</span>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-bottom:24px;">
               <sc-for list="{{ grammarUnits }}" as="u" hint-placeholder-count="6">
                 <button onClick="{{ u.open }}" style="{{ u.style }}">
-                  <div style="font-family:'Noto Sans JP'; font-weight:700; font-size:15px; color:#3E2F23;">{{ u.pattern }}</div>
-                  <div style="font-size:12px; color:#6B5B4A; margin-top:3px;">{{ u.gloss }}</div>
+                  <div style="font-family:var(--font-ja); font-weight:700; font-size:15px; color:var(--ink);">{{ u.pattern }}</div>
+                  <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:3px;">{{ u.gloss }}</div>
                 </button>
               </sc-for>
             </div>
             <!-- detail -->
             <sc-if value="{{ grammarOpen }}" hint-placeholder-val="">
-              <div style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:6px; padding:26px; animation:hh-fade .3s ease;">
+              <div style="background:var(--card); border:2px solid var(--ink); border-radius:6px; padding:26px; animation:hh-fade .3s ease;">
                 <div style="display:flex; align-items:center; gap:10px;">
-                  <span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#3E2F23; color:#F2C14E; border:2px solid #3E2F23; padding:4px 9px; border-radius:0;">{{ grammarLevel }}</span>
-                  <span style="font-family:'Noto Sans JP'; font-size:24px; font-weight:700;">{{ gd.pattern }}</span>
-                  <span style="font-size:14px; color:#6B5B4A;">{{ gd.gloss }}</span>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); border:2px solid var(--ink); padding:4px 9px; border-radius:0;">{{ grammarLevel }}</span>
+                  <span style="font-family:var(--font-ja); font-size:24px; font-weight:700;">{{ gd.pattern }}</span>
+                  <span style="font-size:14px; color:var(--ink2);">{{ gd.gloss }}</span>
                 </div>
-                <p style="font-size:14px; line-height:1.8; color:#3E2F23; margin:16px 0 0;">{{ gd.explain }}</p>
-                <div style="background:#F3E9D2; border:2px solid #3E2F23; border-radius:4px; padding:14px 16px; margin-top:14px;">
-                  <div style="font-size:12px; font-weight:700; color:#C13B3B; margin-bottom:8px;">핵심 규칙</div>
-                  <ul style="margin:0; padding-left:18px; font-size:13.5px; line-height:1.9; color:#3E2F23;">
-                    <sc-for list="{{ gd.rules }}" as="r" hint-placeholder-count="3"><li style="font-family:'Noto Sans JP';">{{ r }}</li></sc-for>
+                <p style="font-size:14px; line-height:1.8; color:var(--ink); margin:16px 0 0;">{{ gd.explain }}</p>
+                <div style="background:var(--paper2); border:2px solid var(--ink); border-radius:4px; padding:14px 16px; margin-top:14px;">
+                  <div style="font-size:var(--fs-sm); font-weight:700; color:var(--red); margin-bottom:8px;">핵심 규칙</div>
+                  <ul style="margin:0; padding-left:18px; font-size:13.5px; line-height:1.9; color:var(--ink);">
+                    <sc-for list="{{ gd.rules }}" as="r" hint-placeholder-count="3"><li style="font-family:var(--font-ja);">{{ r }}</li></sc-for>
                   </ul>
                 </div>
-                <div style="font-size:12px; font-weight:700; color:#C13B3B; margin:20px 0 10px;">예문</div>
+                <div style="font-size:var(--fs-sm); font-weight:700; color:var(--red); margin:20px 0 10px;">예문</div>
                 <div style="display:flex; flex-direction:column; gap:9px;">
                   <sc-for list="{{ gd.examples }}" as="e" hint-placeholder-count="3">
-                    <div style="display:flex; gap:12px; align-items:center; background:#fff; border:2px solid #3E2F23; border-radius:4px; padding:12px 14px;">
-                      <button onClick="{{ e.play }}" style="width:30px; height:30px; flex:none; border-radius:50%; border:2px solid #3E2F23; background:#F3E9D2; cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg></button>
-                      <div><div style="font-family:'Noto Sans JP'; font-size:15px; color:#3E2F23;">{{ e.jp }}</div><div style="font-size:12.5px; color:#6B5B4A; margin-top:2px;">{{ e.kr }}</div></div>
+                    <div style="display:flex; gap:12px; align-items:center; background:var(--white-bg); border:2px solid var(--ink); border-radius:4px; padding:12px 14px;">
+                      <button onClick="{{ e.play }}" style="width:30px; height:30px; flex:none; border-radius:50%; border:2px solid var(--ink); background:var(--paper2); cursor:pointer; display:flex; align-items:center; justify-content:center;"><svg width="13" height="13" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg></button>
+                      <div><div style="font-family:var(--font-ja); font-size:15px; color:var(--ink);">{{ e.jp }}</div><div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:2px;">{{ e.kr }}</div></div>
                     </div>
                   </sc-for>
                 </div>
-                <div style="font-size:12px; font-weight:700; color:#C13B3B; margin:22px 0 10px;">확인 문제 <span style="color:#6B5B4A; font-weight:400;">({{ gd.checkCount }}문항)</span></div>
+                <div style="font-size:var(--fs-sm); font-weight:700; color:var(--red); margin:22px 0 10px;">확인 문제 <span style="color:var(--ink2); font-weight:400;">({{ gd.checkCount }}문항)</span></div>
                 <div style="display:flex; flex-direction:column; gap:14px;">
                   <sc-for list="{{ gcChecks }}" as="c" hint-placeholder-count="5">
-                    <div style="background:#fff; border:2px solid #3E2F23; border-radius:4px; padding:15px 16px;">
-                      <div style="font-family:'Noto Sans JP'; font-size:14px; margin-bottom:10px;"><span style="font-family:'DM Mono',monospace; color:#C13B3B; margin-right:8px;">Q{{ c.num }}</span>{{ c.q }}</div>
+                    <div style="background:var(--white-bg); border:2px solid var(--ink); border-radius:4px; padding:15px 16px;">
+                      <div style="font-family:var(--font-ja); font-size:14px; margin-bottom:10px;"><span style="font-family:var(--font-mono); color:var(--red); margin-right:8px;">Q{{ c.num }}</span>{{ c.q }}</div>
                       <div style="display:flex; gap:8px; flex-wrap:wrap;">
                         <sc-for list="{{ c.options }}" as="op" hint-placeholder-count="3"><button onClick="{{ op.choose }}" style="{{ op.style }}">{{ op.text }}</button></sc-for>
                       </div>
                       <sc-if value="{{ c.answered }}" hint-placeholder-val="">
-                        <div style="margin-top:12px; background:#F3E9D2; border:2px dashed #3E2F23; border-radius:4px; padding:11px 12px;">
-                          <div style="font-size:12px; color:#C13B3B; font-weight:700;">{{ c.resultLabel }}</div>
-                          <div style="font-size:13px; color:#3E2F23; margin-top:4px;">정답: <b>{{ c.correctText }}</b></div>
-                          <div style="font-size:12.5px; color:#6B5B4A; margin-top:5px; line-height:1.7;">{{ c.guide }}</div>
+                        <div style="margin-top:12px; background:var(--paper2); border:2px dashed var(--ink); border-radius:4px; padding:11px 12px;">
+                          <div style="font-size:var(--fs-sm); color:var(--red); font-weight:700;">{{ c.resultLabel }}</div>
+                          <div style="font-size:13px; color:var(--ink); margin-top:4px;">정답: <b>{{ c.correctText }}</b></div>
+                          <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:5px; line-height:1.7;">{{ c.guide }}</div>
                         </div>
                       </sc-if>
                     </div>
@@ -743,70 +760,70 @@
               <sc-for list="{{ writeSubs }}" as="s" hint-placeholder-count="4"><button onClick="{{ s.pick }}" style="{{ s.style }}">{{ s.label }}</button></sc-for>
             </div>
           </sc-if>
-          <div style="background:#FFFDF6; border:2px solid #3E2F23; border-radius:6px; padding:24px;">
+          <div style="background:var(--card); border:2px solid var(--ink); border-radius:6px; padding:24px;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
-              <span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#F2C14E; color:#3E2F23; border:2px solid #3E2F23; padding:3px 9px; border-radius:0;">{{ writeLabel }}</span>
-              <span style="font-size:12px; color:#6B5B4A;">작문 주제 {{ writePool }}</span>
-              <button onClick="{{ nextPrompt }}" style="margin-left:auto; background:#fff; border:2px solid #3E2F23; border-radius:3px; padding:7px 13px; cursor:pointer; font-family:inherit; font-size:12.5px;" style-hover="border-color:#C13B3B;">다른 화제</button>
+              <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--yellow); color:var(--ink); border:2px solid var(--ink); padding:3px 9px; border-radius:0;">{{ writeLabel }}</span>
+              <span style="font-size:var(--fs-sm); color:var(--ink2);">작문 주제 {{ writePool }}</span>
+              <button onClick="{{ nextPrompt }}" style="margin-left:auto; background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:7px 13px; cursor:pointer; font-family:inherit; font-size:var(--fs-sm);" style-hover="border-color:var(--red);">다른 화제</button>
             </div>
-            <div style="font-size:12px; color:#6B5B4A; margin-bottom:4px;">{{ writeCaption }}</div>
+            <div style="font-size:var(--fs-sm); color:var(--ink2); margin-bottom:4px;">{{ writeCaption }}</div>
             <sc-if value="{{ writeIsPlain }}" hint-placeholder-val="">
-              <div style="font-size:19px; font-weight:700; color:#3E2F23; line-height:1.5;">{{ writePrompt }}</div>
+              <div style="font-size:19px; font-weight:700; color:var(--ink); line-height:1.5;">{{ writePrompt }}</div>
             </sc-if>
             <sc-if value="{{ writeIsCombo }}" hint-placeholder-val="">
               <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
                 <sc-for list="{{ writeWords }}" as="ww" hint-placeholder-count="2">
-                  <div style="background:#F2C14E; border:2px solid #3E2F23; border-radius:4px; padding:8px 14px; box-shadow:3px 3px 0 #3E2F23;">
-                    <div style="font-family:'Noto Sans JP'; font-size:21px; font-weight:900; color:#3E2F23; line-height:1.25;">{{ ww.w }}</div>
-                    <div style="font-family:'Noto Sans JP'; font-size:11.5px; color:#6B5B4A; margin-top:2px;">{{ ww.sub }}</div>
+                  <div style="background:var(--yellow); border:2px solid var(--ink); border-radius:4px; padding:8px 14px; box-shadow:3px 3px 0 var(--shadow);">
+                    <div style="font-family:var(--font-ja); font-size:21px; font-weight:900; color:var(--ink); line-height:1.25;">{{ ww.w }}</div>
+                    <div style="font-family:var(--font-ja); font-size:var(--fs-sm); color:var(--ink2); margin-top:2px;">{{ ww.sub }}</div>
                   </div>
                 </sc-for>
               </div>
               <sc-if value="{{ writeHasCond }}" hint-placeholder-val="">
                 <div style="margin-top:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                  <span style="font-family:'DM Mono',monospace; font-size:11px; font-weight:700; background:#C13B3B; color:#fff; border:2px solid #3E2F23; padding:3px 9px;">문법 조건</span>
-                  <span style="font-family:'Noto Sans JP'; font-size:14.5px; font-weight:700; color:#3E2F23;">{{ writeCond }}</span>
+                  <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--red); color:#fff; border:2px solid var(--ink); padding:3px 9px;">문법 조건</span>
+                  <span style="font-family:var(--font-ja); font-size:14.5px; font-weight:700; color:var(--ink);">{{ writeCond }}</span>
                 </div>
               </sc-if>
             </sc-if>
-            <textarea ref="{{ writeRef }}" placeholder="여기에 일본어로 작성…" style="width:100%; min-height:110px; margin-top:16px; padding:14px; border:2px solid #3E2F23; border-radius:4px; font-family:'Noto Sans JP'; font-size:15px; resize:vertical; background:#F3E9D2; color:#3E2F23;"></textarea>
+            <textarea ref="{{ writeRef }}" placeholder="여기에 일본어로 작성…" style="width:100%; min-height:110px; margin-top:16px; padding:14px; border:2px solid var(--ink); border-radius:4px; font-family:var(--font-ja); font-size:15px; resize:vertical; background:var(--paper2); color:var(--ink);"></textarea>
             <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
-              <button onClick="{{ scoreWrite }}" style="background:#3E2F23; color:#F2C14E; border:2px solid #3E2F23; border-radius:4px; padding:11px 18px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 #F2C14E;">채점하기</button>
-              <button onClick="{{ revealModel }}" style="background:#C13B3B; color:#fff; border:2px solid #3E2F23; border-radius:4px; padding:11px 18px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 #3E2F23;">모범 답안 보기</button>
-              <button onClick="{{ playModel }}" style="display:flex; align-items:center; gap:6px; background:#fff; border:2px solid #3E2F23; border-radius:4px; padding:11px 16px; cursor:pointer; font-family:inherit;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#C13B3B"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg> 듣기</button>
+              <button onClick="{{ scoreWrite }}" style="background:var(--ink-bg); color:var(--yellow); border:2px solid var(--ink); border-radius:4px; padding:11px 18px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 var(--yellow);">채점하기</button>
+              <button onClick="{{ revealModel }}" style="background:var(--red); color:#fff; border:2px solid var(--ink); border-radius:4px; padding:11px 18px; font-weight:800; cursor:pointer; font-family:inherit; box-shadow:3px 3px 0 var(--shadow);">모범 답안 보기</button>
+              <button onClick="{{ playModel }}" style="display:flex; align-items:center; gap:6px; background:var(--white-bg); border:2px solid var(--ink); border-radius:4px; padding:11px 16px; cursor:pointer; font-family:inherit;"><svg width="14" height="14" viewBox="0 0 24 24" fill="var(--red)"><path d="M4 9v6h4l5 5V4L8 9H4z"></path></svg> 듣기</button>
             </div>
             <sc-if value="{{ writeNoticeShown }}" hint-placeholder-val="">
-              <div style="margin-top:14px; font-size:13px; color:#9E2F2F; font-weight:700;">{{ writeScoreMsg }}</div>
+              <div style="margin-top:14px; font-size:13px; color:var(--red-dark); font-weight:700;">{{ writeScoreMsg }}</div>
             </sc-if>
             <sc-if value="{{ writeScoreShown }}" hint-placeholder-val="">
-              <div style="margin-top:16px; display:flex; align-items:center; gap:14px; padding:16px; background:#F3E9D2; border:2px solid #3E2F23; border-radius:4px; animation:hh-pop .25s ease;">
-                <div style="flex:none; width:66px; height:66px; border-radius:4px; border:2.5px solid #3E2F23; background:#3E2F23; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:3px 3px 0 #C13B3B;">
-                  <span style="font-family:'DM Mono',monospace; font-size:26px; font-weight:700; color:#F2C14E; line-height:1;">{{ writeScore }}</span>
-                  <span style="font-size:9px; color:#B08D57;">/ 100</span>
+              <div style="margin-top:16px; display:flex; align-items:center; gap:14px; padding:16px; background:var(--paper2); border:2px solid var(--ink); border-radius:4px; animation:hh-pop .25s ease;">
+                <div style="flex:none; width:66px; height:66px; border-radius:4px; border:2.5px solid var(--ink); background:var(--ink-bg); display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:3px 3px 0 var(--red);">
+                  <span style="font-family:var(--font-mono); font-size:26px; font-weight:700; color:var(--yellow); line-height:1;">{{ writeScore }}</span>
+                  <span style="font-size:var(--fs-xs); color:var(--tan);">/ 100</span>
                 </div>
                 <div style="flex:1; min-width:0;">
-                  <div style="font-size:11px; color:#6B5B4A; font-weight:700; margin-bottom:3px;">{{ writeScoreLabel }}</div>
-                  <div style="font-size:14px; color:#3E2F23; line-height:1.5;">{{ writeScoreMsg }}</div>
+                  <div style="font-size:var(--fs-sm); color:var(--ink2); font-weight:700; margin-bottom:3px;">{{ writeScoreLabel }}</div>
+                  <div style="font-size:14px; color:var(--ink); line-height:1.5;">{{ writeScoreMsg }}</div>
                 </div>
               </div>
             </sc-if>
             <sc-if value="{{ writeHasChecks }}" hint-placeholder-val="">
-              <div style="margin-top:10px; padding:12px 16px; background:#FFFDF6; border:2px solid #3E2F23; border-radius:4px;">
+              <div style="margin-top:10px; padding:12px 16px; background:var(--card); border:2px solid var(--ink); border-radius:4px;">
                 <sc-for list="{{ writeChecks }}" as="ck" hint-placeholder-count="3">
                   <div style="font-size:13.5px; line-height:1.9; color:{{ ck.color }};"><b>{{ ck.mark }}</b> <span>{{ ck.text }}</span></div>
                 </sc-for>
-                <div style="font-size:11.5px; color:#6B5B4A; margin-top:6px;">규칙 기반 점검이라 문법이 자연스러운지는 판단하지 못해요. 모범 답안·다른 예시와 비교해 보세요.</div>
+                <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:6px;">규칙 기반 점검이라 문법이 자연스러운지는 판단하지 못해요. 모범 답안·다른 예시와 비교해 보세요.</div>
               </div>
             </sc-if>
             <sc-if value="{{ modelShown }}" hint-placeholder-val="">
-              <div style="margin-top:16px; padding:16px; background:#F3E9D2; border:2px dashed #3E2F23; border-radius:4px; animation:hh-pop .25s ease;">
-                <div style="font-size:11px; color:#C13B3B; font-weight:700; margin-bottom:6px;">모범 답안</div>
-                <div style="font-family:'Noto Sans JP'; font-size:16px; color:#3E2F23;">{{ writeModel }}</div>
-                <div style="font-size:12.5px; color:#6B5B4A; margin-top:6px;">{{ writeModelNote }}</div>
+              <div style="margin-top:16px; padding:16px; background:var(--paper2); border:2px dashed var(--ink); border-radius:4px; animation:hh-pop .25s ease;">
+                <div style="font-size:var(--fs-sm); color:var(--red); font-weight:700; margin-bottom:6px;">모범 답안</div>
+                <div style="font-family:var(--font-ja); font-size:16px; color:var(--ink);">{{ writeModel }}</div>
+                <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:6px;">{{ writeModelNote }}</div>
                 <sc-if value="{{ writeHasAlts }}" hint-placeholder-val="">
-                  <div style="font-size:11px; color:#6B5B4A; font-weight:700; margin-top:12px;">다른 예시</div>
+                  <div style="font-size:var(--fs-sm); color:var(--ink2); font-weight:700; margin-top:12px;">다른 예시</div>
                   <sc-for list="{{ writeAlts }}" as="al" hint-placeholder-count="1">
-                    <div style="font-family:'Noto Sans JP'; font-size:14.5px; color:#3E2F23; margin-top:4px;">{{ al.text }}</div>
+                    <div style="font-family:var(--font-ja); font-size:14.5px; color:var(--ink); margin-top:4px;">{{ al.text }}</div>
                   </sc-for>
                 </sc-if>
               </div>
@@ -933,7 +950,7 @@ class Component extends DCLogic {
       nbIdx:0,
       speaking:false,
       // 다크 모드(선택) · TTS 재생 상태
-      dark: (()=>{ try{ return localStorage.getItem('tj.dark')==='1'; }catch(e){ return false; } })(),
+      dark: (()=>{ try{ const v=localStorage.getItem('tj.dark'); if(v==='1') return true; if(v==='0') return false; return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); }catch(e){ return false; } })(),
       // 일일 묶음 페이지
       kanjiPage:0, wordPage:0,
     };
@@ -1359,7 +1376,7 @@ class Component extends DCLogic {
     const on=!this.state.dark;
     try{ localStorage.setItem('tj.dark', on?'1':'0'); }catch(e){}
     try{ document.documentElement.classList.toggle('hh-dark', on); }catch(e){}
-    this.setState({dark:on});
+    this.setState({dark:on}); setTimeout(()=>{ try{ this.redraw && this.redraw(); }catch(e){} },0);
   }
   addXp(n){ this.setState(s=>{ const xp=s.xp+n; try{ localStorage.setItem('tj.xp',String(xp)); }catch(e){} return {xp}; }); }
   // [필요 XP, 계급 이름] — 대략 걸리는 기간은 하루 45 XP 기준
@@ -1583,24 +1600,25 @@ class Component extends DCLogic {
     const r=c.getBoundingClientRect(); const W=r.width, H=r.height;
     ctx.clearRect(0,0,W,H);
     const rows=5, rh=H/rows;
+    const css=getComputedStyle(document.documentElement); const INK=css.getPropertyValue('--ink').trim()||'#3E2F23', GUIDE=css.getPropertyValue('--paper2').trim()||'#F3E9D2';
     // grid
-    for(let i=0;i<=rows;i++){ ctx.beginPath(); ctx.strokeStyle='#3E2F23'; ctx.lineWidth=1; ctx.moveTo(0,i*rh); ctx.lineTo(W,i*rh); ctx.stroke(); }
+    for(let i=0;i<=rows;i++){ ctx.beginPath(); ctx.strokeStyle=INK; ctx.lineWidth=1; ctx.moveTo(0,i*rh); ctx.lineTo(W,i*rh); ctx.stroke(); }
     // center dashed guide per row
-    ctx.setLineDash([5,7]); ctx.strokeStyle='#F3E9D2';
+    ctx.setLineDash([5,7]); ctx.strokeStyle=GUIDE;
     for(let i=0;i<rows;i++){ const y=i*rh+rh/2; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
     ctx.setLineDash([]);
     // faint guide word on first row (한자/단어 모드)
     const list=this._getNotebookList();
     const it=list[this.state.nbIdx]||list[0]||{}; const word=it.word||'';
-    ctx.fillStyle='#3E2F23'; ctx.textBaseline='middle'; ctx.font='600 '+(rh*0.62)+'px "Noto Serif JP"';
+    ctx.fillStyle=INK; ctx.textBaseline='middle'; ctx.font='600 '+(rh*0.62)+'px "Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif';
     ctx.fillText(word, 26, rh*0.52);
-    ctx.fillStyle='#3E2F23'; ctx.font='12px "DM Mono"'; ctx.fillText('따라쓰기', W-86, rh*0.5);
+    ctx.fillStyle=INK; ctx.font='12px ui-monospace,Menlo,Consolas,monospace'; ctx.fillText('따라쓰기', W-86, rh*0.5);
     // strokes
-    ctx.strokeStyle='#3E2F23'; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.strokeStyle=INK; ctx.lineCap='round'; ctx.lineJoin='round';
     // 점과 점 사이를 따로 그려 필압에 따라 획 중간 굵기가 바뀌게(이웃 점 중간을 곡선으로 이어 부드럽게)
     const wOf=(p)=>2+p*6;
     const draw=(st)=>{ if(st.length<1) return;
-      if(st.length===1){ ctx.beginPath(); ctx.fillStyle='#3E2F23'; ctx.arc(st[0].x,st[0].y,wOf(st[0].p)/2,0,Math.PI*2); ctx.fill(); return; }
+      if(st.length===1){ ctx.beginPath(); ctx.fillStyle=INK; ctx.arc(st[0].x,st[0].y,wOf(st[0].p)/2,0,Math.PI*2); ctx.fill(); return; }
       for(let i=1;i<st.length;i++){ const a=st[i-1], b=st[i]; ctx.beginPath(); ctx.lineWidth=wOf((a.p+b.p)/2);
         if(i>=2){ const z=st[i-2]; ctx.moveTo((z.x+a.x)/2,(z.y+a.y)/2); ctx.quadraticCurveTo(a.x,a.y,(a.x+b.x)/2,(a.y+b.y)/2); }
         else { ctx.moveTo(a.x,a.y); ctx.lineTo((a.x+b.x)/2,(a.y+b.y)/2); }
@@ -1614,7 +1632,7 @@ class Component extends DCLogic {
   componentDidUpdate(){ if(this.state.screen==='notebook' && this._canvas){ /* keep guide synced */ } }
 
   // ========== RENDER ==========
-  navBtn(s,active){ return 'display:flex;align-items:center;gap:11px;width:100%;border:2px solid '+(active?'#FBF5E8':'transparent')+';border-radius:4px;padding:11px 12px;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:'+(active?'900':'700')+';letter-spacing:-.2px;background:'+(active?'#C13B3B':'transparent')+';color:'+(active?'#FBF5E8':'#D9C39A')+';box-shadow:'+(active?'3px 3px 0 #F2C14E':'none')+';transition:.12s;'; }
+  navBtn(s,active){ return 'display:flex;align-items:center;gap:11px;width:100%;border:2px solid '+(active?'var(--on-dark)':'transparent')+';border-radius:4px;padding:11px 12px;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:'+(active?'900':'700')+';letter-spacing:-.2px;background:'+(active?'var(--red)':'transparent')+';color:'+(active?'var(--on-dark)':'var(--on-dark-mute)')+';box-shadow:'+(active?'3px 3px 0 var(--yellow)':'none')+';transition:.12s;'; }
   ic(p){ return React.createElement('svg',{width:18,height:18,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round',strokeLinejoin:'round'},p); }
 
   renderVals(){
@@ -1667,7 +1685,7 @@ class Component extends DCLogic {
     const allKanjiRaw=this._mergeKanji();
     const allKanjiLv = s.kLevel==='전체' ? allKanjiRaw : allKanjiRaw.filter(k=>this._normalizeJlpt(k.jlpt)===s.kLevel);
     const allKanji = this._kanjiFilter(allKanjiLv, s.kSearch);
-    const kLevels=['전체','N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.setKLevel(l),style:'border:2px solid #3E2F23;background:'+(l===s.kLevel?'#C13B3B':'#fff')+';color:'+(l===s.kLevel?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:"DM Mono",monospace;font-size:13px;font-weight:700;box-shadow:'+(l===s.kLevel?'3px 3px 0 #3E2F23':'none')+';'}));
+    const kLevels=['전체','N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.setKLevel(l),style:'border:2px solid var(--ink);background:'+(l===s.kLevel?'var(--red)':'var(--white-bg)')+';color:'+(l===s.kLevel?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:var(--font-mono);font-size:13px;font-weight:700;box-shadow:'+(l===s.kLevel?'3px 3px 0 var(--shadow)':'none')+';'}));
     const KP=10, kStart=s.kanjiPage*KP;
     const kTotalPages=Math.max(1,Math.ceil(allKanji.length/KP));
     const kanjiCards=allKanji.slice(kStart,kStart+KP).map((k,j)=>{
@@ -1685,14 +1703,14 @@ class Component extends DCLogic {
     const MN_SHOW=40;
     const mnHits=mnQ?this._kanjiFilter(this._mnList(s.mnLevel),s.mnSearch):[];
     const mnSearchResults=mnHits.slice(0,MN_SHOW).map(k=>({char:k.char, meaning:String(k.meaning||'').split(/[·,，、]/)[0], pick:()=>this.mnPickChar(k.char),
-      style:'display:flex;align-items:center;gap:6px;background:'+(mnCur&&mnCur.char===k.char?'#F2C14E':'#fff')+';border:2px solid #3E2F23;border-radius:3px;padding:4px 10px;cursor:pointer;font-family:inherit;'}));
+      style:'display:flex;align-items:center;gap:6px;background:'+(mnCur&&mnCur.char===k.char?'var(--yellow)':'var(--white-bg)')+';border:2px solid var(--ink);border-radius:3px;padding:4px 10px;cursor:pointer;font-family:inherit;'}));
     const _mnKnown=this._mnKnownMap();
     let mnKnownCount=0; mnListAll.forEach(k=>{ if(_mnKnown[k.char]) mnKnownCount++; });
-    const mnLevels=['전체','N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.setMnLevel(l),style:'border:2px solid #3E2F23;background:'+(l===s.mnLevel?'#C13B3B':'#fff')+';color:'+(l===s.mnLevel?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:"DM Mono",monospace;font-size:13px;font-weight:700;box-shadow:'+(l===s.mnLevel?'3px 3px 0 #3E2F23':'none')+';'}));
-    const mnGradeBtn=(bg,col)=>'flex:1;border:2.5px solid #3E2F23;background:'+bg+';color:'+col+';border-radius:4px;padding:13px 10px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:800;box-shadow:4px 4px 0 #3E2F23;';
+    const mnLevels=['전체','N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.setMnLevel(l),style:'border:2px solid var(--ink);background:'+(l===s.mnLevel?'var(--red)':'var(--white-bg)')+';color:'+(l===s.mnLevel?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:var(--font-mono);font-size:13px;font-weight:700;box-shadow:'+(l===s.mnLevel?'3px 3px 0 var(--shadow)':'none')+';'}));
+    const mnGradeBtn=(bg,col)=>'flex:1;border:2.5px solid var(--ink);background:'+bg+';color:'+col+';border-radius:4px;padding:13px 10px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:800;box-shadow:4px 4px 0 var(--shadow);';
 
     // word cards (JLPT / 학년)
-    const trackStyle=(on)=>'border:2px solid #3E2F23;background:'+(on?'#3E2F23':'#fff')+';color:'+(on?'#F2C14E':'#3E2F23')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:"DM Mono",monospace;font-size:13px;font-weight:700;box-shadow:'+(on?'3px 3px 0 #F2C14E':'none')+';';
+    const trackStyle=(on)=>'border:2px solid var(--ink);background:'+(on?'var(--ink-bg)':'var(--white-bg)')+';color:'+(on?'var(--yellow)':'var(--ink)')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:var(--font-mono);font-size:13px;font-weight:700;box-shadow:'+(on?'3px 3px 0 var(--yellow)':'none')+';';
     const wordTrackTabs=[
       {label:'JLPT',pick:()=>this.setWordTrack('jlpt'),style:trackStyle(s.wordTrack==='jlpt')},
       {label:'학년',pick:()=>this.setWordTrack('stage'),style:trackStyle(s.wordTrack==='stage')}
@@ -1703,10 +1721,10 @@ class Component extends DCLogic {
     const wordLevelChips=wordLevelSet.map(level=>({
       label:level,
       pick:()=>pickWordLevel(level),
-      style:'border:2px solid #3E2F23;background:'+(level===currentWordLevel?'#C13B3B':'#fff')+';color:'+(level===currentWordLevel?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:'+(s.wordTrack==='stage'?'inherit':'"DM Mono",monospace')+';font-size:13px;font-weight:700;box-shadow:'+(level===currentWordLevel?'3px 3px 0 #3E2F23':'none')+';'
+      style:'border:2px solid var(--ink);background:'+(level===currentWordLevel?'var(--red)':'var(--white-bg)')+';color:'+(level===currentWordLevel?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:'+(s.wordTrack==='stage'?'inherit':'var(--font-mono)')+';font-size:13px;font-weight:700;box-shadow:'+(level===currentWordLevel?'3px 3px 0 var(--shadow)':'none')+';'
     }));
     const WFIELDS=['전체','생활 전문 분야','자연과학 분야','공학·기술 분야','의학·보건 분야','농림수산·식품 분야','사회과학 분야','인문학 분야','예술·디자인·콘텐츠 분야','교육·학습 분야','법률·행정·공공 분야','산업·경제활동 분야','비즈니스·회사 실무 분야','IT·AI 세부 분야','문화·미디어·사회 트렌드 분야','국제·지역·언어 분야'];
-    const wFields=WFIELDS.map(f=>({label:f==='전체'?'전체':f.replace(' 분야',''),pick:()=>this.setWField(f),style:'border:2px solid #3E2F23;background:'+(f===s.wField?'#B87333':'#fff')+';color:'+(f===s.wField?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 11px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:'+(f===s.wField?'800':'600')+';'}));
+    const wFields=WFIELDS.map(f=>({label:f==='전체'?'전체':f.replace(' 분야',''),pick:()=>this.setWField(f),style:'border:2px solid var(--ink);background:'+(f===s.wField?'var(--blue)':'var(--white-bg)')+';color:'+(f===s.wField?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 11px;cursor:pointer;font-family:inherit;font-size:var(--fs-sm);font-weight:'+(f===s.wField?'800':'600')+';'}));
     const allWords=this._wordView(s.wordTrack,currentWordLevel,s.wField,s.wSearch);
     const WP=s.wordMode, wStart=s.wordPage*WP;
     const wTotalPages=Math.max(1,Math.ceil(allWords.length/WP));
@@ -1717,7 +1735,7 @@ class Component extends DCLogic {
       const isSpecial = w.jlpt==='고급' && w.field==='문화·미디어·사회 트렌드 분야';
       return {...w, jlpt:isSpecial?'특수 용어':w.jlpt, revealed:rev, hidden:!rev, toggle:()=>this.toggleWord(key), play:(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.play(w.reading);} };
     });
-    const modeBtn=(on)=>'border:none;border-radius:2px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:'+(on?'900':'700')+';background:'+(on?'#F2C14E':'transparent')+';color:'+(on?'#3E2F23':'#FBF5E8')+';';
+    const modeBtn=(on)=>'border:none;border-radius:2px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:'+(on?'900':'700')+';background:'+(on?'var(--yellow)':'transparent')+';color:'+(on?'var(--ink)':'var(--on-dark)')+';';
 
     // 4년 트랙 — 학년 로드맵 + 필터(학년·JLPT·인지/암기) + 검색
     const prTotalAll=this._practicalWords().length;
@@ -1735,10 +1753,10 @@ class Component extends DCLogic {
       return {label:st.label, desc:st.desc, total:this._formatCount(prTotals[st.n]), done:prDone[st.n],
         pct:Math.min(100,Math.round(prDone[st.n]/Math.max(1,prTotals[st.n])*100)),
         pick:()=>this.setPrStage(on?'전체':st.n),
-        style:'text-align:left;flex:1;min-width:200px;background:'+(on?'#3E2F23':'#FFFDF6')+';color:'+(on?'#FBF5E8':'#3E2F23')+';border:3px solid #3E2F23;border-radius:5px;padding:14px 16px;cursor:pointer;font-family:inherit;box-shadow:'+(on?'4px 4px 0 #C13B3B':'3px 3px 0 #3E2F23')+';transition:.1s;',
-        descColor:on?'#D9C39A':'#6B5B4A'};
+        style:'text-align:left;flex:1;min-width:200px;background:'+(on?'var(--ink-bg)':'var(--card)')+';color:'+(on?'var(--on-dark)':'var(--ink)')+';border:3px solid var(--ink);border-radius:5px;padding:14px 16px;cursor:pointer;font-family:inherit;box-shadow:'+(on?'4px 4px 0 var(--red)':'3px 3px 0 var(--shadow)')+';transition:.1s;',
+        descColor:on?'var(--line)':'var(--ink2)'};
     });
-    const prChipStyle=(on,mono)=>'border:2px solid #3E2F23;background:'+(on?'#C13B3B':'#fff')+';color:'+(on?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:'+(mono?'"DM Mono",monospace':'inherit')+';font-size:13px;font-weight:700;box-shadow:'+(on?'3px 3px 0 #3E2F23':'none')+';';
+    const prChipStyle=(on,mono)=>'border:2px solid var(--ink);background:'+(on?'var(--red)':'var(--white-bg)')+';color:'+(on?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 13px;cursor:pointer;font-family:'+(mono?'var(--font-mono)':'inherit')+';font-size:13px;font-weight:700;box-shadow:'+(on?'3px 3px 0 var(--shadow)':'none')+';';
     const prJlptChips=['전체','N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.setPrJlpt(l),style:prChipStyle(l===s.prJlpt,true)}));
     const prCogChips=[['전체','전체'],['인지','인지 가능 (한자어 일치)'],['암기','암기 필요']].map(c=>({label:c[1],pick:()=>this.setPrCog(c[0]),style:prChipStyle(c[0]===s.prCog,false)}));
     const prList=this._practicalView(s.prStage,s.prJlpt,s.prCog,s.prSearch);
@@ -1756,15 +1774,15 @@ class Component extends DCLogic {
     const nbTotal=nbList.length;
     const nb=nbList[s.nbIdx]||nbList[0]||{word:'',reading:'',say:'',meaning:''};
     const NBP=18, nbPages=Math.max(1,Math.ceil(nbTotal/NBP)), nbPage=Math.min(s.nbPage,nbPages-1), nbStart=nbPage*NBP;
-    const nbWords=nbList.slice(nbStart,nbStart+NBP).map((w,j)=>{const i=nbStart+j;return {word:w.word,pick:()=>this.pickNb(i),style:'border:2px solid #3E2F23;background:'+(i===s.nbIdx?'#C13B3B':'#fff')+';color:'+(i===s.nbIdx?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 12px;cursor:pointer;font-family:"Noto Serif JP";font-weight:700;font-size:'+(s.nbMode==='kanji'?'18':'14')+'px;box-shadow:'+(i===s.nbIdx?'2px 2px 0 #3E2F23':'none')+';'};});
-    const nbModeBtn=(on)=>'border:2px solid #3E2F23;background:'+(on?'#3E2F23':'#fff')+';color:'+(on?'#F2C14E':'#3E2F23')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:'+(on?'900':'700')+';box-shadow:'+(on?'3px 3px 0 #F2C14E':'none')+';';
+    const nbWords=nbList.slice(nbStart,nbStart+NBP).map((w,j)=>{const i=nbStart+j;return {word:w.word,pick:()=>this.pickNb(i),style:'border:2px solid var(--ink);background:'+(i===s.nbIdx?'var(--red)':'var(--white-bg)')+';color:'+(i===s.nbIdx?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 12px;cursor:pointer;font-family:"Noto Serif JP";font-weight:700;font-size:'+(s.nbMode==='kanji'?'18':'14')+'px;box-shadow:'+(i===s.nbIdx?'2px 2px 0 var(--shadow)':'none')+';'};});
+    const nbModeBtn=(on)=>'border:2px solid var(--ink);background:'+(on?'var(--ink-bg)':'var(--white-bg)')+';color:'+(on?'var(--yellow)':'var(--ink)')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:'+(on?'900':'700')+';box-shadow:'+(on?'3px 3px 0 var(--yellow)':'none')+';';
     const nbLevelLabel=s.nbMode==='kanji'?'한자 난이도':'JLPT · 학년';
     const nbLevelChips=(s.nbMode==='kanji'
       ? ['전체','N5','N4','N3','N2','N1'].map(level=>({label:level,pick:()=>this.setNbKanjiLevel(level)}))
       : ['전체','N5','N4','N3','N2','N1','1학년','2학년','3학년','4학년'].map(level=>({label:level,pick:()=>this.setNbWordLevel(level)}))
     ).map(chip=>{
       const active=s.nbMode==='kanji' ? chip.label===s.nbKanjiLevel : chip.label===s.nbWordLevel;
-      return {...chip, style:'border:2px solid #3E2F23;background:'+(active?'#C13B3B':'#fff')+';color:'+(active?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 12px;cursor:pointer;font-family:'+(s.nbMode==='kanji'?'"DM Mono",monospace':'inherit')+';font-size:13px;font-weight:700;box-shadow:'+(active?'3px 3px 0 #3E2F23':'none')+';'};
+      return {...chip, style:'border:2px solid var(--ink);background:'+(active?'var(--red)':'var(--white-bg)')+';color:'+(active?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 12px;cursor:pointer;font-family:'+(s.nbMode==='kanji'?'var(--font-mono)':'inherit')+';font-size:13px;font-weight:700;box-shadow:'+(active?'3px 3px 0 var(--shadow)':'none')+';'};
     });
 
     // quiz
@@ -1772,8 +1790,8 @@ class Component extends DCLogic {
     const q=quizDoneFlag?null:s.quizList[s.quizIdx];
     let quizOptions=[];
     if(q){ quizOptions=q.options.map((o,i)=>{
-      let bg='#fff',bd='#3E2F23',col='#3E2F23',sh='none';
-      if(s.quizSel!=null){ if(i===q.correct){bg='#C8F4D2';bd='#3E2F23';col='#0C7A3C';sh='4px 4px 0 #1FA95B';} else if(i===s.quizSel){bg='#F3E2D2';bd='#3E2F23';col='#9E2F2F';sh='4px 4px 0 #C13B3B';} else {col:'#9c9'; bg='#fff';} }
+      let bg='var(--white-bg)',bd='var(--ink)',col='var(--ink)',sh='none';
+      if(s.quizSel!=null){ if(i===q.correct){bg='var(--tint-green)';bd='var(--ink)';col='var(--green-text)';sh='4px 4px 0 var(--green)';} else if(i===s.quizSel){bg='var(--tint-pink)';bd='var(--ink)';col='var(--red-dark)';sh='4px 4px 0 var(--red)';} else {col:'#9c9'; bg='var(--white-bg)';} }
       return {text:o,letter:String.fromCharCode(65+i),choose:()=>this.chooseQuiz(i),style:'text-align:left;border:2.5px solid '+bd+';background:'+bg+';color:'+col+';border-radius:4px;padding:14px 16px;cursor:'+(s.quizSel!=null?'default':'pointer')+';font-family:inherit;font-size:14.5px;font-weight:700;box-shadow:'+sh+';transition:.1s;'};
     }); }
     const quizNextLabel=(s.quizIdx+1>=s.quizList.length)?'결과 보기':'탭해서 다음 문제 →';
@@ -1785,10 +1803,10 @@ class Component extends DCLogic {
     const quizExplain=q?(q.explain||'정답과 읽기를 확인해 보세요.'):'';
 
     // grammar
-    const grammarLevels=['N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.pickGLevel(l),style:'border:2px solid #3E2F23;background:'+(l===s.gLevel?'#3E2F23':'#fff')+';color:'+(l===s.gLevel?'#F2C14E':'#3E2F23')+';border-radius:3px;padding:11px;cursor:pointer;font-family:"DM Mono",monospace;font-weight:700;font-size:15px;box-shadow:'+(l===s.gLevel?'3px 3px 0 #C13B3B':'none')+';'}));
+    const grammarLevels=['N5','N4','N3','N2','N1'].map(l=>({label:l,pick:()=>this.pickGLevel(l),style:'border:2px solid var(--ink);background:'+(l===s.gLevel?'var(--ink-bg)':'var(--white-bg)')+';color:'+(l===s.gLevel?'var(--yellow)':'var(--ink)')+';border-radius:3px;padding:11px;cursor:pointer;font-family:var(--font-mono);font-weight:700;font-size:15px;box-shadow:'+(l===s.gLevel?'3px 3px 0 var(--red)':'none')+';'}));
     const gAll=[...this.grammar[s.gLevel].units,...((this.grammarFile||{})[s.gLevel]||[]),...(this.grammarExtra[s.gLevel]||[])];
     const gSeen={},gUnitsRaw=[];gAll.forEach(u=>{if(u&&u.pattern&&!gSeen[u.pattern]){gSeen[u.pattern]=1;gUnitsRaw.push(u);}});
-    const grammarUnits=gUnitsRaw.map((u,i)=>({pattern:u.pattern,gloss:u.gloss,open:()=>this.openGUnit(i),style:'text-align:left;border:2px solid #3E2F23;background:'+(i===s.gUnit?'#F2C14E':'#FFFDF6')+';border-radius:4px;padding:13px 15px;cursor:pointer;font-family:inherit;box-shadow:'+(i===s.gUnit?'4px 4px 0 #3E2F23':'2px 2px 0 #3E2F23')+';transition:.1s;'}));
+    const grammarUnits=gUnitsRaw.map((u,i)=>({pattern:u.pattern,gloss:u.gloss,open:()=>this.openGUnit(i),style:'text-align:left;border:2px solid var(--ink);background:'+(i===s.gUnit?'var(--yellow)':'var(--card)')+';border-radius:4px;padding:13px 15px;cursor:pointer;font-family:inherit;box-shadow:'+(i===s.gUnit?'4px 4px 0 var(--shadow)':'2px 2px 0 var(--shadow)')+';transition:.1s;'}));
     const gd=gUnitsRaw[s.gUnit]||gUnitsRaw[0]||{checks:[],examples:[],rules:[]};
     const gdView={...gd, checkCount:(gd.checks||[]).length, examples:(gd.examples||[]).map(e=>({jp:e.jp,kr:e.kr,play:()=>this.play(e.jp)}))};
     const gcChecks=(gd.checks||[]).map((c,qi)=>{
@@ -1803,10 +1821,10 @@ class Component extends DCLogic {
         resultLabel:picked===c.a?'정답입니다.':'정답은 이 선택지입니다.',
         guide,
         options:(c.options||[]).map((o,oi)=>{
-          let bg='#F3E9D2',bd='#3E2F23',col='#3E2F23',sh='none';
+          let bg='var(--paper2)',bd='var(--ink)',col='var(--ink)',sh='none';
           if(picked!=null){
-            if(oi===c.a){ bg='#C8F4D2'; bd='#3E2F23'; col='#0C7A3C'; sh='3px 3px 0 #1FA95B'; }
-            else if(oi===picked){ bg='#F3E2D2'; bd='#3E2F23'; col='#9E2F2F'; sh='3px 3px 0 #C13B3B'; }
+            if(oi===c.a){ bg='var(--tint-green)'; bd='var(--ink)'; col='var(--green-text)'; sh='3px 3px 0 var(--green)'; }
+            else if(oi===picked){ bg='var(--tint-pink)'; bd='var(--ink)'; col='var(--red-dark)'; sh='3px 3px 0 var(--red)'; }
           }
           return {text:o,choose:()=>this.chooseGCheck(qi,oi),style:'border:2.5px solid '+bd+';background:'+bg+';color:'+col+';border-radius:3px;padding:8px 13px;cursor:pointer;font-family:"Noto Sans JP";font-size:13.5px;font-weight:700;box-shadow:'+sh+';transition:.1s;'};
         })
@@ -1815,10 +1833,10 @@ class Component extends DCLogic {
 
     // writing
     const wd=this.writeData[s.wTab];
-    const writeTabs=Object.keys(this.writeData).map(k=>({label:this.writeData[k].label,pick:()=>this.pickWTab(k),style:'border-radius:4px;padding:10px 16px;cursor:pointer;font-family:inherit;font-weight:'+(k===s.wTab?'900':'700')+';font-size:14px;background:'+(k===s.wTab?'#3E2F23':'#FFFDF6')+';color:'+(k===s.wTab?'#F2C14E':'#3E2F23')+';border:2px solid #3E2F23;box-shadow:'+(k===s.wTab?'3px 3px 0 #C13B3B':'none')+';'}));
+    const writeTabs=Object.keys(this.writeData).map(k=>({label:this.writeData[k].label,pick:()=>this.pickWTab(k),style:'border-radius:4px;padding:10px 16px;cursor:pointer;font-family:inherit;font-weight:'+(k===s.wTab?'900':'700')+';font-size:14px;background:'+(k===s.wTab?'var(--ink-bg)':'var(--card)')+';color:'+(k===s.wTab?'var(--yellow)':'var(--ink)')+';border:2px solid var(--ink);box-shadow:'+(k===s.wTab?'3px 3px 0 var(--red)':'none')+';'}));
     const subList=wd.subs;
     const writeHasSub=subList.length>1;
-    const writeSubs=subList.map(sub=>({label:sub.label,pick:()=>this.pickWSub(sub.key),style:'border:2px solid #3E2F23;background:'+(sub.key===s.wSub?'#C13B3B':'#fff')+';color:'+(sub.key===s.wSub?'#fff':'#3E2F23')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;box-shadow:'+(sub.key===s.wSub?'3px 3px 0 #3E2F23':'none')+';'}));
+    const writeSubs=subList.map(sub=>({label:sub.label,pick:()=>this.pickWSub(sub.key),style:'border:2px solid var(--ink);background:'+(sub.key===s.wSub?'var(--red)':'var(--white-bg)')+';color:'+(sub.key===s.wSub?'#fff':'var(--ink)')+';border-radius:3px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;box-shadow:'+(sub.key===s.wSub?'3px 3px 0 var(--shadow)':'none')+';'}));
     const curSub=subList.find(x=>x.key===s.wSub)||subList[0];
     const writeCount=this._getWritePromptCount(s.wTab, s.wSub, curSub.prompts||[], curSub.target||0);
     const curP=this._getWritePromptAt(s.wTab, s.wSub, curSub.prompts||[], curSub.target||0, s.wIdx);
@@ -1826,7 +1844,7 @@ class Component extends DCLogic {
 
     const dayTotal=this.totalDays();
     const qlChip=(lv)=>({label:this._quizLevelLabel(lv), pick:()=>this.setQuizLevel(lv),
-      style:'border:2px solid #3E2F23;background:'+(s.quizLevel===lv?'#C13B3B':'#fff')+';color:'+(s.quizLevel===lv?'#fff':'#3E2F23')+';border-radius:3px;padding:6px 11px;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:800;white-space:nowrap;'});
+      style:'border:2px solid var(--ink);background:'+(s.quizLevel===lv?'var(--red)':'var(--white-bg)')+';color:'+(s.quizLevel===lv?'#fff':'var(--ink)')+';border-radius:3px;padding:6px 11px;cursor:pointer;font-family:inherit;font-size:var(--fs-sm);font-weight:800;white-space:nowrap;'});
     const quizJlptChips=['전체','N5','N4','N3','N2','N1'].map(qlChip);
     return {
       is, screenTitle:screens[s.screen][0], screenTag:screens[s.screen][1],
@@ -1843,7 +1861,7 @@ class Component extends DCLogic {
       mnShowMn:s.mnStep>=1, mnShowAns:s.mnStep>=2, mnStep0:s.mnStep===0, mnStep1:s.mnStep===1,
       mnReveal:()=>this.mnReveal(), playMn:()=>{ if(mnCur) this.play(mnCur.on||mnCur.reading||mnCur.kun); },
       mnAgain:()=>this.mnGrade('again'), mnSoon:()=>this.mnGrade('soon'), mnKnownPick:()=>this.mnGrade('known'),
-      mnAgainStyle:mnGradeBtn('#F3E2D2','#9E2F2F'), mnSoonStyle:mnGradeBtn('#F3E9D2','#3E2F23'), mnKnownStyle:mnGradeBtn('#C8F4D2','#0C7A3C'),
+      mnAgainStyle:mnGradeBtn('var(--tint-pink)','var(--red-dark)'), mnSoonStyle:mnGradeBtn('var(--paper2)','var(--ink)'), mnKnownStyle:mnGradeBtn('var(--tint-green)','var(--green-text)'),
       mnRemain:this._formatCount(mnQueue.length), mnTotalCount:this._formatCount(mnListAll.length), mnKnownCount:this._formatCount(mnKnownCount),
       mnPct:Math.min(100,Math.round(mnKnownCount/Math.max(1,mnListAll.length)*100)),
       mnResetKnown:()=>this.mnResetKnown(), mnHasKnown:mnKnownCount>0,
@@ -1892,7 +1910,7 @@ class Component extends DCLogic {
       writeWords:(curP.words||[]).map(w=>({w:w.w, sub:w.r+' · '+w.m})),
       writeHasCond:!!curP.cond, writeCond:curP.cond?curP.cond.t:'',
       writeScoreLabel:writeIsCombo?'조건 충족도 (단어 · 문법 규칙 점검)':'모범 답안과의 일치도',
-      writeChecks:(s.writeChecks||[]).map(c=>({mark:c.ok?'✓':'✗', text:c.text, color:c.ok?'#0C7A3C':'#9E2F2F'})), writeHasChecks:!!(s.writeChecks&&s.writeChecks.length),
+      writeChecks:(s.writeChecks||[]).map(c=>({mark:c.ok?'✓':'✗', text:c.text, color:c.ok?'var(--green-text)':'var(--red-dark)'})), writeHasChecks:!!(s.writeChecks&&s.writeChecks.length),
       writeAlts:(curP.alts||[]).map(a=>({text:a})), writeHasAlts:!!(curP.alts&&curP.alts.length),
       scoreWrite:()=>this.scoreWrite(curP), writeScoreShown:s.writeScore!=null, writeNoticeShown:s.writeScore==null&&!!s.writeScoreMsg, writeScore:s.writeScore, writeScoreMsg:s.writeScoreMsg||'',
       // UI 공통: TTS 재생 상태 · 다크 모드
