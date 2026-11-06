@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GrammarCard",
+  "type": "object",
+  "required": ["id", "level", "pattern", "meaning_ko", "simple_note", "tags", "source"],
+  "properties": {
+    "id": {"type": "string"},
+    "level": {"type": "string", "enum": ["N5", "N4", "N3", "N2", "N1", "business", "academic", "domain"]},
+    "pattern": {"type": "string"},
+    "meaning_ko": {"type": "string"},
+    "simple_note": {"type": "string"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "example_jp": {"type": "string"},
+    "example_ko": {"type": "string"},
+    "source": {
+      "type": "object",
+      "required": ["name", "license"],
+      "properties": {
+        "name": {"type": "string"},
+        "license": {"type": "string"}
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KanjiCard",
+  "type": "object",
+  "required": ["id", "literal", "meanings", "course_tags", "source"],
+  "properties": {
+    "id": {"type": "string"},
+    "literal": {"type": "string", "minLength": 1, "maxLength": 2},
+    "grade": {"type": ["integer", "null"]},
+    "stroke_count": {"type": ["integer", "null"]},
+    "frequency_rank": {"type": ["integer", "null"]},
+    "old_jlpt_level": {"type": ["integer", "null"]},
+    "on_readings": {"type": "array", "items": {"type": "string"}},
+    "kun_readings": {"type": "array", "items": {"type": "string"}},
+    "meanings": {"type": "array", "items": {"type": "string"}},
+    "variants": {"type": "array", "items": {"type": "object"}},
+    "course_tags": {"type": "array", "items": {"type": "string"}},
+    "source": {
+      "type": "object",
+      "required": ["name", "license"],
+      "properties": {
+        "name": {"type": "string"},
+        "url": {"type": "string"},
+        "license": {"type": "string"}
+      }
+    }
+  }
+}

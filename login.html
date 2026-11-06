@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF5E8">
+<link rel="apple-touch-icon" href="haruko.jpg">
+<title>BUFS 비공식 일본어 학습 · 로그인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* BUFS 비공식 일본어 학습 로그인 — NEO-BRUTALIST / HIGH-CONTRAST (LIGHT)
+     paper #FBF5E8 · ink #3E2F23 · red #C13B3B · yellow #F2C14E */
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+    font-family:'Noto Sans KR',system-ui,-apple-system,sans-serif;color:#3E2F23;
+    background:#FBF5E8;
+    background-image:radial-gradient(rgba(176,141,87,.22) 2px, transparent 2.4px);
+    background-size:26px 26px;}
+  .card{position:relative;width:100%;max-width:400px;background:#FFFDF6;border:3px solid #3E2F23;border-radius:6px;
+    padding:34px 30px 28px;box-shadow:10px 10px 0 #3E2F23;}
+  .brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;background:#C13B3B;
+    border:3px solid #3E2F23;border-radius:5px;padding:10px 14px;box-shadow:4px 4px 0 #3E2F23;}
+  .brand .t{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:900;color:#FBF5E8;letter-spacing:-.5px;}
+  .sub{font-family:"DM Mono",ui-monospace,monospace;font-size:11px;font-weight:500;color:#3E2F23;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:24px;}
+  label{display:block;font-size:12.5px;font-weight:800;color:#3E2F23;margin:0 0 7px 2px;text-transform:uppercase;letter-spacing:.5px;}
+  input[type=email]{width:100%;padding:13px 15px;font-size:15px;border:2.5px solid #3E2F23;border-radius:4px;
+    outline:none;transition:.12s;font-family:inherit;background:#F3E9D2;color:#3E2F23;}
+  input[type=email]:focus{border-color:#3E2F23;background:#fff;box-shadow:4px 4px 0 #F2C14E;}
+  button{width:100%;margin-top:18px;padding:14px;font-size:15px;font-weight:900;color:#FBF5E8;background:#C13B3B;
+    border:3px solid #3E2F23;border-radius:4px;cursor:pointer;transition:.12s;font-family:inherit;box-shadow:5px 5px 0 #3E2F23;}
+  button:hover{background:#F2C14E;color:#3E2F23;}
+  button:active{transform:translate(3px,3px);box-shadow:2px 2px 0 #3E2F23;}
+  button:disabled{opacity:.6;cursor:default;transform:none;box-shadow:5px 5px 0 #3E2F23;}
+  .msg{margin-top:18px;font-size:13px;font-weight:600;line-height:1.6;border-radius:4px;padding:12px 14px;display:none;border:2.5px solid #3E2F23;}
+  .msg.ok{display:block;background:#C8F4D2;color:#0C7A3C;box-shadow:3px 3px 0 #3E2F23;}
+  .msg.err{display:block;background:#F3E2D2;color:#9E2F2F;box-shadow:3px 3px 0 #3E2F23;}
+  .msg.info{display:block;background:#F2C14E;color:#3E2F23;box-shadow:3px 3px 0 #3E2F23;}
+  .guest{display:block;margin-top:16px;text-align:center;font-size:13.5px;font-weight:800;color:#3E2F23;text-decoration:underline;}
+  .foot{margin-top:22px;font-size:11.5px;font-weight:600;color:#6B5B4A;line-height:1.6;text-align:center;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <img src="haruko.jpg" alt="하루코" width="30" height="30" style="border-radius:50%; border:2px solid #3E2F23; background:#FCE7D9;">
+      <span class="t">BUFS 비공식 일본어 학습</span>
+    </div>
+    <div class="sub">BUFS Unofficial Japanese · Members Only</div>
+
+    <form id="f" autocomplete="on">
+      <label for="email">이메일 주소</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+      <button id="btn" type="submit">로그인 링크 받기</button>
+    </form>
+    <div id="msg" class="msg"></div>
+    <a class="guest" href="/">이메일 없이 바로 이용하기</a>
+
+    <div class="foot">등록된 4명만 입장할 수 있어요.<br>입력한 메일로 로그인 링크를 보내드립니다.</div>
+  </div>
+
+<script>
+  (function(){
+    var f=document.getElementById('f'), btn=document.getElementById('btn'),
+        msg=document.getElementById('msg'), email=document.getElementById('email');
+    function show(t,cls){ msg.textContent=t; msg.className='msg '+cls; }
+
+    // 리다이렉트 사유 안내
+    var p=new URLSearchParams(location.search), e=p.get('e');
+    if(e==='expired') show('링크가 만료되었거나 올바르지 않아요. 다시 받아주세요.','err');
+    else if(e==='out') show('로그아웃되었습니다.','info');
+
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var v=(email.value||'').trim();
+      if(!v) return;
+      btn.disabled=true; btn.textContent='보내는 중…';
+      fetch('/api/auth/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:v})})
+        .then(function(r){ return r.json().catch(function(){return {};}).then(function(d){ return {status:r.status, d:d}; }); })
+        .then(function(o){
+          if(o.status>=200 && o.status<300){
+            show((o.d&&o.d.message)||'등록된 주소라면 로그인 링크를 보냈어요. 메일함을 확인하세요.','ok');
+            btn.textContent='메일을 확인하세요';
+          } else {
+            var detail=(o.d&&(o.d.detail||o.d.error))||('오류 '+o.status);
+            show('메일 발송에 실패했어요: '+detail,'err');
+            btn.disabled=false; btn.textContent='로그인 링크 받기';
+          }
+        })
+        .catch(function(){
+          show('잠시 후 다시 시도해주세요.','err');
+          btn.disabled=false; btn.textContent='로그인 링크 받기';
+        });
+    });
+  })();
+</script>
+</body>
+</html>

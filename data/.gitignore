@@ -1,0 +1,9 @@
+# 빌드 입력용 원본 오픈 데이터 (build.mjs / build_words.mjs가 사용 · 재생성 가능, 대용량)
+kanji_full.json
+jg_n*.json
+ko_n*.json
+kanjidic2-all-*.json
+jmdict-eng-*.json
+jmdict-eng-common-*.json
+jmnedict-all-*.json
+*.zip

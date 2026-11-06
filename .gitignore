@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# Downloaded source archives can be rebuilt with tools/build_dataset.py --download.
+data/raw/
+audio/**/*.part

@@ -1,0 +1,65 @@
+id	domain	japanese	kana	meaning_ko	education_stage	simple_note	ags
+term-001	academic	仮説	かせつ	가설	high_school	연구에서 임시로 세우는 설명이다.	research
+term-002	academic	検証	けんしょう	검증	undergraduate	맞는지 확인하는 과정이다.	research
+term-003	academic	考察	こうさつ	고찰	undergraduate	자료를 보고 의미를 해석하는 부분이다.	research
+term-004	academic	先行研究	せんこうけんきゅう	선행연구	undergraduate	이전에 나온 연구다.	research
+term-005	academic	引用	いんよう	인용	middle_school	다른 글의 말을 가져와 출처를 밝히는 일이다.	writing
+term-006	academic	出典	しゅってん	출처	middle_school	자료가 나온 곳이다.	writing
+term-007	academic	要旨	ようし	요지/초록	high_school	글이나 논문의 핵심 요약이다.	writing
+term-008	academic	序論	じょろん	서론	undergraduate	글의 시작 부분이다.	writing
+term-009	academic	本論	ほんろん	본론	undergraduate	주장을 자세히 설명하는 중심 부분이다.	writing
+term-010	academic	結論	けつろん	결론	undergraduate	마지막 정리 부분이다.	writing
+term-011	education	小数	しょうすう	소수	elementary	1보다 작은 수를 나타낼 때 쓴다.	math
+term-012	education	分数	ぶんすう	분수	elementary	전체 중 일부를 나타내는 수다.	math
+term-013	education	比例	ひれい	비례	middle_school	한 값이 커지면 다른 값도 일정하게 커진다.	math
+term-014	education	反比例	はんぴれい	반비례	middle_school	한 값이 커지면 다른 값이 줄어든다.	math
+term-015	education	方程式	ほうていしき	방정식	middle_school	모르는 수를 찾는 식이다.	math
+term-016	education	微分	びぶん	미분	high_school	변화율을 다루는 수학이다.	math
+term-017	education	積分	せきぶん	적분	high_school	넓이나 누적량을 다루는 수학이다.	math
+term-018	it	情報処理	じょうほうしょり	정보처리	high_school	정보를 저장, 계산, 변환하는 일이다.	it
+term-019	it	人工知能	じんこうちのう	인공지능	undergraduate	기계가 지능적인 작업을 하게 하는 기술이다.	ai
+term-020	it	機械学習	きかいがくしゅう	기계학습	undergraduate	데이터로 규칙을 배우는 AI 방법이다.	ai
+term-021	it	深層学習	しんそうがくしゅう	딥러닝	undergraduate	층이 많은 신경망을 쓰는 학습 방법이다.	ai
+term-022	it	データベース	でーたべーす	데이터베이스	high_school	자료를 정리해서 저장하는 시스템이다.	database
+term-023	it	暗号化	あんごうか	암호화	undergraduate	내용을 알아보기 어렵게 바꾸는 기술이다.	security
+term-024	it	脆弱性	ぜいじゃくせい	취약점	undergraduate	공격받기 쉬운 약점이다.	security
+term-025	it	認証	にんしょう	인증	high_school	사용자가 맞는지 확인하는 일이다.	security
+term-026	it	権限	けんげん	권한	high_school	사용할 수 있는 허용 범위다.	security
+term-027	medicine	症状	しょうじょう	증상	middle_school	몸에 나타나는 이상 신호다.	medicine
+term-028	medicine	診断	しんだん	진단	high_school	병이나 상태를 판단하는 일이다.	medicine
+term-029	medicine	治療	ちりょう	치료	middle_school	병을 낫게 하는 일이다.	medicine
+term-030	medicine	処方	しょほう	처방	high_school	약을 정해 주는 일이다.	medicine
+term-031	medicine	副作用	ふくさよう	부작용	high_school	약이나 치료 때문에 생기는 원치 않는 반응이다.	medicine
+term-032	medicine	臨床試験	りんしょうしけん	임상시험	undergraduate	사람을 대상으로 치료 효과를 확인하는 시험이다.	medicine
+term-033	law	契約	けいやく	계약	high_school	서로 지키기로 한 법적 약속이다.	law
+term-034	law	権利	けんり	권리	middle_school	법적으로 보장되는 힘이나 자격이다.	law
+term-035	law	義務	ぎむ	의무	middle_school	해야 하는 책임이다.	law
+term-036	law	損害賠償	そんがいばいしょう	손해배상	undergraduate	남에게 준 손해를 돈 등으로 갚는 일이다.	law
+term-037	law	知的財産	ちてきざいさん	지식재산	undergraduate	아이디어, 저작물, 발명 같은 지적 결과물이다.	law
+term-038	law	個人情報	こじんじょうほう	개인정보	high_school	개인을 알아볼 수 있는 정보다.	law;privacy
+term-039	finance	会計	かいけい	회계	high_school	돈의 흐름을 기록하고 정리하는 일이다.	finance
+term-040	finance	決算	けっさん	결산	undergraduate	일정 기간의 돈 결과를 마감하는 일이다.	finance
+term-041	finance	売上	うりあげ	매출	high_school	물건이나 서비스를 팔아 얻은 금액이다.	finance
+term-042	finance	利益	りえき	이익	middle_school	번 돈에서 비용을 뺀 것.	finance
+term-043	finance	投資	とうし	투자	high_school	미래 이익을 기대하고 돈이나 자원을 넣는 일이다.	finance
+term-044	finance	為替	かわせ	환율/외환	high_school	돈을 다른 나라 돈으로 바꾸는 것과 관련된다.	finance
+term-045	engineering	設計	せっけい	설계	high_school	만들기 전에 구조와 방법을 정하는 일이다.	engineering
+term-046	engineering	製造	せいぞう	제조	high_school	제품을 만드는 일이다.	engineering
+term-047	engineering	品質管理	ひんしつかんり	품질관리	undergraduate	제품이나 서비스 품질을 일정하게 지키는 일이다.	engineering
+term-048	engineering	安全基準	あんぜんきじゅん	안전기준	undergraduate	안전을 위해 지켜야 하는 기준이다.	engineering
+term-049	engineering	耐久性	たいきゅうせい	내구성	undergraduate	오래 버티는 성질이다.	engineering
+term-050	science	実験	じっけん	실험	middle_school	조건을 정해 현상을 확인하는 일이다.	science
+term-051	science	観察	かんさつ	관찰	elementary	자세히 보고 기록하는 일이다.	science
+term-052	science	物質	ぶっしつ	물질	middle_school	공간을 차지하고 질량이 있는 것.	science
+term-053	science	元素	げんそ	원소	middle_school	물질을 이루는 기본 종류다.	science
+term-054	science	細胞	さいぼう	세포	middle_school	생물을 이루는 기본 단위다.	science
+term-055	science	遺伝子	いでんし	유전자	high_school	생물의 특징 정보를 담는 단위다.	science
+term-056	media	報道	ほうどう	보도	high_school	뉴스로 알리는 일이다.	media
+term-057	media	取材	しゅざい	취재	high_school	기사를 쓰기 위해 자료를 모으는 일이다.	media
+term-058	media	世論	よろん	여론	high_school	사회 사람들의 전반적인 의견이다.	media
+term-059	tourism	宿泊	しゅくはく	숙박	middle_school	호텔 등에서 머무는 일이다.	tourism
+term-060	tourism	旅程	りょてい	여정/일정	middle_school	여행 계획과 이동 순서다.	tourism
+term-061	public_administration	申請	しんせい	신청	high_school	기관에 공식적으로 요청하는 일이다.	public
+term-062	public_administration	許可	きょか	허가	high_school	해도 된다고 인정하는 일이다.	public
+term-063	public_administration	証明書	しょうめいしょ	증명서	high_school	사실을 증명하는 문서다.	public
+term-064	public_administration	住民票	じゅうみんひょう	주민표	high_school	일본에서 주소와 세대 정보를 적은 공적 문서다.	public

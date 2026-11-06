@@ -1,0 +1,41 @@
+id	category	japanese	kana	meaning_ko	simple_note	register	ags
+keigo-001	sonkeigo	いらっしゃる	いらっしゃる	계시다/가시다/오시다	相手나 윗사람의 行く, 来る, いる를 높인다.	sonkeigo	keigo;verb
+keigo-002	sonkeigo	おっしゃる	おっしゃる	말씀하시다	言う의 존경어다.	sonkeigo	keigo;verb
+keigo-003	sonkeigo	なさる	なさる	하시다	する의 존경어다.	sonkeigo	keigo;verb
+keigo-004	sonkeigo	召し上がる	めしあがる	드시다	食べる, 飲む의 존경어다.	sonkeigo	keigo;verb
+keigo-005	sonkeigo	ご覧になる	ごらんになる	보시다	見る의 존경어다.	sonkeigo	keigo;verb
+keigo-006	sonkeigo	お聞きになる	おききになる	들으시다/물으시다	聞く의 존경 표현이다.	sonkeigo	keigo;verb
+keigo-007	sonkeigo	お使いになる	おつかいになる	사용하시다	使う의 존경 표현이다.	sonkeigo	keigo;verb
+keigo-008	kenjougo	伺う	うかがう	찾아뵙다/여쭙다	行く, 聞く, 訪ねる의 겸양어다.	kenjougo	keigo;verb
+keigo-009	kenjougo	申す	もうす	말씀드리다	言う의 겸양어다.	kenjougo	keigo;verb
+keigo-010	kenjougo	申し上げる	もうしあげる	말씀드리다	言う를 더 공손하게 낮춰 말한다.	kenjougo	keigo;verb
+keigo-011	kenjougo	いたす	いたす	하다	する의 겸양어다.	kenjougo	keigo;verb
+keigo-012	kenjougo	拝見する	はいけんする	보다/뵙다	見る의 겸양어다.	kenjougo	keigo;verb
+keigo-013	kenjougo	拝聴する	はいちょうする	듣다	聞く의 겸양어다.	kenjougo	keigo;verb
+keigo-014	kenjougo	頂戴する	ちょうだいする	받다	もらう의 겸양 표현이다.	kenjougo	keigo;verb
+keigo-015	kenjougo	存じる	ぞんじる	알다/생각하다	知る, 思う의 겸양어다.	kenjougo	keigo;verb
+business-001	email	お世話になっております	おせわになっております	늘 신세 지고 있습니다	일본 비즈니스 메일의 기본 인사다.	business	mail;opening
+business-002	email	恐れ入ります	おそれいります	죄송합니다/황송합니다	부탁이나 확인 전에 부드럽게 쓴다.	business	mail;polite
+business-003	email	ご確認のほどよろしくお願いいたします	ごかくにんのほどよろしくおねがいいたします	확인 부탁드립니다	상대에게 확인을 요청하는 정중한 표현이다.	business	mail;request
+business-004	email	ご査収ください	ごさしゅうください	확인 후 받아 주세요	첨부 파일이나 자료를 보낼 때 쓴다.	business	mail;attachment
+business-005	email	添付いたします	てんぷいたします	첨부드립니다	자료를 메일에 붙여 보낼 때 쓴다.	business	mail;attachment
+business-006	email	取り急ぎご連絡まで	とりいそぎごれんらくまで	우선 급히 연락드립니다	짧게 먼저 알릴 때 쓴다.	business	mail;closing
+business-007	email	何卒よろしくお願い申し上げます	なにとぞよろしくおねがいもうしあげます	아무쪼록 잘 부탁드립니다	매우 정중한 마무리 표현이다.	business	mail;closing
+business-008	meeting	本日はお時間をいただきありがとうございます	ほんじつはおじかんをいただきありがとうございます	오늘 시간 내 주셔서 감사합니다	회의 시작 인사로 좋다.	business	meeting;opening
+business-009	meeting	議題に入らせていただきます	ぎだいにはいらせていただきます	안건으로 들어가겠습니다	회의 진행을 정중하게 시작한다.	business	meeting
+business-010	meeting	認識に相違はございませんでしょうか	にんしきにそういはございませんでしょうか	이해가 서로 다른 점은 없을까요	회의 내용을 확인할 때 쓴다.	business	meeting;check
+business-011	meeting	検討いたします	けんとういたします	검토하겠습니다	바로 답하기 어려울 때 쓴다.	business	meeting;response
+business-012	meeting	社内で確認いたします	しゃないでかくにんいたします	사내에서 확인하겠습니다	회사 안에서 확인이 필요할 때 쓴다.	business	meeting;response
+business-013	phone	少々お待ちください	しょうしょうおまちください	잠시만 기다려 주세요	전화나 접객에서 자주 쓴다.	polite	phone
+business-014	phone	担当者におつなぎいたします	たんとうしゃにおつなぎいたします	담당자에게 연결해 드리겠습니다	전화 연결 표현이다.	business	phone
+business-015	phone	折り返しご連絡いたします	おりかえしごれんらくいたします	다시 연락드리겠습니다	회신 약속 표현이다.	business	phone
+business-016	apology	ご迷惑をおかけし申し訳ございません	ごめいわくをおかけしもうしわけございません	불편을 드려 죄송합니다	비즈니스 사과의 기본 표현이다.	business	apology
+business-017	apology	今後このようなことがないよう努めます	こんごこのようなことがないようつとめます	앞으로 이런 일이 없도록 노력하겠습니다	재발 방지를 약속할 때 쓴다.	business	apology
+business-018	request	差し支えなければ	さしつかえなければ	괜찮으시다면	부탁을 부드럽게 시작한다.	business	request
+business-019	request	ご都合のよろしい日時をお知らせください	ごつごうのよろしいにちじをおしらせください	편하신 날짜와 시간을 알려 주세요	일정 조율 표현이다.	business	schedule
+business-020	report	進捗状況をご報告いたします	しんちょくじょうきょうをごほうこくいたします	진행 상황을 보고드립니다	업무 보고의 시작 표현이다.	business	report
+business-021	report	結論から申し上げます	けつろんからもうしあげます	결론부터 말씀드리겠습니다	보고를 짧고 분명하게 시작한다.	business	report
+business-022	negotiation	条件を再度調整させていただけますでしょうか	じょうけんをさいどちょうせいさせていただけますでしょうか	조건을 다시 조정할 수 있을까요	협상에서 정중하게 조정을 요청한다.	business	negotiation
+business-023	negotiation	前向きに検討させていただきます	まえむきにけんとうさせていただきます	긍정적으로 검토하겠습니다	가능성을 열어 둔 답변이다.	business	negotiation
+business-024	customer	貴重なご意見ありがとうございます	きちょうなごいけんありがとうございます	소중한 의견 감사합니다	고객 의견에 답할 때 쓴다.	business	customer_support
+business-025	customer	早急に確認いたします	そうきゅうにかくにんいたします	빠르게 확인하겠습니다	긴급 대응 표현이다.	business	customer_support

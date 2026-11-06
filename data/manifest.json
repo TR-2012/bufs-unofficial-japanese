@@ -1,0 +1,54 @@
+{
+  "project": "bufs-unofficial-japanese",
+  "version": "0.1.0",
+  "language_pair": "ja-ko",
+  "data_policy": {
+    "official_exam_list_warning": "JLPT and JPT official full vocabulary, kanji, and grammar lists are not treated as available open data. Course tags in this repository are learning targets, not official exam guarantees.",
+    "allowed_sources": [
+      "Open-license dictionary data with attribution",
+      "Original learning notes written for this repository",
+      "User-contributed data with clear permission"
+    ],
+    "blocked_sources": [
+      "Copied textbook word lists",
+      "Copied paid course material",
+      "Scraped exam-prep websites without license permission"
+    ]
+  },
+  "targets": {
+    "jlpt_n1_180_candidate_vocab": 10000,
+    "jpt_990_candidate_vocab": 20000,
+    "joyo_kanji": 2136,
+    "modern_kanji_candidate": 3000,
+    "grammar_levels": ["N5", "N4", "N3", "N2", "N1"],
+    "registers": ["plain", "polite", "sonkeigo", "kenjougo", "business"],
+    "education_stages": ["elementary", "middle_school", "high_school", "undergraduate", "graduate"],
+    "domains": [
+      "business",
+      "academic",
+      "it",
+      "medicine",
+      "law",
+      "finance",
+      "engineering",
+      "science",
+      "education",
+      "media",
+      "tourism",
+      "public_administration"
+    ]
+  },
+  "generated_files": {
+    "vocab": "data/generated/vocab.jsonl",
+    "kanji": "data/generated/kanji.jsonl",
+    "grammar": "data/generated/grammar.jsonl",
+    "business_keigo": "data/generated/business_keigo.jsonl",
+    "domain_terms": "data/generated/domain_terms.jsonl",
+    "coverage": "data/generated/coverage.json"
+  },
+  "source_files": {
+    "grammar_seed": "data/seed/grammar.tsv",
+    "business_keigo_seed": "data/seed/business_keigo.tsv",
+    "domain_terms_seed": "data/seed/domain_terms.tsv"
+  }
+}

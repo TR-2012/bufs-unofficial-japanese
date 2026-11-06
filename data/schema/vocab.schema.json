@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VocabularyCard",
+  "type": "object",
+  "required": ["id", "writing", "kana", "meanings", "course_tags", "source"],
+  "properties": {
+    "id": {"type": "string"},
+    "writing": {"type": "string"},
+    "kana": {"type": "string"},
+    "other_writings": {"type": "array", "items": {"type": "string"}},
+    "other_readings": {"type": "array", "items": {"type": "string"}},
+    "meanings": {"type": "array", "items": {"type": "string"}},
+    "pos": {"type": "array", "items": {"type": "string"}},
+    "fields": {"type": "array", "items": {"type": "string"}},
+    "priority": {"type": "array", "items": {"type": "string"}},
+    "course_tags": {"type": "array", "items": {"type": "string"}},
+    "difficulty_hint": {"type": "string"},
+    "source": {
+      "type": "object",
+      "required": ["name", "license"],
+      "properties": {
+        "name": {"type": "string"},
+        "url": {"type": "string"},
+        "license": {"type": "string"}
+      }
+    }
+  }
+}

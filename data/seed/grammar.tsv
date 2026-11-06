@@ -1,0 +1,180 @@
+id	level	pattern	meaning_ko	simple_note	tags
+grammar-n5-001	N5	です	입니다/예요	명사나 な형용사를 정중하게 말할 때 쓴다.	polite;basic
+grammar-n5-002	N5	ます	합니다	동사를 정중하게 말할 때 쓴다.	polite;verb
+grammar-n5-003	N5	は	은/는	문장의 주제를 표시한다.	particle;topic
+grammar-n5-004	N5	が	이/가	새 정보나 주어를 표시한다.	particle;subject
+grammar-n5-005	N5	を	을/를	동작의 대상을 표시한다.	particle;object
+grammar-n5-006	N5	に	에/에게	시간, 장소, 방향, 받는 사람을 표시한다.	particle
+grammar-n5-007	N5	で	에서/로	동작 장소나 수단을 표시한다.	particle
+grammar-n5-008	N5	へ	~로	방향을 말할 때 쓴다.	particle;direction
+grammar-n5-009	N5	と	와/과	함께하는 대상이나 인용을 표시한다.	particle
+grammar-n5-010	N5	も	도	같은 정보가 추가됨을 표시한다.	particle
+grammar-n5-011	N5	の	의/것	소유, 설명, 명사화를 만든다.	particle;noun_modifier
+grammar-n5-012	N5	か	까?	질문을 만든다.	particle;question
+grammar-n5-013	N5	から	부터/이니까	시작점이나 이유를 말한다.	particle;reason
+grammar-n5-014	N5	まで	까지	끝나는 지점을 말한다.	particle
+grammar-n5-015	N5	より	보다	비교 기준을 말한다.	particle;comparison
+grammar-n5-016	N5	ませんか	하지 않을래요?	상대에게 부드럽게 권할 때 쓴다.	polite;invitation
+grammar-n5-017	N5	ましょう	합시다	같이 하자고 말한다.	polite;invitation
+grammar-n5-018	N5	たい	하고 싶다	자신의 희망을 말한다.	desire
+grammar-n5-019	N5	てください	해주세요	부탁이나 지시를 정중하게 말한다.	request
+grammar-n5-020	N5	てもいい	해도 된다	허락을 말한다.	permission
+grammar-n5-021	N5	てはいけない	하면 안 된다	금지를 말한다.	prohibition
+grammar-n5-022	N5	ている	하고 있다/되어 있다	진행이나 상태를 말한다.	aspect
+grammar-n5-023	N5	ないでください	하지 말아 주세요	하지 말라고 부탁한다.	request;negative
+grammar-n5-024	N5	なくてもいい	하지 않아도 된다	필요 없음을 말한다.	permission;negative
+grammar-n5-025	N5	たことがある	한 적이 있다	경험을 말한다.	experience
+grammar-n4-001	N4	そうだ	~할 것 같다	겉모습을 보고 예상한다.	appearance
+grammar-n4-002	N4	そうだ	~라고 한다	들은 내용을 전한다.	hearsay
+grammar-n4-003	N4	ようだ	~인 것 같다	상황을 보고 판단한다.	guess
+grammar-n4-004	N4	みたいだ	~같다	회화에서 비슷함이나 추측을 말한다.	guess;casual
+grammar-n4-005	N4	らしい	~답다/~인 듯하다	전형적인 성질이나 들은 정보를 말한다.	guess
+grammar-n4-006	N4	すぎる	너무 ~하다	정도가 지나침을 말한다.	degree
+grammar-n4-007	N4	やすい	하기 쉽다	동작이 쉽다는 뜻이다.	verb_suffix
+grammar-n4-008	N4	にくい	하기 어렵다	동작이 어렵다는 뜻이다.	verb_suffix
+grammar-n4-009	N4	ながら	~하면서	두 동작을 동시에 한다.	connection
+grammar-n4-010	N4	ば	~하면	조건을 말한다.	conditional
+grammar-n4-011	N4	なら	~라면	상대 말이나 상황을 조건으로 받는다.	conditional
+grammar-n4-012	N4	たら	~하면/~했더니	조건이나 발견을 말한다.	conditional
+grammar-n4-013	N4	と	~하면	자연스러운 결과를 말한다.	conditional
+grammar-n4-014	N4	ても	~해도	반대 조건을 말한다.	concession
+grammar-n4-015	N4	てしまう	해 버리다	완료나 후회를 말한다.	aspect
+grammar-n4-016	N4	ておく	해 두다	미리 준비해 둔다.	aspect;preparation
+grammar-n4-017	N4	てみる	해 보다	시도한다는 뜻이다.	attempt
+grammar-n4-018	N4	てある	되어 있다	누군가 해 놓은 결과가 남아 있다.	aspect
+grammar-n4-019	N4	てくる	해 오다/되어 오다	변화가 현재 쪽으로 온다.	aspect
+grammar-n4-020	N4	ていく	해 가다/되어 가다	변화가 앞으로 이어진다.	aspect
+grammar-n4-021	N4	ことにする	하기로 하다	자신이 결정한다.	decision
+grammar-n4-022	N4	ことになる	하게 되다	상황이나 다른 사람이 결정한다.	decision
+grammar-n4-023	N4	ようにする	~하도록 하다	습관이나 목표로 노력한다.	goal
+grammar-n4-024	N4	ようになる	~하게 되다	능력이나 상태가 변한다.	change
+grammar-n4-025	N4	ために	~하기 위해	목적을 말한다.	purpose
+grammar-n4-026	N4	のに	~인데도	기대와 다른 결과를 말한다.	contrast
+grammar-n4-027	N4	ので	~해서	부드럽게 이유를 말한다.	reason
+grammar-n4-028	N4	かもしれない	~일지도 모른다	가능성이 있음을 말한다.	possibility
+grammar-n4-029	N4	はずだ	~일 것이다	근거 있는 예상을 말한다.	expectation
+grammar-n4-030	N4	つもりだ	~할 생각이다	계획이나 의도를 말한다.	plan
+grammar-n4-031	N4	予定だ	~할 예정이다	정해진 계획을 말한다.	plan
+grammar-n4-032	N4	ほうがいい	~하는 편이 좋다	조언을 말한다.	advice
+grammar-n4-033	N4	なければならない	해야 한다	의무를 말한다.	obligation
+grammar-n4-034	N4	なくてはいけない	해야 한다	의무를 말한다.	obligation
+grammar-n3-001	N3	ように	~하도록	목표, 부탁, 방식의 뜻으로 쓴다.	goal
+grammar-n3-002	N3	ような	~와 같은	뒤의 명사를 설명한다.	noun_modifier
+grammar-n3-003	N3	ことになっている	~하기로 되어 있다	규칙이나 예정이 정해져 있다.	rule
+grammar-n3-004	N3	ところ	막 ~하는 때	동작의 단계나 시점을 말한다.	time
+grammar-n3-005	N3	ばかり	~만/~한 지 얼마 안 됨	한쪽으로 치우침이나 방금 끝남을 말한다.	degree
+grammar-n3-006	N3	ばかりでなく	~뿐만 아니라	추가 정보를 말한다.	addition
+grammar-n3-007	N3	しかない	~할 수밖에 없다	다른 방법이 없음을 말한다.	limitation
+grammar-n3-008	N3	わけだ	~인 셈이다	이유를 알고 납득한다.	explanation
+grammar-n3-009	N3	わけではない	반드시 ~인 것은 아니다	부분 부정을 말한다.	partial_negative
+grammar-n3-010	N3	わけがない	~일 리가 없다	강한 부정을 말한다.	negative
+grammar-n3-011	N3	わけにはいかない	~할 수는 없다	상황상 하면 안 됨을 말한다.	constraint
+grammar-n3-012	N3	べきだ	~해야 한다	옳은 행동이나 조언을 말한다.	advice
+grammar-n3-013	N3	べきではない	~해서는 안 된다	옳지 않은 행동을 말한다.	advice;negative
+grammar-n3-014	N3	はずがない	~일 리가 없다	근거 있는 강한 부정을 말한다.	expectation;negative
+grammar-n3-015	N3	ところだった	~할 뻔했다	거의 그렇게 될 뻔했음을 말한다.	near_miss
+grammar-n3-016	N3	たびに	~할 때마다	반복되는 때를 말한다.	time
+grammar-n3-017	N3	おかげで	~덕분에	좋은 결과의 이유를 말한다.	reason
+grammar-n3-018	N3	せいで	~탓에	나쁜 결과의 이유를 말한다.	reason
+grammar-n3-019	N3	によって	~에 의해/~에 따라	수단, 원인, 차이를 말한다.	relation
+grammar-n3-020	N3	について	~에 대해	주제를 말한다.	topic
+grammar-n3-021	N3	に対して	~에 대해/~에 비해	대상이나 대비를 말한다.	relation
+grammar-n3-022	N3	として	~로서	자격이나 입장을 말한다.	role
+grammar-n3-023	N3	にとって	~에게 있어서	판단의 기준 대상을 말한다.	viewpoint
+grammar-n3-024	N3	かわりに	~대신에	대체를 말한다.	substitution
+grammar-n3-025	N3	うちに	~하는 동안에	그 상태가 계속될 때 한다.	time
+grammar-n3-026	N3	最中に	~하는 한창때에	동작이 진행 중인 때를 말한다.	time
+grammar-n3-027	N3	途中で	~하는 도중에	중간 시점을 말한다.	time
+grammar-n3-028	N3	ほど	~만큼/~할 정도로	정도나 비교를 말한다.	degree
+grammar-n3-029	N3	くらい	~정도	대략적인 정도를 말한다.	degree
+grammar-n3-030	N3	さえ	~조차	극단적인 예를 든다.	focus
+grammar-n3-031	N3	なんか	~따위	가볍게 낮추어 말한다.	casual
+grammar-n3-032	N3	っぽい	~같다/~스럽다	그런 느낌이나 성향을 말한다.	suffix
+grammar-n3-033	N3	気味	~기미	조금 그런 상태임을 말한다.	suffix
+grammar-n3-034	N3	がち	~하기 쉽다	나쁜 쪽으로 자주 그러함을 말한다.	suffix
+grammar-n3-035	N3	だらけ	~투성이	많이 붙어 있거나 가득함을 말한다.	suffix
+grammar-n3-036	N3	ついでに	~하는 김에	한 일을 하는 기회에 다른 일도 한다.	time
+grammar-n2-001	N2	に限る	~이 최고다/~에 한정된다	제한이나 가장 좋은 선택을 말한다.	limit
+grammar-n2-002	N2	に限らず	~뿐만 아니라	범위가 넓음을 말한다.	addition
+grammar-n2-003	N2	に限って	~에 한해서/하필	특정 경우를 강조한다.	limit
+grammar-n2-004	N2	にかかわらず	~에 관계없이	조건과 상관없음을 말한다.	concession
+grammar-n2-005	N2	にもかかわらず	~인데도 불구하고	예상과 다른 결과를 말한다.	concession
+grammar-n2-006	N2	に応じて	~에 따라	상황에 맞춰 변한다.	relation
+grammar-n2-007	N2	に沿って	~에 따라서	방침이나 길을 따른다.	relation
+grammar-n2-008	N2	に基づいて	~에 근거해서	기준이나 자료를 바탕으로 한다.	relation
+grammar-n2-009	N2	にわたって	~에 걸쳐	넓은 시간이나 범위를 말한다.	range
+grammar-n2-010	N2	を通じて	~을 통해/~내내	수단이나 기간 전체를 말한다.	range
+grammar-n2-011	N2	を通して	~을 통해	수단이나 매개를 말한다.	relation
+grammar-n2-012	N2	をめぐって	~을 둘러싸고	논쟁이나 관계의 중심 주제를 말한다.	topic
+grammar-n2-013	N2	に反して	~에 반해서	기대나 규칙과 반대임을 말한다.	contrast
+grammar-n2-014	N2	に比べて	~에 비해	비교를 말한다.	comparison
+grammar-n2-015	N2	にしたがって	~에 따라	한 변화와 함께 다른 변화가 일어난다.	change
+grammar-n2-016	N2	とともに	~와 함께/~함에 따라	동시 변화나 함께함을 말한다.	change
+grammar-n2-017	N2	に伴って	~에 동반하여	큰 변화와 같이 일어남을 말한다.	change
+grammar-n2-018	N2	上で	~한 후에/~하는 데 있어서	순서나 관점을 말한다.	formal
+grammar-n2-019	N2	上に	~뿐만 아니라	좋거나 나쁜 점이 더해진다.	addition
+grammar-n2-020	N2	以上	~한 이상	이미 그런 상황이면 당연히 해야 함을 말한다.	condition
+grammar-n2-021	N2	うえは	~한 이상	결심이나 책임을 강조한다.	condition
+grammar-n2-022	N2	からには	~한 이상	당연한 결과나 의무를 말한다.	condition
+grammar-n2-023	N2	ものだから	~하는 바람에	개인적 변명이나 이유를 말한다.	reason
+grammar-n2-024	N2	ものの	~이기는 하지만	인정 뒤 반대 내용을 말한다.	contrast
+grammar-n2-025	N2	とはいえ	~라고는 해도	앞 내용을 일부 인정하고 제한한다.	contrast
+grammar-n2-026	N2	といっても	~라고 해도	실제 정도가 낮음을 말한다.	contrast
+grammar-n2-027	N2	かねない	~할지도 모른다	나쁜 일이 생길 가능성을 말한다.	risk
+grammar-n2-028	N2	かねる	~하기 어렵다	정중하게 거절하거나 어렵다고 말한다.	formal;negative
+grammar-n2-029	N2	ざるをえない	~하지 않을 수 없다	어쩔 수 없이 해야 함을 말한다.	constraint
+grammar-n2-030	N2	ないことはない	~하지 않는 것은 아니다	약한 긍정을 말한다.	partial_positive
+grammar-n2-031	N2	ずにはいられない	~하지 않을 수 없다	감정 때문에 참을 수 없음을 말한다.	emotion
+grammar-n2-032	N2	ものだ	~하는 법이다/참 ~하다	일반론이나 감탄을 말한다.	general
+grammar-n2-033	N2	ものではない	~하는 것이 아니다	강한 충고나 금지를 말한다.	advice;negative
+grammar-n2-034	N2	というものだ	~라는 것이다	평가나 판단을 강하게 말한다.	formal
+grammar-n2-035	N2	というものではない	~라고 해서 되는 것은 아니다	단순히 그렇다고 충분하지 않음을 말한다.	formal;negative
+grammar-n2-036	N2	だけあって	~인 만큼	그럴 만한 이유가 있음을 말한다.	reason
+grammar-n2-037	N2	だけに	~인 만큼	그래서 더 강하게 느껴짐을 말한다.	reason
+grammar-n2-038	N2	次第	~하는 대로	바로 이어서 한다.	time
+grammar-n2-039	N2	次第で	~에 따라	결과가 조건에 달려 있다.	condition
+grammar-n1-001	N1	に至る	~에 이르다	결과나 단계의 끝에 도달함을 말한다.	formal
+grammar-n1-002	N1	に至って	~에 이르러서	특정 단계가 되어서야 변함을 말한다.	formal
+grammar-n1-003	N1	に至っては	~에 이르러서는	극단적인 예를 든다.	formal
+grammar-n1-004	N1	に至るまで	~에 이르기까지	범위가 끝까지 미침을 말한다.	range
+grammar-n1-005	N1	を皮切りに	~을 시작으로	그 일을 시작으로 이어진다.	sequence
+grammar-n1-006	N1	をもって	~으로써/~을 끝으로	수단, 기준 시점, 종료를 격식 있게 말한다.	formal
+grammar-n1-007	N1	をよそに	~을 아랑곳하지 않고	주변 상황을 무시하고 행동한다.	contrast
+grammar-n1-008	N1	をものともせず	~을 개의치 않고	어려움을 이겨내고 한다.	contrast
+grammar-n1-009	N1	を禁じ得ない	~을 금할 수 없다	감정이 저절로 생김을 격식 있게 말한다.	emotion;formal
+grammar-n1-010	N1	に堪えない	~할 수 없다/매우 ~하다	감정이나 평가가 강함을 말한다.	formal
+grammar-n1-011	N1	に足る	~할 만하다	충분한 가치가 있음을 말한다.	formal
+grammar-n1-012	N1	に値する	~할 가치가 있다	평가할 만한 가치가 있음을 말한다.	formal
+grammar-n1-013	N1	に即して	~에 맞춰	현실이나 기준에 맞게 한다.	formal
+grammar-n1-014	N1	に則って	~에 따라	규칙이나 법을 따른다.	formal
+grammar-n1-015	N1	に照らして	~에 비추어	기준과 비교해 판단한다.	formal
+grammar-n1-016	N1	に鑑みて	~을 고려하여	중요한 사정을 보고 판단한다.	formal
+grammar-n1-017	N1	と相まって	~와 맞물려	두 요소가 함께 작용한다.	formal
+grammar-n1-018	N1	とあって	~라서	특별한 상황이라 자연스럽게 그렇다.	reason
+grammar-n1-019	N1	とあれば	~라면	그런 상황이면 당연히 한다.	condition
+grammar-n1-020	N1	ときたら	~라 하면	불만이나 화제를 강조한다.	casual
+grammar-n1-021	N1	ばこそ	~이기 때문에야말로	이유를 강하게 강조한다.	emphasis
+grammar-n1-022	N1	てこそ	~해야 비로소	그 조건이 있어야 성립한다.	emphasis
+grammar-n1-023	N1	てからというもの	~한 뒤로 계속	어떤 뒤로 큰 변화가 이어진다.	time
+grammar-n1-024	N1	ずくめ	~투성이/온통	좋거나 나쁜 것이 가득함을 말한다.	suffix
+grammar-n1-025	N1	まみれ	~투성이	안 좋은 것이 잔뜩 묻어 있음을 말한다.	suffix
+grammar-n1-026	N1	だに	~조차	아주 극단적인 예를 든다.	formal
+grammar-n1-027	N1	すら	~조차	극단적인 예를 든다.	focus
+grammar-n1-028	N1	たりとも	~라도	가장 작은 것도 예외가 아님을 말한다.	formal
+grammar-n1-029	N1	ならでは	~만이 할 수 있는	특별한 장점을 말한다.	formal
+grammar-n1-030	N1	べく	~하려고/~해야 해서	목적이나 의무를 격식 있게 말한다.	formal
+grammar-n1-031	N1	べからず	~해서는 안 된다	금지를 격식 있게 말한다.	formal;prohibition
+grammar-n1-032	N1	まじき	~해서는 안 되는	직업이나 입장에 어울리지 않음을 말한다.	formal
+grammar-n1-033	N1	ごとき	~같은	비유나 낮춤을 격식 있게 말한다.	formal
+grammar-n1-034	N1	いかん	~에 달림	결과가 조건에 달려 있음을 말한다.	formal
+grammar-n1-035	N1	いかんで	~에 따라	결과가 조건에 따라 달라진다.	formal
+grammar-n1-036	N1	いかんによらず	~에 관계없이	조건과 상관없음을 말한다.	formal
+grammar-n1-037	N1	には及ばない	~할 필요가 없다	그럴 정도까지는 아님을 말한다.	formal
+grammar-n1-038	N1	に越したことはない	~하는 것이 가장 좋다	가능하면 그게 좋다고 말한다.	advice
+grammar-n1-039	N1	ないまでも	~까지는 아니더라도	최고 정도는 아니지만 어느 정도를 말한다.	concession
+grammar-n1-040	N1	ただではすまない	그냥 넘어가지 않는다	문제가 생기면 대가가 있음을 말한다.	consequence
+grammar-n1-041	N1	でなくてなんだろう	~이 아니고 무엇이겠는가	강한 단정을 말한다.	emphasis
+grammar-n1-042	N1	ずにはおかない	반드시 ~하게 만든다	강한 영향이나 결심을 말한다.	force
+grammar-n1-043	N1	を余儀なくされる	~을 어쩔 수 없이 하게 되다	외부 상황 때문에 강제로 하게 된다.	formal
+grammar-n1-044	N1	に忍びない	~하기 차마 어렵다	마음이 아파서 하기 어렵다.	emotion
+grammar-n1-045	N1	そばから	~하자마자 또	반복해서 바로 이어짐을 말한다.	time
