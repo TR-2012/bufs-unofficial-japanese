@@ -81,7 +81,6 @@ Vercel에서는 아래 환경변수를 **선택적으로** 쓸 수 있습니다(
 | 환경변수 | 용도 |
 |---|---|
 | `GOOGLE_TTS_API_KEY` | 음성 파일이 없는 문장을 Google 음성으로 읽기(`api/tts.js`). `GOOGLE_TTS_VOICE`(기본 `ja-JP-Neural2-B`)·`GOOGLE_TTS_RATE`·`GOOGLE_TTS_PITCH`로 조정 |
-| `REQUIRE_LOGIN=1` | 등록된 이메일만 접속하도록 잠금(`middleware.js`, `login.html`). 함께 `AUTH_SECRET`, `ALLOWED_EMAILS`(최대 4명), `GMAIL_USER`, `GMAIL_APP_PASSWORD`(Gmail 앱 비밀번호 16자)가 필요 |
 
 ## 데이터 다시 만들기
 
@@ -144,7 +143,7 @@ node scripts/build_voice.mjs
 | `audio/` | VOICEVOX:春日部つむぎ 음성 파일 |
 | `data/` | 학습 데이터(JSON)와 생성 코드 |
 | `scripts/` | 커리큘럼·퀴즈·작문·문법·음성 생성 스크립트 |
-| `api/`, `lib/`, `middleware.js`, `login.html` | (선택) Google TTS 프록시와 로그인 잠금 |
+| `api/` | (선택) Google TTS 프록시 |
 | `haruko.jpg` | 마스코트 하루코 |
 
 ## 라이선스
