@@ -1,10 +1,8 @@
 /* ===== 하루코 TTS layer =====
    호출 우선순위:
      0) 미리 만든 음성 파일 audio/<key>.mp3 — VOICEVOX:春日部つむぎ (단어·한자·문법 예문, 무료·무제한)
-     1) Vercel 서버리스 함수 /api/tts — Google Cloud TTS ja-JP 젊은 여성 음성(GOOGLE_TTS_API_KEY)
-     2) 실패·미설정 시 브라우저 SpeechSynthesis의 일본어 여성 음성(「Google 日本語」 우선) */
+     1) 파일이 없을 때 브라우저 SpeechSynthesis의 일본어 여성 음성(「Google 日本語」 우선) */
 (function(){
-  var serverlessAvailable=null; // null=미확인, true/false
   var audioEl=null;
   var inflight=null; // 마지막 재생 중인 AbortController
   var cache=new Map(); // text → blob URL (세션 내)
@@ -75,27 +73,6 @@
     return true;
   }
 
-  async function tryServerless(text, signal){
-    var r;
-    try{
-      r=await fetch('/api/tts',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({text:text}),
-        signal:signal,
-      });
-    }catch(e){ return null; }
-    // 서버 키 미설정(503)일 때만 '서버리스 불가'로 기억한다.
-    if(r && r.status===503) serverlessAvailable=false;
-    if(!r||!r.ok){
-      try{ var t=r?await r.text():''; console.warn('[하루코 TTS] /api/tts 실패 status='+(r&&r.status)+' '+t.slice(0,300)); }catch(e2){}
-      return null;
-    }
-    var b=await r.blob();
-    if(!b||b.size<200) return null; // 빈 응답 방어
-    return b;
-  }
-
   // 브라우저 폴백: 일본어 여성 음성 우선순위 — Google 日本語 → Kyoko/Nanami/Haruka 등 → 아무 ja-JP
   var FEMALE_HINT=/Google 日本語|Kyoko|O-ren|Nanami|Haruka|Ayumi|Mizuki|Sayaka|Female|女性/i;
   function pickVoice(){
@@ -157,7 +134,7 @@
     text=toJaOnly(text);
     if(!text) return false;
     opts=opts||{};
-    var ck='v2|'+text; // v2: つむぎ 정적 파일 도입(이전 Google 캐시와 분리)
+    var ck='v2|'+text; // v2: つむぎ 정적 파일 도입(이전 캐시와 분리)
     stop();
     inflight=new AbortController();
     var sig=inflight.signal;
@@ -172,10 +149,6 @@
     var fromStatic=false;
     if(!ephemeral){ blob=await tryStatic(text, sig); fromStatic=!!blob; }   // ephemeral 문장은 미리 만든 파일이 없으므로 건너뜀
     if(sig.aborted) return false;
-    if(!blob && serverlessAvailable!==false){
-      blob=await tryServerless(text, sig);
-      if(blob) serverlessAvailable=true;
-    }
     if(blob){
       var url=URL.createObjectURL(blob);
       cache.set(ck,url);

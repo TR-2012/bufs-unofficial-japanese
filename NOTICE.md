@@ -4,7 +4,7 @@
 
 | 부분 | 경로 | 라이선스 / 조건 |
 |---|---|---|
-| 코드 | `index.html`, `tts.js`, `support.js`, `combo_check.js`, `api/`, `scripts/`, `tools/` 등 | **MIT** (`LICENSE`) |
+| 코드 | `index.html`, `tts.js`, `support.js`, `combo_check.js`, `scripts/`, `tools/` 등 | **MIT** (`LICENSE`) |
 | 한자 데이터 | `data/kanji.json` 및 파생물 | **CC BY-SA 4.0** — KANJIDIC2 © EDRDG. 출처 표시 + 같은 조건으로 공유 |
 | 어휘 데이터 | `data/words.json`, `data/quiz_core.json` 및 파생물 | **CC BY-SA 4.0** — JMdict © EDRDG. JLPT 분류 일부는 kotoba(MIT) |
 | 직접 작성한 학습 데이터 | `data/grammar.json`, `data/writing.json`, `data/writing_combo.json`, `data/lib/`, `data/seed/` | **CC BY-SA 4.0** (위 사전 데이터와 섞여 있어 같은 조건으로 통일) |
