@@ -300,7 +300,7 @@ def build_coverage(counts: dict[str, int]) -> dict:
             "joyo_kanji": counts.get("joyo_kanji", 0) >= TARGETS["joyo_kanji"],
             "modern_kanji_candidate": counts.get("kanji", 0) >= TARGETS["modern_kanji_candidate"],
         },
-        "note": "Course tags are learning candidates, not official JLPT or JPT source lists.",
+        "note": "Course tags are learning candidates, not official JLPT source lists.",
     }
 
 

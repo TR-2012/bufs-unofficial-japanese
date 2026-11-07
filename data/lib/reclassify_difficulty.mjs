@@ -2,7 +2,7 @@
 //
 // 단어 카드·필기 노트 어휘(words.json)의 두 난이도 축을 재계산한다.
 // 의미·읽기·품사·분야는 그대로 두고 jlpt/level만 다시 계산한다.
-//   · jlpt  = JLPT 난이도(N5~N1·고급). JPT 축도 앱에서 이 값으로 파생됨.
+//   · jlpt  = JLPT 난이도(N5~N1·고급).
 //   · level = 단계(초등~대학원) = 일본 학년(学年) 기준(아래 stageOf 참고). jlpt와 독립.
 //
 //   실행:  node data/lib/reclassify_difficulty.mjs

@@ -260,7 +260,7 @@
           <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:26px;">
             <div style="flex:2; min-width:340px; background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:6px; padding:28px 30px; position:relative; overflow:hidden; box-shadow:8px 8px 0 var(--red);">
               <div style="display:inline-block; font-family:var(--font-mono); font-size:var(--fs-sm); letter-spacing:2px; color:var(--ink); font-weight:700; background:var(--yellow); border:2px solid var(--ink); padding:3px 9px;">오늘의 공부 — DAY {{ dayNo }} / 960</div>
-              <div class="hh-serif" style="font-size:32px; font-weight:900; margin:14px 0 6px; letter-spacing:-1px; color:var(--on-dark);">열심히 힘내서 N1 만점 목표로 해요!</div>
+              <div class="hh-serif" style="font-size:32px; font-weight:900; margin:14px 0 6px; letter-spacing:-1px; color:var(--on-dark);">열심히 힘내서 N1 합격 목표로 해요!</div>
               <div style="font-size:14px; color:var(--on-dark-mute); line-height:1.6; max-width:440px;">하루 15분이면 충분해요. 오늘의 단어 8개·한자 3자·퀴즈 5문제를 하루코와 함께 끝내요.</div>
               <div style="display:flex; gap:12px; margin-top:22px;">
                 <button onClick="{{ goKanji }}" style="background:var(--red); color:var(--on-dark); border:2px solid var(--on-dark); border-radius:4px; padding:12px 18px; font-weight:900; font-size:14px; cursor:pointer; font-family:inherit; white-space:nowrap; box-shadow:4px 4px 0 var(--yellow);" style-hover="background:var(--yellow); color:var(--ink); border-color:var(--yellow);">오늘 한자 시작</button>
@@ -274,6 +274,7 @@
                 <div style="height:100%; width: {{ xpPercent }}%; background:var(--red);"></div>
               </div>
               <div style="font-size:var(--fs-sm); color:var(--ink); font-weight:600;">{{ xpNextLabel }} <b style="color:var(--ink);">{{ xpNextValue }}</b></div>
+              <div style="margin-top:10px; font-size:var(--fs-sm); color:var(--ink); font-weight:600;">XP는 퀴즈 코너나 연상 암기 등에서 올라갑니다</div>
               <div style="margin-top:16px; padding-top:16px; border-top:3px solid var(--ink); display:flex; justify-content:space-between;">
                 <div><div style="font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink);">{{ streak }}</div><div style="font-size:var(--fs-sm); color:var(--ink); font-weight:700; white-space:nowrap;">연속 출석</div></div>
                 <div><div style="font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--ink);">{{ solvedCount }}</div><div style="font-size:var(--fs-sm); color:var(--ink); font-weight:700; white-space:nowrap;">맞힌 퀴즈</div></div>
@@ -535,7 +536,7 @@
       <sc-if value="{{ is.practical }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
           <div style="background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:5px; padding:16px 20px; margin-bottom:16px; box-shadow:6px 6px 0 var(--yellow);">
-            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · 비공식 학습 계획 · JLPT N1 만점</div>
+            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · 비공식 학습 계획 · JLPT N1 합격</div>
             <div style="font-size:13.5px; color:var(--on-dark-mute); line-height:1.7; margin-top:6px;">4년 동안 외울 어휘는 <b style="color:var(--yellow);">{{ prTotalCount }}개</b>뿐이에요. 평일 하루 8개 × 240일 × 4년(DAY 1~960)이면 끝나는 분량입니다. <b style="color:var(--yellow);">「인지」</b> 표시는 한국 한자음과 같은 단어(経済→경제)라서 외우지 않고 확인만 하면 돼요.</div>
           </div>
           <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
@@ -1433,7 +1434,7 @@ class Component extends DCLogic {
     this.setState({dark:on}); setTimeout(()=>{ try{ this.redraw && this.redraw(); }catch(e){} },0);
   }
   addXp(n){ this.setState(s=>{ const xp=s.xp+n; try{ localStorage.setItem('tj.xp',String(xp)); }catch(e){} return {xp}; }); }
-  // [필요 XP, 계급 이름] — 대략 걸리는 기간은 하루 45 XP 기준
+  // [필요 XP, 계급 이름] — 대략 걸리는 기간은 하루 약 45 XP 기준(한자 뜻 보기 XP 제거 후 실제는 약 39 XP)
   RANKS(){ return [
     [0,'입문'], [300,'새싹'], [1200,'초급'], [3000,'초급 숙련'], [6000,'중급 입문'],     // ~1주 · ~4주 · ~2달 · ~4.5달
     [10000,'중급'], [15000,'중급 숙련'], [21000,'상급 입문'], [28000,'상급'],           // ~1학년 말 · ~1.4년 · ~2학년 말 · ~2.6년
@@ -1537,7 +1538,8 @@ class Component extends DCLogic {
   // ---------- KANJI ----------
   toggleKanji(key){
     const r=this.state.revealedKanji.slice(); const at=r.indexOf(key);
-    if(at<0){ r.push(key); if(this._firstSeen('k',key)){ this.addXp(2); this._bumpToday('k'); } } else r.splice(at,1);
+    // 뜻 보기만으로는 XP를 주지 않는다(넘겨보기만 해도 쌓이는 문제) — 한자 XP는 「외웠어요」에서만
+    if(at<0){ r.push(key); if(this._firstSeen('k',key)){ this._bumpToday('k'); } } else r.splice(at,1);
     this._saveJson('tj.rev.k',r); this.setState({revealedKanji:r});
   }
   // ---------- WORDS ----------
@@ -1751,7 +1753,7 @@ class Component extends DCLogic {
     const is={}; Object.keys(screens).forEach(k=>is[k]=s.screen===k);
 
     // level
-    // 계급: 하루 분량(단어 8·한자 3·퀴즈 5·문법 3)을 다 하면 약 45 XP → 1년(240일) 약 1만, 4년 약 4만 3천 XP.
+    // 계급: 하루 분량(단어 8·한자 3·퀴즈 5·문법 3)을 다 하면 약 39 XP(한자 뜻 보기는 XP 없음) → 1년(240일) 약 9천, 4년 약 3만 7천 XP.
     const RANKS=this.RANKS(); let li=0; while(li+1<RANKS.length && s.xp>=RANKS[li+1][0]) li++;
     const level=li+1, rankName=RANKS[li][1];
     const lo=RANKS[li][0], hi=li+1<RANKS.length?RANKS[li+1][0]:null;
@@ -1807,7 +1809,7 @@ class Component extends DCLogic {
       {tag:'VOCAB',name:'4년 어휘',count:'7,680 단어'},
       {tag:'DAY',name:'하루 15분',count:'단어 8 · 한자 3 · 퀴즈 5'},
       {tag:'PLAN',name:'4년 · 8학기',count:'DAY 1~960'},
-      {tag:'GOAL',name:'최종 목표',count:'JLPT N1 만점'},
+      {tag:'GOAL',name:'최종 목표',count:'JLPT N1 합격'},
       {tag:'KANJI',name:'상용한자',count:'2,136자'},
       {tag:'BUSINESS',name:'비즈니스·경어',count:'실무 표현'},
       {tag:'GRAMMAR',name:'N5–N1 문법',count:Object.values(this.grammarFile||{}).reduce((a,u)=>a+(u||[]).length,0)+'단원'}
@@ -1995,7 +1997,7 @@ class Component extends DCLogic {
       {n:1,label:'1학년',desc:'N5 · N4 → 1학년 말 N4 합격'},
       {n:2,label:'2학년',desc:'N3 → 2학년 말 N3 합격'},
       {n:3,label:'3학년',desc:'N2 → 3학년 말 N2 합격 · 한자 완료'},
-      {n:4,label:'4학년',desc:'N1 + N2 심화 → N1 만점'}
+      {n:4,label:'4학년',desc:'N1 + N2 심화 → N1 합격'}
     ];
     const prStageCards=PR_STAGE_DEFS.map(st=>{
       const on=s.prStage===st.n;

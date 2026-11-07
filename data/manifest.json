@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "language_pair": "ja-ko",
   "data_policy": {
-    "official_exam_list_warning": "JLPT and JPT official full vocabulary, kanji, and grammar lists are not treated as available open data. Course tags in this repository are learning targets, not official exam guarantees.",
+    "official_exam_list_warning": "JLPT official full vocabulary, kanji, and grammar lists are not treated as available open data. Course tags in this repository are learning targets, not official exam guarantees.",
     "allowed_sources": [
       "Open-license dictionary data with attribution",
       "Original learning notes written for this repository",

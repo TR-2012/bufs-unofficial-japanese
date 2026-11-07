@@ -11,8 +11,6 @@ docs
 screenshots
 data/lib
 wrangler.jsonc
-vercel.json
-.vercelignore
 .gitignore
 README.md
 CONTRIBUTING.md
