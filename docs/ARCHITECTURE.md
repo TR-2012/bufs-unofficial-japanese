@@ -121,6 +121,16 @@ scripts/check-writing-combo.mjs
 - 우선순위 1: 파일이 없으면 브라우저 SpeechSynthesis의 일본어 여성 음성(「Google 日本語」 우선).
 - 키 생성: 문장을 `toJaOnly`로 정리한 뒤 FNV-1a 32비트 해시. `scripts/build_voice.mjs`가 같은 함수를 재사용한다(VOICEVOX 엔진 필요).
 
+음성 파일을 다시 만들 때는 VOICEVOX 엔진을 띄운 뒤 스크립트를 실행한다(이미 있는 파일은 건너뛰므로 중단 후 다시 실행해도 된다).
+
+```bash
+docker run -d -p 50021:50021 voicevox/voicevox_engine:cpu-0.26.1
+```
+
+```bash
+node scripts/build_voice.mjs
+```
+
 ## 8. 오프라인·설치(서비스 워커)
 
 - 같은 출처의 화면·스크립트·데이터: 네트워크 우선(4초) → 실패하면 저장본. 배포하면 항상 최신이 반영된다.

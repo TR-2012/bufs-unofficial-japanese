@@ -68,7 +68,8 @@
     border-left:7px solid var(--red); border-radius:5px; box-shadow:4px 4px 0 var(--shadow); }
   .hh-unofficial-badge { flex:none; background:var(--yellow); color:#3E2F23; border:2px solid #3E2F23;
     padding:4px 8px; font-size:12px; font-weight:900; white-space:nowrap; }
-  .hh-unofficial-copy { min-width:0; line-height:1.5; }
+  .hh-unofficial-copy { min-width:0; line-height:1.5; word-break:keep-all; overflow-wrap:break-word; }
+  @media (max-width: 768px) { .hh-unofficial-notice { flex-direction:column; align-items:flex-start; gap:8px; } }
   .hh-unofficial-copy strong { display:block; font-size:15px; }
   .hh-unofficial-copy span { display:block; color:var(--ink2); font-size:13px; }
   ::-webkit-scrollbar { width: 14px; height: 14px; }
@@ -222,8 +223,9 @@
           <div class="hh-unofficial-notice" role="note" aria-label="사이트 운영 안내">
             <span class="hh-unofficial-badge">비공식</span>
             <div class="hh-unofficial-copy">
-              <strong>부산외국어대학교 공식 서비스가 아닙니다.</strong>
-              <span>재학생이 만든 일본어 학습 사이트입니다.</span>
+              <span>무료. 개인정보 불필요. 계정 및 로그인 불필요.</span>
+              <span>오픈소스. 학습 기록은 각자의 기기에만 저장됩니다.</span>
+              <strong>BUFS 대학 본부와는 상관이 없는 재학생 제작 프로젝트입니다.</strong>
             </div>
           </div>
           <sc-if value="{{ showInstall }}" hint-placeholder-val="">

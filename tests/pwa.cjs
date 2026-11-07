@@ -30,6 +30,8 @@ async function main() {
     p.on('pageerror', (e) => errs.push(e.message.slice(0, 90)));
     await p.goto(base); await p.waitForTimeout(3500);
     r.ok('첫 방문에 앱 표시', (await p.evaluate(() => document.body.innerText)).includes('BUFS 비공식'));
+    const homeText = await p.evaluate(() => document.body.innerText);
+    r.ok('홈에 안내 3줄 표시(무료·개인정보·오픈소스·학교와 무관)', ['무료. 개인정보 불필요. 계정 및 로그인 불필요.', '오픈소스. 학습 기록은 각자의 기기에만 저장됩니다.', 'BUFS 대학 본부와는 상관이 없는 재학생 제작 프로젝트입니다.'].every((x) => homeText.includes(x)));
     r.ok('외부 요청 0건', ext.length === 0, ext.join(', '));
     await p.evaluate(() => navigator.serviceWorker.ready); await p.waitForTimeout(2500);
     const info = await p.evaluate(async () => { const names = await caches.keys(); const n = names.find((k) => k.startsWith('bufs-v')); return { names, shell: n ? (await (await caches.open(n)).keys()).length : 0 }; });
