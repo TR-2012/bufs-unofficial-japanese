@@ -68,7 +68,8 @@ suite(6, '접근성(axe-core)', 'a11y', true);
 /* 8: 보안 — 보안 테스트(위 묶음 1에 포함) + npm audit */
 {
   const sec = FAST ? null : run(['security']).status === 0;
-  const au = spawnSync('npm', ['audit', '--audit-level=high'], { cwd: __dirname, encoding: 'utf8' });
+  // Windows의 npm은 npm.cmd라 셸을 거쳐야 실행된다(인자는 고정값이라 셸 사용이 안전). 실행 실패를 「취약점 있음」으로 오판하지 않게 한다.
+  const au = spawnSync('npm', ['audit', '--audit-level=high'], { cwd: __dirname, encoding: 'utf8', shell: process.platform === 'win32' });
   const none = /found 0 vulnerabilities/.test(au.stdout + au.stderr);
   add(8, '보안(헤더·XSS 테스트 + npm audit)', (sec === null ? true : sec) && au.status === 0, `npm audit: ${none ? '취약점 0건' : (au.status === 0 ? '심각 취약점 없음' : '취약점 있음')}${sec === null ? ' / 보안 테스트는 --fast 에서 건너뜀' : ''}`);
 }
