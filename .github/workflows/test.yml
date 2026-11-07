@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - name: 테스트 도구 설치
+        working-directory: tests
+        run: npm ci
+      - name: 브라우저 설치
+        working-directory: tests
+        run: npx playwright install --with-deps chromium
+      - name: 전체 테스트
+        run: node tests/run.cjs
+      - name: 실패 시 현재 화면 덤프 보관
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-current
+          path: tests/.out/
+          if-no-files-found: ignore
