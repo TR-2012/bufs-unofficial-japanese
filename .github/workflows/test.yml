@@ -34,3 +34,4 @@ jobs:
           name: golden-current
           path: tests/.out/
           if-no-files-found: ignore
+          include-hidden-files: true
