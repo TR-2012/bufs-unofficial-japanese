@@ -140,6 +140,11 @@ node scripts/build_voice.mjs
 
 데이터 생성 기준과 스키마는 [`data/README.md`](data/README.md), 출처는 [`docs/data-sources.md`](docs/data-sources.md)에 있습니다.
 
+## 개발
+
+- 코드 구조(실행 흐름 · 화면별 코드 위치 · 저장 키 · 함정): [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- 회귀 테스트(화면·오프라인·보안): `node tests/run.cjs` — 준비와 사용법은 [`tests/README.md`](tests/README.md)
+
 ## 폴더 구성
 
 | 경로 | 내용 |
@@ -153,6 +158,8 @@ node scripts/build_voice.mjs
 | `audio/` | VOICEVOX:春日部つむぎ 음성 파일 |
 | `data/` | 학습 데이터(JSON)와 생성 코드 |
 | `scripts/` | 커리큘럼·퀴즈·작문·문법·음성 생성 스크립트 |
+| `tests/` | 회귀 테스트(배포에서 제외) |
+| `docs/` | 구조 안내 · 데이터 출처 |
 | `haruko.jpg` | 마스코트 하루코 |
 
 ## 라이선스
