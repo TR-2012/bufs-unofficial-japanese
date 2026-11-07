@@ -44,7 +44,14 @@ try {
 
 /* 개인 식별 정보: git 추적 파일 전체에서 검사 */
 const tracked = spawnSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' }).stdout.split('\0').filter(Boolean);
-const PII = /titalike|@pm\.me|sekkenkun|\.workers\.dev|\.pages\.dev/i;
+// 계정명·이메일 일부 같은 개인 단어는 저장소에 적지 않는다(적으면 그 자체가 노출).
+// tests/pii.local.txt(git 제외, 한 줄에 하나, #은 주석) 또는 환경변수 PII_WORDS(쉼표 구분)에서 읽는다.
+const PII_FILE = path.join(__dirname, 'pii.local.txt');
+const fileWords = fs.existsSync(PII_FILE) ? fs.readFileSync(PII_FILE, 'utf8').split(/\r?\n/) : [];
+const envWords = String(process.env.PII_WORDS || '').split(',');
+const personalWords = [...fileWords, ...envWords].map((w) => w.trim()).filter((w) => w && !w.startsWith('#'));
+const escapeRegex = (w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const PII = new RegExp(['\\.workers\\.dev', '\\.pages\\.dev', ...personalWords.map(escapeRegex)].join('|'), 'i');
 const hits = [];
 for (const f of tracked) {
   if (/\.(png|jpg|mp3|woff2?)$/i.test(f) || f.startsWith('audio/') || f.startsWith('tests/node_modules/') || f === 'tests/package-lock.json') continue;
