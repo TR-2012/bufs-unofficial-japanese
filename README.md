@@ -146,7 +146,7 @@ node scripts/build_voice.mjs
 |---|---|
 | `index.html` | 앱 본체(화면 템플릿 + 로직) |
 | `support.js` | 화면 렌더링 런타임 |
-| `vendor/` | React 18.3.1 · Babel 7.29.13(외부 CDN 없이 자체 포함, MIT) |
+| `vendor/` | React 18.3.1(외부 CDN 없이 자체 포함, MIT) |
 | `sw.js` · `pwa.js` · `manifest.webmanifest` · `icons/` | 앱 설치 · 오프라인 |
 | `tts.js` | 발음 재생(음성 파일 → 브라우저 음성) |
 | `combo_check.js` | 단어 조합 작문 규칙 점검 |

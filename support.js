@@ -986,7 +986,9 @@
     }
     return cur;
   }
-  var BABEL_URL = "./vendor/babel-7.29.13.min.js";
+  // Babel은 .jsx 모듈을 x-import할 때만 필요하다(현재 앱은 사용하지 않음 → vendor/에 파일을 두지 않는다).
+  // .jsx import를 쓰려면 @babel/standalone을 받아 이 주소에 두고 sw.js의 SHELL에도 추가한다.
+  var BABEL_URL = "./vendor/babel-standalone.min.js";
   var GLOBAL_POLL_INTERVAL_MS = 50;
   var GLOBAL_POLL_TIMEOUT_MS = 3e4;
   function createExternalModules(onResolved) {

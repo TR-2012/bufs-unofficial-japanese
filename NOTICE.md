@@ -11,7 +11,7 @@
 | 음성 파일 | `audio/` | **VOICEVOX:春日部つむぎ** 로 생성. 사용·재배포 시 「VOICEVOX:春日部つむぎ」 크레디트 표시 필수. VOICEVOX 및 春日部つむぎ 이용규약을 따름(https://voicevox.hiroshiba.jp) |
 | 마스코트 이미지 | `haruko.jpg` | **CC BY 4.0** — 출처 표시만 하면 자유롭게 사용·수정·재배포 가능. 표시 예: 「하루코 © BUFS 비공식 일본어 학습 contributors, CC BY 4.0」 (https://creativecommons.org/licenses/by/4.0/deed.ko) |
 | 글꼴 | 기기에 설치된 기본 글꼴(외부 글꼴 파일을 받지 않음) | 해당 없음 |
-| 외부 라이브러리 | `vendor/` — React · React DOM 18.3.1 (© Meta Platforms, Inc.), @babel/standalone 7.29.13 (© Sebastian McKenzie and other contributors) | **MIT** |
+| 외부 라이브러리 | `vendor/` — React · React DOM 18.3.1 (© Meta Platforms, Inc.) | **MIT** |
 
 - KANJIDIC2·JMdict: Electronic Dictionary Research and Development Group, https://www.edrdg.org/edrdg/licence.html
 - CC BY-SA 4.0 전문: https://creativecommons.org/licenses/by-sa/4.0/legalcode.ko

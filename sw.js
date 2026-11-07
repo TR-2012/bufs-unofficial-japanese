@@ -13,7 +13,7 @@
  *     self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.map(c => caches.delete(c)))).then(() => self.registration.unregister())));
  *   (파일을 그냥 삭제하면 이미 설치된 기기에는 남아 있으므로 위 방법을 쓴다.)
  */
-const CACHE = 'bufs-v1';
+const CACHE = 'bufs-v2';
 const AUDIO = 'bufs-audio-v1';
 const MAX_AUDIO = 800;
 const NET_TIMEOUT = 4000;
@@ -22,7 +22,7 @@ const SHELL = [
   './', 'index.html', 'support.js', 'tts.js', 'combo_check.js', 'pwa.js', 'haruko.jpg',
   'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon-180.png',
-  'vendor/react-18.3.1.min.js', 'vendor/react-dom-18.3.1.min.js', 'vendor/babel-7.29.13.min.js',
+  'vendor/react-18.3.1.min.js', 'vendor/react-dom-18.3.1.min.js',
   'data/kanji.json', 'data/words.json', 'data/grammar.json', 'data/writing.json', 'data/writing_combo.json', 'data/quiz_core.json',
 ];
 
