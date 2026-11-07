@@ -62,6 +62,15 @@
   .hh-card:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--ink); }
   /* 헤더 세리프(케이스 파일 느낌) — 굵게 */
   .hh-serif { font-family: var(--font-serif); letter-spacing:-.5px; }
+  /* 홈에서 사이트의 운영 주체를 바로 알 수 있도록 안내한다. */
+  .hh-unofficial-notice { display:flex; align-items:center; gap:14px; margin-bottom:20px;
+    padding:13px 16px; background:var(--card); color:var(--ink); border:3px solid var(--ink);
+    border-left:7px solid var(--red); border-radius:5px; box-shadow:4px 4px 0 var(--shadow); }
+  .hh-unofficial-badge { flex:none; background:var(--yellow); color:#3E2F23; border:2px solid #3E2F23;
+    padding:4px 8px; font-size:12px; font-weight:900; white-space:nowrap; }
+  .hh-unofficial-copy { min-width:0; line-height:1.5; }
+  .hh-unofficial-copy strong { display:block; font-size:15px; }
+  .hh-unofficial-copy span { display:block; color:var(--ink2); font-size:13px; }
   ::-webkit-scrollbar { width: 14px; height: 14px; }
   ::-webkit-scrollbar-thumb { background: var(--ink); border: 3px solid var(--paper); border-radius: 0; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -210,6 +219,13 @@
       <!-- ===== HOME ===== -->
       <sc-if value="{{ is.home }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
+          <div class="hh-unofficial-notice" role="note" aria-label="사이트 운영 안내">
+            <span class="hh-unofficial-badge">비공식</span>
+            <div class="hh-unofficial-copy">
+              <strong>부산외국어대학교 공식 서비스가 아닙니다.</strong>
+              <span>재학생이 만든 일본어 학습 사이트입니다.</span>
+            </div>
+          </div>
           <sc-if value="{{ showInstall }}" hint-placeholder-val="">
             <div class="hh-card" style="background:var(--yellow); color:#3E2F23; border-radius:5px; padding:14px 18px; margin-bottom:18px; display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
               <div style="flex:1; min-width:220px;">
@@ -517,7 +533,7 @@
       <sc-if value="{{ is.practical }}" hint-placeholder-val="">
         <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease;">
           <div style="background:var(--ink-bg); color:var(--on-dark); border:3px solid var(--ink); border-radius:5px; padding:16px 20px; margin-bottom:16px; box-shadow:6px 6px 0 var(--yellow);">
-            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · JLPT N1 만점</div>
+            <div style="font-family:var(--font-mono); font-size:var(--fs-xs); letter-spacing:2px; color:var(--yellow); font-weight:700;">4-YEAR ROADMAP · BUFS 일본어융합학부 · 비공식 학습 계획 · JLPT N1 만점</div>
             <div style="font-size:13.5px; color:var(--on-dark-mute); line-height:1.7; margin-top:6px;">4년 동안 외울 어휘는 <b style="color:var(--yellow);">{{ prTotalCount }}개</b>뿐이에요. 평일 하루 8개 × 240일 × 4년(DAY 1~960)이면 끝나는 분량입니다. <b style="color:var(--yellow);">「인지」</b> 표시는 한국 한자음과 같은 단어(経済→경제)라서 외우지 않고 확인만 하면 돼요.</div>
           </div>
           <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
