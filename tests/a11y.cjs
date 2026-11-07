@@ -1,6 +1,5 @@
 /* 접근성 테스트 — axe-core(WCAG 2.x A·AA 규칙)를 9개 화면 × 라이트·다크 × PC·폰에서 실행한다.
  * 통과 기준: 심각(critical)·중대(serious) 위반 0건. 낮은 등급(moderate·minor)은 목록만 출력한다. */
-const path = require('node:path');
 const { startServer, loadPlaywright, reporter, MENUS, goto, launchOptions } = require('./lib.cjs');
 const AXE = require.resolve('axe-core/axe.min.js', { paths: [__dirname] });
 const SHOW = process.argv.includes('--all');

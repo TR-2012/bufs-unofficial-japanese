@@ -7,17 +7,19 @@
 | # | 항목 | 통과 기준 | 확인 명령 | 상태 |
 |---|---|---|---|---|
 | 1 | 자동 테스트 | 골든 마스터·PWA·보안 테스트 전체 통과 | `node tests/run.cjs` | ✅ |
-| 2 | CI | 푸시·PR마다 GitHub Actions가 항목 1을 실행해 통과 | `.github/workflows/test.yml` + Actions 탭 | ✅ (Actions 실행 2회 성공 확인) |
+| 2 | CI | 푸시·PR마다 GitHub Actions가 항목 1을 실행해 통과 | `.github/workflows/test.yml` + Actions 탭 | ✅ (Actions 실행 성공 확인) |
 | 3 | 단위 테스트 | 순수 로직 단위 테스트 40개 이상 통과 | `node tests/run.cjs unit` | ✅ (81개, 변이 테스트 6/6 검출) |
 | 4 | 린트 | ESLint 오류 0, 경고 0 (앱 JS·인라인 로직·테스트·스크립트. 제외: `support.js` — 별도 도구로 만든 런타임) | `node tests/run.cjs lint` | ✅ |
-| 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0 (현재 대상: `tts.js` · `pwa.js` · `combo_check.js` · `sw.js`. 인라인 로직은 파일로 분리한 뒤 추가) | `node tests/run.cjs types` | 🔶 |
+| 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0 (대상: `tts.js` · `pwa.js` · `combo_check.js` · `sw.js`. 인라인 로직은 파일로 분리한 뒤 추가) | `node tests/run.cjs types` | ✅ (대상 범위 한정) |
 | 6 | 접근성 | axe-core(WCAG 2.x A·AA) 심각·중대 위반 0 (9개 화면 × 라이트·다크 × PC·폰) | `node tests/run.cjs a11y` | ✅ |
-| 7 | 문서 | 구조(ARCHITECTURE)·품질(QUALITY)·기여(CONTRIBUTING) 문서 존재, 링크 유효 | `node tests/quality.cjs` | 🔶 |
+| 7 | 문서 | 구조(ARCHITECTURE)·품질(QUALITY)·기여(CONTRIBUTING) 문서 존재, 상대 링크 유효 | `node tests/quality.cjs` | ✅ |
 | 8 | 보안 | 보안 헤더·XSS 테스트 통과, 테스트 도구 `npm audit` 중대 취약점 0 | `node tests/run.cjs security` + `npm audit` | ✅ (감사 0건, 2026-11) |
-| 9 | 구조 | 앱 JS 파일 하나당 600줄 이하 | `node tests/quality.cjs` | ⬜ |
-| 10 | 재현성 | 외부 CDN 0, 잠금 파일(`tests/package-lock.json`) 있음, 빌드 없이 실행 | `node tests/quality.cjs` | 🔶 |
+| 9 | 구조 | 앱 JS 파일 하나당 600줄 이하 (제외: `support.js` — 별도 도구가 만든 화면 런타임) | `node tests/quality.cjs` | ⬜ 미통과: `index.html` 인라인 로직 1,339줄. 파일 분리는 구조 변경이라 별도 동의가 필요 |
+| 10 | 재현성 | 외부 CDN 0, 잠금 파일(`tests/package-lock.json`) 있음, 루트 `package.json` 없이(빌드 없이) 실행 | `node tests/quality.cjs` | ✅ |
 
-상태 표시: ✅ 통과 · 🔶 일부 · ⬜ 아직. 마지막에 `node tests/quality.cjs`가 위 항목을 한 화면에 출력합니다.
+상태 표시: ✅ 통과 · 🔶 일부 · ⬜ 아직. `node tests/quality.cjs`가 위 항목을 실제로 검사해 한 화면에 출력합니다(`--fast`: 브라우저 없이 가능한 항목만).
+
+**마지막 전체 점검: 9/10 통과** (미통과: 항목 9).
 
 ## 이 표가 말해 주지 않는 것
 - 학습 내용(어휘·문법 데이터)의 정확성은 이 표 밖입니다. 데이터는 `data/README.md`, `docs/data-sources.md`를 보세요.

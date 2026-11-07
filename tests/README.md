@@ -19,6 +19,15 @@ node tests/run.cjs a11y       # 접근성(axe-core WCAG 2.x A·AA)
 node tests/run.cjs security   # XSS·글자 대비·위험 API
 ```
 
+## 품질 기준표 한 번에 점검
+
+```bash
+node tests/quality.cjs          # 10항목 전체(약 2~3분)
+node tests/quality.cjs --fast   # 브라우저가 필요 없는 항목만
+```
+
+기준표의 정의는 [`docs/QUALITY.md`](../docs/QUALITY.md)에 있습니다.
+
 ## 무엇을 검사하나
 
 | 묶음 | 내용 |
