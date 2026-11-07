@@ -1,0 +1,12 @@
+{
+  "name": "bufs-japanese-tests",
+  "private": true,
+  "description": "BUFS 비공식 일본어 학습 회귀 테스트(개발용). 앱 배포와 무관합니다.",
+  "scripts": {
+    "test": "node run.cjs",
+    "update-golden": "node golden.cjs --update"
+  },
+  "devDependencies": {
+    "playwright": "^1.50.0"
+  }
+}
