@@ -13,7 +13,7 @@
 | 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0 (대상: `tts.js` · `pwa.js` · `combo_check.js` · `sw.js`. 인라인 로직은 파일로 분리한 뒤 추가) | `node tests/run.cjs types` | ✅ (대상 범위 한정) |
 | 6 | 접근성 | axe-core(WCAG 2.x A·AA) 심각·중대 위반 0 (9개 화면 × 라이트·다크 × PC·폰) | `node tests/run.cjs a11y` | ✅ |
 | 7 | 문서 | 구조(ARCHITECTURE)·품질(QUALITY)·기여(CONTRIBUTING) 문서 존재, 상대 링크 유효 | `node tests/quality.cjs` | ✅ |
-| 8 | 보안 | 보안 헤더·XSS 테스트 통과, 테스트 도구 `npm audit` 중대 취약점 0 | `node tests/run.cjs security` + `npm audit` | ✅ (감사 0건, 2026-11) |
+| 8 | 보안 | 보안 헤더(vercel.json·_headers 일치)·XSS 테스트 통과, 테스트 도구 `npm audit` 중대 취약점 0 | `node tests/run.cjs security` + `npm audit` | ✅ (감사 0건, 2026-11) |
 | 9 | 구조 | 앱 JS 파일 하나당 600줄 이하 (제외: `support.js` — 별도 도구가 만든 화면 런타임) | `node tests/quality.cjs` | ⬜ 미통과: `index.html` 인라인 로직 1,339줄. 파일 분리는 구조 변경이라 별도 동의가 필요 |
 | 10 | 재현성 | 외부 CDN 0, 잠금 파일(`tests/package-lock.json`) 있음, 루트 `package.json` 없이(빌드 없이) 실행 | `node tests/quality.cjs` | ✅ |
 

@@ -87,8 +87,16 @@ python3 -m http.server 8000
 
 ## 배포
 
-정적 사이트라서 Vercel · GitHub Pages · Netlify 어디든 저장소 루트를 그대로 올리면 됩니다.
-환경변수·서버 설정이 필요 없습니다. 저장소를 연결하면 바로 동작합니다.
+정적 사이트라서 저장소 루트를 그대로 올리면 됩니다. 환경변수·서버 설정이 필요 없고 빌드 단계도 없습니다.
+
+| 호스팅 | 설정 | 헤더(캐시·보안) |
+|---|---|---|
+| Cloudflare Pages | Workers & Pages → Create → Pages → Connect to Git → 저장소 선택 → **Build command 비움 · Build output directory `/`** → Deploy | `_headers` |
+| Vercel | 저장소를 Import(Framework: Other, 환경변수 없음). `.vercelignore`가 `tests/`를 제외 | `vercel.json` |
+| GitHub Pages · Netlify | 저장소 루트를 그대로 게시 | 두 파일을 읽지 않음 — 캐시·보안 헤더는 직접 설정 |
+
+- `_headers`와 `vercel.json`은 같은 내용을 유지합니다(`node tests/run.cjs security`가 일치 여부를 검사).
+- **주소(도메인)가 바뀌면 브라우저 저장 공간도 달라져서 기존 학습 기록이 새 주소에 보이지 않습니다.** 옛 주소에서 홈의 「백업 파일 받기」로 저장한 뒤, 새 주소에서 「백업 불러오기」를 하세요.
 
 ## 데이터 다시 만들기
 

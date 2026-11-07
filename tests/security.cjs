@@ -73,6 +73,17 @@ async function main() {
     const v = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
     const keys = new Set(v.headers.flatMap((h) => h.headers.map((x) => x.key)));
     r.ok('보안 헤더 설정(nosniff·Referrer-Policy·CSP)', ['X-Content-Type-Options', 'Referrer-Policy', 'Content-Security-Policy'].every((k) => keys.has(k)));
+    // Cloudflare Pages용 _headers 가 vercel.json 과 같은 헤더를 내는지 비교(「/*」의 Cache-Control만 의도적으로 제외 — _headers 머리말 참고)
+    const norm = (src) => (src === '/(.*)' ? '/*' : src.replace('(.*)', '*'));
+    const fromVercel = new Set(v.headers.flatMap((h) => h.headers.map((x) => `${norm(h.source)}|${x.key}|${x.value}`)).filter((l) => l !== '/*|Cache-Control|no-cache'));
+    const fromCf = new Set(); let cur = null;
+    for (const raw of fs.readFileSync(path.join(ROOT, '_headers'), 'utf8').split('\n')) {
+      if (!raw.trim() || raw.trim().startsWith('#')) continue;
+      if (!/^\s/.test(raw)) { cur = raw.trim(); continue; }
+      const i = raw.indexOf(':'); fromCf.add(`${cur}|${raw.slice(0, i).trim()}|${raw.slice(i + 1).trim()}`);
+    }
+    const onlyV = [...fromVercel].filter((x) => !fromCf.has(x)), onlyC = [...fromCf].filter((x) => !fromVercel.has(x));
+    r.ok('_headers(Cloudflare)와 vercel.json 헤더 일치', onlyV.length === 0 && onlyC.length === 0, `vercel에만: ${onlyV.join(' ; ')} / _headers에만: ${onlyC.join(' ; ')}`);
   }
 
   await browser.close(); server.close();

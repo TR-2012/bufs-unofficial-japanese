@@ -46,7 +46,7 @@ scripts/*.mjs — 데이터 재생성 · audio/*.mp3 — VOICEVOX 음성
 | vendor/ | React 18.3.1 · React DOM(외부 CDN 없이 자체 포함) |
 | audio/ | 미리 만든 mp3(VOICEVOX:春日部つむぎ) |
 | icons/, screenshots/, haruko.jpg | 아이콘·이미지 |
-| manifest.webmanifest, vercel.json | PWA 매니페스트, 배포 헤더 설정 |
+| manifest.webmanifest, vercel.json, _headers | PWA 매니페스트, 배포 헤더 설정(Vercel은 vercel.json, Cloudflare Pages는 _headers — 같은 내용 유지) |
 
 ## 4. 화면과 코드 위치
 
@@ -128,7 +128,7 @@ scripts/check-writing-combo.mjs
 - 외부 요청은 건드리지 않는다.
 - `SHELL`(미리 저장할 파일 목록)을 바꾸면 CACHE 이름의 숫자를 올린다. activate에서 이전 캐시를 지운다.
 - 비상 해제: sw.js 전체를 두 줄로 바꿔 배포하면 기기들이 새 sw.js를 받는 즉시 스스로 등록을 해제한다(sw.js 머리말 주석 참고).
-- vercel.json이 `/sw.js`에 `Service-Worker-Allowed` 헤더를 지정한다.
+- vercel.json(Vercel)과 _headers(Cloudflare Pages)가 `/sw.js`에 `Service-Worker-Allowed` 헤더를 지정한다.
 
 ## 9. 테스트와 변경 절차
 
@@ -145,7 +145,7 @@ node tests/golden.cjs --update   # 의도한 화면 변경 후 baseline.json 갱
 4. 인라인 `<script>`에 camelCase 속성을 쓰지 않았는가? 새 JS는 외부 파일로.
 5. 데이터 원본을 바꿨다면 6절의 재생성 순서를 전부 돌렸는가?
 
-배포: Vercel 정적 배포(빌드 없음). vercel.json에 캐시·보안 헤더(CSP 등). `.vercelignore`로 tests/ 제외.
+배포: Vercel 또는 Cloudflare Pages 정적 배포(빌드 없음). 캐시·보안 헤더(CSP 등)는 vercel.json / _headers에 같은 내용으로 두고 테스트가 일치를 검사한다. Vercel은 `.vercelignore`로 tests/ 제외(Cloudflare는 제외 기능이 없어 tests/가 함께 올라가나 동작에는 영향 없음). 같은 이름의 헤더가 여러 규칙에 걸리면 Cloudflare는 값을 이어 붙이므로 `/*`에는 Cache-Control을 두지 않는다.
 
 ## 10. 함정
 
