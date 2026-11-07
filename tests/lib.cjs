@@ -39,8 +39,12 @@ function reporter(title) {
   };
 }
 
-/* 결정적 실행: 난수·현재 시각 고정 */
-const SEED = `(()=>{let a=123456789;Math.random=()=>{a=(a*1664525+1013904223)%4294967296;return a/4294967296};const T=1762400000000;Date.now=()=>T;})();`;
+/* 결정적 실행: 난수·현재 시각 고정
+ * Date.now()만 고정하면 인자 없는 new Date()(오늘 날짜·연속 출석 계산)는 실제 시계를 써서,
+ * 날짜가 바뀌면 골든 「저장값」이 달라진다 → 인자 없는 new Date()도 같은 시각(T)을 쓰게 한다. */
+const SEED = `(()=>{let a=123456789;Math.random=()=>{a=(a*1664525+1013904223)%4294967296;return a/4294967296};const T=1762400000000;`
+  + `const R=Date;function F(...x){if(!new.target)return new R(T).toString();return x.length?new R(...x):new R(T);}`
+  + `F.prototype=R.prototype;F.now=()=>T;F.parse=R.parse;F.UTC=R.UTC;globalThis.Date=F;})();`;
 
 const MENUS = ['홈', '한자 카드', '연상 암기', '단어 카드', '4년 트랙', '필기 노트', '퀴즈 코너', '일본어 문법', '작문 연습'];
 const goto = async (p, name) => { await p.locator('nav button', { hasText: name }).first().click(); await p.waitForTimeout(600); };
