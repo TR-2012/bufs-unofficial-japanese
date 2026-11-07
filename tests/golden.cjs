@@ -9,7 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { startServer, loadPlaywright, reporter, SEED, MENUS, goto } = require('./lib.cjs');
+const { startServer, loadPlaywright, reporter, SEED, MENUS, goto, launchOptions } = require('./lib.cjs');
 
 const BASELINE = path.join(__dirname, 'golden', 'baseline.json');
 const OUTDIR = path.join(__dirname, '.out');
@@ -28,7 +28,7 @@ const DUMP = () => {
 
 async function collect(base) {
   const { chromium } = loadPlaywright();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(launchOptions());
   const res = {};
   for (const [theme, vw, vh] of [['light', 1280, 900], ['dark', 1280, 900], ['light', 390, 844], ['dark', 390, 844]]) {
     const ctx = await browser.newContext({ viewport: { width: vw, height: vh }, serviceWorkers: 'block', hasTouch: vw < 800 });

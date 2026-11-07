@@ -1,3 +1,4 @@
+/* global module */
 // 단어 조합 작문 판정기 — 브라우저(window.TJCombo)와 Node(require) 양쪽에서 쓰는 순수 함수 모음.
 //
 // 규칙 기반 점검만 한다: ① 일본어 한 문장인지 ② 제시 단어를 모두 썼는지 ③ 문법 조건을 만족했는지.
@@ -9,7 +10,7 @@
   var MIN_LEN = 6;
 
   function norm(s) {
-    return String(s == null ? '' : s).normalize('NFKC').replace(/[\s　]/g, '');
+    return String(s == null ? '' : s).normalize('NFKC').replace(/[\s\u3000]/g, '');
   }
 
   function hasWord(n, word) {

@@ -104,7 +104,7 @@
   function toJaOnly(s){
     if(!s) return '';
     s=String(s);
-    s=s.replace(/\s*[（(][\s぀-ヿーA-Za-z0-9가-힯ᄀ-ᇿ㄰-㆏・.,'’\-]*[)）]\s*/g,'');
+    s=s.replace(/\s*[（(][\s぀-ヿーA-Za-z0-9가-힯ᄀ-ᇿ㄰-㆏・.,'’-]*[)）]\s*/g,'');
     s=s.replace(/[가-힣ᄀ-ᇿ㄰-㆏]/g,'');
     s=s.replace(/\s+/g,' ').trim();
     return s;

@@ -7,9 +7,9 @@
 | # | 항목 | 통과 기준 | 확인 명령 | 상태 |
 |---|---|---|---|---|
 | 1 | 자동 테스트 | 골든 마스터·PWA·보안 테스트 전체 통과 | `node tests/run.cjs` | ✅ |
-| 2 | CI | 푸시·PR마다 GitHub Actions가 항목 1을 실행해 통과 | `.github/workflows/test.yml` + Actions 탭 | 🔶 설정됨, 첫 실행 확인 필요 |
+| 2 | CI | 푸시·PR마다 GitHub Actions가 항목 1을 실행해 통과 | `.github/workflows/test.yml` + Actions 탭 | ✅ (Actions 실행 2회 성공 확인) |
 | 3 | 단위 테스트 | 순수 로직 단위 테스트 40개 이상 통과 | `node tests/run.cjs unit` | ✅ (81개, 변이 테스트 6/6 검출) |
-| 4 | 린트 | ESLint 오류 0 | `npx eslint` (tests 폴더에서) | ⬜ |
+| 4 | 린트 | ESLint 오류 0, 경고 0 (앱 JS·인라인 로직·테스트·스크립트. 제외: `support.js` — 별도 도구로 만든 런타임) | `node tests/run.cjs lint` | ✅ |
 | 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0(분리한 모듈 대상) | `npx tsc -p tests/tsconfig.json` | ⬜ |
 | 6 | 접근성 | axe-core 자동 검사 심각·중대 위반 0 (9개 화면 × 라이트·다크) | `node tests/run.cjs a11y` | ⬜ |
 | 7 | 문서 | 구조(ARCHITECTURE)·품질(QUALITY)·기여(CONTRIBUTING) 문서 존재, 링크 유효 | `node tests/quality.cjs` | 🔶 |

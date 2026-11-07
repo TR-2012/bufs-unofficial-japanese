@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { startServer, loadPlaywright, reporter, goto } = require('./lib.cjs');
+const { startServer, loadPlaywright, reporter, goto, launchOptions } = require('./lib.cjs');
 
 const FAKE = `window.__fire=()=>{const e=new Event('beforeinstallprompt');e.prompt=()=>{window.__prompted=(window.__prompted||0)+1;return Promise.resolve()};e.userChoice=Promise.resolve({outcome:'accepted'});window.dispatchEvent(e)};`;
 const cards = (p) => p.evaluate(() => ({ install: document.body.innerText.includes('앱으로 설치해서'), a2hs: document.body.innerText.includes('홈 화면에 추가해서') }));
@@ -11,7 +11,7 @@ async function main() {
   const { chromium, devices } = loadPlaywright();
   const { server, base } = await startServer();
   const origin = new URL(base).origin;
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(launchOptions());
   const r = reporter('PWA(오프라인·설치·백업)');
   const mk = async (opts, init) => {
     const ctx = await browser.newContext({ serviceWorkers: 'block', ...opts });
@@ -37,7 +37,9 @@ async function main() {
     await p.evaluate(async () => { await window.harukoSpeak('机の上にペンや消しゴムがあります。'); }); await p.waitForTimeout(800);
     const cdp = await ctx.newCDPSession(p);
     const ie = await cdp.send('Page.getInstallabilityErrors');
-    r.ok('설치 가능 판정 오류 0', ie.installabilityErrors.length === 0, JSON.stringify(ie.installabilityErrors));
+    // in-incognito: 테스트용 임시 브라우저 창 때문에 생기는 것이라 앱(매니페스트·아이콘)의 문제가 아니다
+    const instErrs = ie.installabilityErrors.filter((e) => e.errorId !== 'in-incognito');
+    r.ok('설치 가능 판정 오류 0', instErrs.length === 0, JSON.stringify(instErrs));
     await ctx.setOffline(true); await p.reload(); await p.waitForTimeout(4500);
     const txt = async () => p.evaluate(() => document.body.innerText);
     let t = await txt();

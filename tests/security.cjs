@@ -1,14 +1,14 @@
 /* 보안·접근성 테스트 — 사용자 입력/저장 데이터를 통한 스크립트 주입(XSS) 0건, 글자 대비, 알려진 위험 API 사용 점검 */
 const fs = require('node:fs');
 const path = require('node:path');
-const { ROOT, startServer, loadPlaywright, reporter, MENUS, goto } = require('./lib.cjs');
+const { ROOT, startServer, loadPlaywright, reporter, MENUS, goto, launchOptions } = require('./lib.cjs');
 
 const P1 = '<img src=x onerror="window.__xss=1">', P2 = '"><svg onload="window.__xss=2">', P3 = '</script><script>window.__xss=3</script>';
 
 async function main() {
   const { chromium } = loadPlaywright();
   const { server, base } = await startServer();
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(launchOptions());
   const r = reporter('보안·대비');
 
   // 1) XSS: 악성 문자열을 저장값·주소·검색칸·작문 입력에 넣어 본다

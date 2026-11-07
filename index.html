@@ -1134,7 +1134,7 @@ class Component extends DCLogic {
 
   // ---------- 헷갈리는 오답 만들기 ----------
   // 뜻을 쉼표·가운뎃점 등으로 나눈 조각(정답과 겹치면 사실상 정답이므로 오답 후보에서 제외)
-  _meanParts(m){ return String(m||'').split(/[,，、·;；/()（）\[\]~〜]+/).map(x=>x.replace(/\s+/g,'').replace(/(스러움|스럽다|하다|되다|이다|함|한|히|성|적|의)$/,'')).filter(x=>x.length>0); }
+  _meanParts(m){ return String(m||'').split(/[,，、·;；/()（）[\]~〜]+/).map(x=>x.replace(/\s+/g,'').replace(/(스러움|스럽다|하다|되다|이다|함|한|히|성|적|의)$/,'')).filter(x=>x.length>0); }
   // 두 뜻 조각이 같은 말로 볼 수 있는지(같거나, 2음절 이상 어간이 그대로 들어 있음)
   _sameMeaning(a,b){ if(a===b) return true; const [x,y]=a.length<=b.length?[a,b]:[b,a]; if(x.length<2) return false; if(/^[불비무미반]/.test(y) && y.slice(1).startsWith(x)) return false; return y.includes(x); }   // 불친절·불필요 같은 반대말은 좋은 오답이라 남긴다
   _quizIndex(){
@@ -1500,7 +1500,7 @@ class Component extends DCLogic {
   _validScreens(){ return ['home','kanji','mnemonic','word','practical','notebook','quiz','grammar','writing']; }
   _screenFromHash(fallback){
     try{
-      const h=(location.hash||'').replace(/^#\/?/,'').split(/[?\/]/)[0].trim();
+      const h=(location.hash||'').replace(/^#\/?/,'').split(/[?/]/)[0].trim();
       return this._validScreens().indexOf(h)>=0 ? h : (fallback||'home');
     }catch(e){ return fallback||'home'; }
   }

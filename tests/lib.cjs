@@ -45,4 +45,7 @@ const SEED = `(()=>{let a=123456789;Math.random=()=>{a=(a*1664525+1013904223)%42
 const MENUS = ['홈', '한자 카드', '연상 암기', '단어 카드', '4년 트랙', '필기 노트', '퀴즈 코너', '일본어 문법', '작문 연습'];
 const goto = async (p, name) => { await p.locator('nav button', { hasText: name }).first().click(); await p.waitForTimeout(600); };
 
-module.exports = { ROOT, startServer, loadPlaywright, reporter, SEED, MENUS, goto };
+/* 브라우저 실행 옵션: 시스템에 설치된 크롬을 쓰려면 환경변수 CHROMIUM_PATH=/경로/chrome */
+const launchOptions = () => (process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+
+module.exports = { launchOptions, ROOT, startServer, loadPlaywright, reporter, SEED, MENUS, goto };

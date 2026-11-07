@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-/* 전체 테스트 실행: node tests/run.cjs [unit|golden|pwa|security] */
+/* 전체 테스트 실행: node tests/run.cjs [lint|unit|golden|pwa|security] */
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const only = process.argv[2];
-const FILES = { unit: 'unit/logic.test.cjs', golden: 'golden.cjs', pwa: 'pwa.cjs', security: 'security.cjs' };
+const FILES = { lint: 'lint.cjs', unit: 'unit/logic.test.cjs', golden: 'golden.cjs', pwa: 'pwa.cjs', security: 'security.cjs' };
 const suites = Object.keys(FILES).filter((s) => !only || s === only);
 let failed = 0;
 for (const s of suites) {
