@@ -10,3 +10,6 @@ tests/.out/
 tests/node_modules/
 node_modules/
 .wrangler/
+
+# 개인 단어 목록(개인정보 검사용) — 저장소에 올리지 않는다
+tests/pii.local.txt
