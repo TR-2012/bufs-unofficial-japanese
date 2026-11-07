@@ -1016,7 +1016,8 @@ class Component extends DCLogic {
       window.addEventListener('hashchange',this._hashHandler);
     }catch(e){}
   }
-  componentWillUnmount(){ try{ if(this._hashHandler) window.removeEventListener('hashchange',this._hashHandler); }catch(e){} }
+  componentWillUnmount(){ try{ if(this._hashHandler) window.removeEventListener('hashchange',this._hashHandler); }catch(e){}
+    try{ if(this._installH){ window.removeEventListener('bufs-install-ready',this._installH); window.removeEventListener('bufs-install-done',this._installH); } }catch(e){} }
   async loadBaseData(){
     const grab=(p,d)=>fetch(p).then(r=>r.ok?r.json():d).catch(()=>d);
     try{
@@ -1104,7 +1105,7 @@ class Component extends DCLogic {
     lv=lv||this.state.quizLevel||'전체';
     const bands=this.QUIZ_LEVELS()[lv];
     if(!bands){
-      // 전체 = 4년 커리큘럼 순서(DAY 1~960). DAY가 없는 항목(시드 등)은 맨 뒤.
+      // 전체 = 4년 커리큘럼 순서(DAY 1~960). DAY가 없는 항목(시드 등)은 제외.
       if(!this._learnDay){ this._learnDay=this._learnList().filter(p=>p.day>0).sort((a,b)=>a.day-b.day||(a.t==='w'?0:1)-(b.t==='w'?0:1)); }
       return this._learnDay;
     }
@@ -1203,7 +1204,6 @@ class Component extends DCLogic {
       return {word:p.q, reading:p.reading, tag, options:opts, correct:opts.indexOf(p.ans), explain};
     });
   }
-  _buildQuiz(){ return this._buildDayQuiz(this.state?this.state.day:1); }
   setDay(d){ const t=this.totalDays(); const day=Math.min(Math.max(1,(d|0)||1),t); try{localStorage.setItem(this._dayKey(this.state.quizLevel),String(day));}catch(e){} this.setState({day, quizList:this._buildDayQuiz(day), quizIdx:0, quizScore:0, quizSel:null, quizXp:0, dayMsg:'', screen:'quiz'}); this._syncHash('quiz'); }
   // 이전 DAY: DAY 1보다 이전은 없음 → 안내만 표시(퀴즈를 새로 만들지 않아 보기 선택지가 바뀌는 버그 방지).
   prevDay(){ if(this.state.day<=1){ this.setState({dayMsg:'DAY 1보다 이전 DAY는 없습니다.'}); return; } this.setDay(this.state.day-1); }
@@ -1376,7 +1376,7 @@ class Component extends DCLogic {
         key:this._kanjiKey(k),
         word:k.char,
         reading:(k.on||'')+(k.kun?(' · '+k.kun):''),
-        // TTS는 음독(on)을 읽는다(한자 카드와 일관). 음독 없으면 훈독→읽기→한자음 순 폴백.
+        // TTS는 음독(on)을 읽는다(한자 카드와 일관). 음독 없으면 훈독→읽기→한자 글자 순 폴백.
         say:(k.on||'').trim()||((k.kun||'').replace(/[()（）]/g,''))||k.reading||k.char,
         meaning:k.meaning,
       }));
@@ -1432,11 +1432,11 @@ class Component extends DCLogic {
     const o={app:'bufs-japanese',v:1,at:new Date().toISOString(),data:{}};
     try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith('tj.')&&!k.startsWith('tj.nudge.')) o.data[k]=localStorage.getItem(k); } }catch(e){}
     const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));
-    a.download='bufs-japanese-backup-'+this._ymd()+'.json'; document.body.appendChild(a); a.click(); a.remove();
+    a.download='bufs-japanese-backup-'+this._ymd()+'.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} },1000);
     try{ localStorage.setItem('tj.nudge.backupAt',String(Date.now())); localStorage.removeItem('tj.nudge.snooze'); }catch(e){}
     this.setState({backupMsg:'백업 파일을 저장했어요. 파일 앱(또는 다운로드 폴더)에 보관하세요.'});
   }
-  // 홈 안내: 홈 화면 추가(iOS Safari) · 백업 알림(첫 기록 후 7일마다)
+  // 홈 안내: 앱 설치 카드(안드로이드·PC) · 홈 화면 추가(iOS Safari) · 백업 알림(마지막 백업 또는 첫 기록 후 7일, 「나중에」는 2일 미룸)
   _ls(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   _lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   _nudges(){
@@ -1699,6 +1699,10 @@ class Component extends DCLogic {
   navBtn(s,active){ return 'display:flex;align-items:center;gap:11px;width:100%;border:2px solid '+(active?'var(--on-dark)':'transparent')+';border-radius:4px;padding:11px 12px;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:'+(active?'900':'700')+';letter-spacing:-.2px;background:'+(active?'var(--red)':'transparent')+';color:'+(active?'var(--on-dark)':'var(--on-dark-mute)')+';box-shadow:'+(active?'3px 3px 0 var(--yellow)':'none')+';transition:.12s;'; }
   ic(p){ return React.createElement('svg',{width:18,height:18,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.9,strokeLinecap:'round',strokeLinejoin:'round'},p); }
 
+  /* renderVals — 화면에 넘길 값 전체를 한 번에 만든다(상태 s → 템플릿의 {{ 이름 }}). 부수 효과 없음.
+   * 위에서 아래로 구역 순서: 화면 이름 → 계급·XP → 내비 → 홈(진행 카드·안내) → 한자 카드 → 연상 암기 →
+   *   단어 카드 → 4년 트랙 → 필기 노트 → 퀴즈 → 문법 → 작문 → 마지막 return(템플릿 이름 목록).
+   * 템플릿에서 쓰는 이름만 return에 둔다(안 쓰는 값은 지운다). 저장 키는 tj.* 접두사로 통일. */
   renderVals(){
     const s=this.state;
     const screens={home:['홈','대시보드'],kanji:['한자 카드','KANJI'],mnemonic:['연상 암기','KANJI MNEMONICS 2,136'],word:['단어 카드','VOCABULARY'],practical:['4년 트랙','4-YEAR TRACK · DAY 1–960'],notebook:['필기 노트','HANDWRITING PRACTICE'],quiz:['퀴즈 코너','REVIEW QUIZ'],grammar:['일본어 문법','GRAMMAR N5–N1'],writing:['작문 연습','COMPOSITION']};
@@ -1757,7 +1761,6 @@ class Component extends DCLogic {
       const nums=Array.from({length:Math.min(k.strokes,9)},(_,n)=>n+1).join('');
       return {...k, strokeNums:nums, revealed:rev, hidden:!rev, toggle:()=>this.toggleKanji(key), play:()=>this.play(k.on||k.reading)};
     });
-    const kRevealedOnPage=kanjiCards.filter(k=>k.revealed).length;
 
     // 연상 암기 — 큐 맨 앞 카드 + 단계 공개 + 진행률
     const mnListAll=this._mnList(s.mnLevel);
@@ -1855,7 +1858,7 @@ class Component extends DCLogic {
     let quizOptions=[];
     if(q){ quizOptions=q.options.map((o,i)=>{
       let bg='var(--white-bg)',bd='var(--ink)',col='var(--ink)',sh='none';
-      if(s.quizSel!=null){ if(i===q.correct){bg='var(--tint-green)';bd='var(--ink)';col='var(--green-text)';sh='4px 4px 0 var(--green)';} else if(i===s.quizSel){bg='var(--tint-pink)';bd='var(--ink)';col='var(--red-dark)';sh='4px 4px 0 var(--red)';} else {col:'#9c9'; bg='var(--white-bg)';} }
+      if(s.quizSel!=null){ if(i===q.correct){bg='var(--tint-green)';bd='var(--ink)';col='var(--green-text)';sh='4px 4px 0 var(--green)';} else if(i===s.quizSel){bg='var(--tint-pink)';bd='var(--ink)';col='var(--red-dark)';sh='4px 4px 0 var(--red)';} else {bg='var(--white-bg)';} }
       return {text:o,letter:String.fromCharCode(65+i),choose:()=>this.chooseQuiz(i),style:'text-align:left;border:2.5px solid '+bd+';background:'+bg+';color:'+col+';border-radius:4px;padding:14px 16px;cursor:'+(s.quizSel!=null?'default':'pointer')+';font-family:inherit;font-size:14.5px;font-weight:700;box-shadow:'+sh+';transition:.1s;'};
     }); }
     const quizNextLabel=(s.quizIdx+1>=s.quizList.length)?'결과 보기':'탭해서 다음 문제 →';
@@ -1930,7 +1933,7 @@ class Component extends DCLogic {
       mnPct:Math.min(100,Math.round(mnKnownCount/Math.max(1,mnListAll.length)*100)),
       mnResetKnown:()=>this.mnResetKnown(), mnHasKnown:mnKnownCount>0,
       // kanji
-      kanjiCards, kanjiToday:kRevealedOnPage, kanjiTotal:allKanji.length, kanjiEmpty:allKanji.length===0, kanjiSearchActive:!!this._normSearch(s.kSearch),
+      kanjiCards, kanjiTotal:allKanji.length, kanjiEmpty:allKanji.length===0, kanjiSearchActive:!!this._normSearch(s.kSearch),
       kanjiSearchRef:this.kanjiSearchRef.bind(this), kanjiSearchInput:this.kanjiSearchInput.bind(this), kanjiSearchKey:this.kanjiSearchKey.bind(this), clearKanjiSearch:()=>this.clearKanjiSearch(),
       mnSearchRef:this.mnSearchRef.bind(this), mnSearchInput:this.mnSearchInput.bind(this), mnSearchKey:this.mnSearchKey.bind(this), clearMnSearch:()=>this.clearMnSearch(),
       mnSearchActive:!!mnQ, mnSearchTotal:mnHits.length, mnSearchEmpty:!!mnQ&&mnHits.length===0, mnSearchResults, mnSearchMore:mnHits.length>MN_SHOW, mnSearchShown:MN_SHOW, kLevels, kLevel:s.kLevel,
@@ -1944,7 +1947,7 @@ class Component extends DCLogic {
       // practical (실전 일본어)
       prCards, prStageCards, prJlptChips, prCogChips,
       prTotalCount:this._formatCount(prTotalAll), prListCount:this._formatCount(prList.length),
-      prEmpty:prList.length===0, prSearchActive:!!this._normSearch(s.prSearch),
+      prEmpty:prList.length===0,
       prSearchRef:this.prSearchRef.bind(this), prSearchInput:this.prSearchInput.bind(this), prSearchKey:this.prSearchKey.bind(this), clearPrSearch:()=>this.clearPrSearch(),
       prPageLabel:(s.prPage+1)+' / '+prTotalPages, prPrev:()=>this.setState(p=>({prPage:Math.max(0,p.prPage-1)})), prNext:()=>this.setState(p=>({prPage:Math.min(prTotalPages-1,p.prPage+1)})),
       // notebook (모든 한자/어휘)
