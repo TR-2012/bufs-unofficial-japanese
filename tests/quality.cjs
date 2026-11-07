@@ -87,8 +87,9 @@ suite(6, '접근성(axe-core)', 'a11y', true);
   const html = read('index.html') + read('support.js') + read('tts.js') + read('pwa.js');
   const ext = [...html.matchAll(/(?:src|href)\s*=\s*["'](https?:\/\/[^"']+)["']/g)].map((m) => m[1]).filter((u) => !/edrdg|creativecommons/.test(u));
   const hasLock = exists('tests/package-lock.json');
+  const assetsOk = run(['assets']).status === 0;
   const noRootPkg = !exists('package.json');
-  add(10, '재현성(외부 CDN 0 · 잠금 파일 · 빌드 없음)', ext.length === 0 && hasLock && noRootPkg, `외부 주소 ${ext.length}건 · tests/package-lock.json ${hasLock ? '있음' : '없음'} · 루트 package.json ${noRootPkg ? '없음(빌드 불필요)' : '있음'}`);
+  add(10, '재현성(외부 CDN 0 · 잠금 파일 · 빌드 없음 · 배포 자산)', ext.length === 0 && hasLock && noRootPkg && assetsOk, `외부 주소 ${ext.length}건 · tests/package-lock.json ${hasLock ? '있음' : '없음'} · 루트 package.json ${noRootPkg ? '없음(빌드 불필요)' : '있음'} · 배포 자산 점검 ${assetsOk ? '통과' : '실패'}`);
 }
 
 items.sort((a, b) => a.no - b.no);

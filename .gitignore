@@ -9,3 +9,4 @@ audio/**/*.part
 tests/.out/
 tests/node_modules/
 node_modules/
+.wrangler/

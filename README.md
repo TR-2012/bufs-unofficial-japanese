@@ -91,11 +91,12 @@ python3 -m http.server 8000
 
 | 호스팅 | 설정 | 헤더(캐시·보안) |
 |---|---|---|
-| Cloudflare Pages | Workers & Pages → Create → Pages → Connect to Git → 저장소 선택 → **Build command 비움 · Build output directory `/`** → Deploy | `_headers` |
+| Cloudflare (Workers 정적 배포 / Pages) | Workers & Pages → Create → Git 연결 → 저장소 선택 → **Build command 비움 · 루트 디렉터리 `/`** → Deploy. Worker 이름은 `wrangler.jsonc`의 `name`과 같게 | `_headers` · `wrangler.jsonc` · `.assetsignore`(개발·문서 파일은 올리지 않음) |
 | Vercel | 저장소를 Import(Framework: Other, 환경변수 없음). `.vercelignore`가 `tests/`를 제외 | `vercel.json` |
 | GitHub Pages · Netlify | 저장소 루트를 그대로 게시 | 두 파일을 읽지 않음 — 캐시·보안 헤더는 직접 설정 |
 
-- `_headers`와 `vercel.json`은 같은 내용을 유지합니다(`node tests/run.cjs security`가 일치 여부를 검사).
+- `_headers`와 `vercel.json`은 같은 내용을 유지합니다(`node tests/run.cjs security`가 일치 여부를, `node tests/run.cjs assets`가 업로드 목록에 필수 파일이 있는지를 검사).
+- 저장소 공개 파일에는 개인 계정 이름이 들어간 배포 주소(호스팅 업체가 주는 기본 주소 등)를 적지 않습니다(`assets` 검사가 막음).
 - **주소(도메인)가 바뀌면 브라우저 저장 공간도 달라져서 기존 학습 기록이 새 주소에 보이지 않습니다.** 옛 주소에서 홈의 「백업 파일 받기」로 저장한 뒤, 새 주소에서 「백업 불러오기」를 하세요.
 
 ## 데이터 다시 만들기

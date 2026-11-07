@@ -145,7 +145,7 @@ node tests/golden.cjs --update   # 의도한 화면 변경 후 baseline.json 갱
 4. 인라인 `<script>`에 camelCase 속성을 쓰지 않았는가? 새 JS는 외부 파일로.
 5. 데이터 원본을 바꿨다면 6절의 재생성 순서를 전부 돌렸는가?
 
-배포: Vercel 또는 Cloudflare Pages 정적 배포(빌드 없음). 캐시·보안 헤더(CSP 등)는 vercel.json / _headers에 같은 내용으로 두고 테스트가 일치를 검사한다. Vercel은 `.vercelignore`로 tests/ 제외(Cloudflare는 제외 기능이 없어 tests/가 함께 올라가나 동작에는 영향 없음). 같은 이름의 헤더가 여러 규칙에 걸리면 Cloudflare는 값을 이어 붙이므로 `/*`에는 Cache-Control을 두지 않는다.
+배포: Vercel 또는 Cloudflare Pages 정적 배포(빌드 없음). 캐시·보안 헤더(CSP 등)는 vercel.json / _headers에 같은 내용으로 두고 테스트가 일치를 검사한다. Vercel은 `.vercelignore`, Cloudflare(Workers 정적 배포)는 `wrangler.jsonc`+`.assetsignore`로 개발·문서 파일을 제외한다(`tests/assets.cjs`가 필수 파일 포함 여부를 검사). 같은 이름의 헤더가 여러 규칙에 걸리면 Cloudflare는 값을 이어 붙이므로 `/*`에는 Cache-Control을 두지 않는다.
 
 ## 10. 함정
 

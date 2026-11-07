@@ -1,0 +1,10 @@
+// Cloudflare Workers 정적 파일 배포 설정 — 빌드 없이 저장소 루트의 파일을 그대로 올린다.
+// name은 Cloudflare 대시보드의 Worker 이름과 같아야 한다(다르면 새 Worker가 만들어질 수 있음).
+// 올리지 않을 파일은 .assetsignore, 캐시·보안 헤더는 _headers 에서 정한다.
+{
+  "name": "bufs-unofficial-japanese",
+  "compatibility_date": "2026-11-07",
+  "assets": {
+    "directory": "."
+  }
+}

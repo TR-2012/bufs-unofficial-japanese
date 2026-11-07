@@ -1,0 +1,19 @@
+# Cloudflare 배포(wrangler)에서 업로드하지 않을 파일 — 개발·문서·다른 호스팅 설정.
+# 올려야 하는 것: 앱 실행 파일 전부 + _headers(헤더 적용) + NOTICE.md·LICENSE(라이선스 고지)
+# 점검: node tests/run.cjs security  (필수 파일이 빠지면 실패)
+.git
+.github
+node_modules
+tests
+scripts
+tools
+docs
+screenshots
+data/lib
+wrangler.jsonc
+vercel.json
+.vercelignore
+.gitignore
+README.md
+CONTRIBUTING.md
+.wrangler
