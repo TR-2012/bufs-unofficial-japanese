@@ -10,7 +10,7 @@
 | 2 | CI | 푸시·PR마다 GitHub Actions가 항목 1을 실행해 통과 | `.github/workflows/test.yml` + Actions 탭 | ✅ (Actions 실행 2회 성공 확인) |
 | 3 | 단위 테스트 | 순수 로직 단위 테스트 40개 이상 통과 | `node tests/run.cjs unit` | ✅ (81개, 변이 테스트 6/6 검출) |
 | 4 | 린트 | ESLint 오류 0, 경고 0 (앱 JS·인라인 로직·테스트·스크립트. 제외: `support.js` — 별도 도구로 만든 런타임) | `node tests/run.cjs lint` | ✅ |
-| 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0(분리한 모듈 대상) | `npx tsc -p tests/tsconfig.json` | ⬜ |
+| 5 | 타입 점검 | JSDoc 기반 `tsc --checkJs` 오류 0 (현재 대상: `tts.js` · `pwa.js` · `combo_check.js` · `sw.js`. 인라인 로직은 파일로 분리한 뒤 추가) | `node tests/run.cjs types` | 🔶 |
 | 6 | 접근성 | axe-core 자동 검사 심각·중대 위반 0 (9개 화면 × 라이트·다크) | `node tests/run.cjs a11y` | ⬜ |
 | 7 | 문서 | 구조(ARCHITECTURE)·품질(QUALITY)·기여(CONTRIBUTING) 문서 존재, 링크 유효 | `node tests/quality.cjs` | 🔶 |
 | 8 | 보안 | 보안 헤더·XSS 테스트 통과, 테스트 도구 `npm audit` 중대 취약점 0 | `node tests/run.cjs security` + `npm audit` | ✅ (감사 0건, 2026-11) |

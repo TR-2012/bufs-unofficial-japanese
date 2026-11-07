@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "allowJs": true, "checkJs": true, "noEmit": true, "target": "ES2022", "module": "commonjs",
+    "lib": ["ES2022", "WebWorker"], "types": [], "strict": false, "skipLibCheck": true
+  },
+  "include": ["../sw.js"]
+}

@@ -3,10 +3,11 @@
 //
 // 규칙 기반 점검만 한다: ① 일본어 한 문장인지 ② 제시 단어를 모두 썼는지 ③ 문법 조건을 만족했는지.
 // 문법의 옳고 그름·자연스러움은 규칙으로 판정할 수 없으므로 점수에 반영하지 않는다(그 부분은 AI 첨삭의 몫).
+/** @param {any} root @param {() => any} factory */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
   else root.TJCombo = factory();
-})(typeof self !== 'undefined' ? self : this, function () {
+})(/** @type {any} */ (typeof self !== 'undefined' ? self : this), function () {
   var MIN_LEN = 6;
 
   function norm(s) {

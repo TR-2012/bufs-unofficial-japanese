@@ -11,6 +11,7 @@ cd tests && npm install && npx playwright install chromium
 ```bash
 node tests/run.cjs            # 전체 (저장소 루트에서)
 node tests/run.cjs lint       # ESLint(앱 JS·인라인 로직·테스트·스크립트)
+node tests/run.cjs types      # 타입 점검(JSDoc + tsc --checkJs)
 node tests/run.cjs unit       # 순수 로직 단위 테스트만(브라우저 불필요, 빠름)
 node tests/run.cjs golden     # 골든 마스터만
 node tests/run.cjs pwa        # 오프라인·설치·백업 불러오기
@@ -22,6 +23,7 @@ node tests/run.cjs security   # XSS·글자 대비·위험 API
 | 묶음 | 내용 |
 |---|---|
 | `lint` | ESLint 권장 규칙으로 앱 코드·테스트·스크립트 검사(오류·경고 0). `support.js`는 제외 |
+| `types` | `tts.js`·`pwa.js`·`combo_check.js`·`sw.js`를 TypeScript로 점검(오류 0). 앱이 window에 붙이는 전역은 `tests/types.d.ts`에 선언 |
 | `unit` | 경험치·계급·연속 출석·저장·백업 알림·설치 안내·화면 이동 같은 로직 81개를 브라우저 없이 검사(`tests/unit/`, 가짜 저장소·시각 사용) |
 | `golden` | 9개 화면 × 라이트·다크 × PC·폰, 퀴즈·작문·문법·카드·연상·필기 상호작용, 저장된 학습 기록을 기준 파일(`golden/baseline.json`)과 비교 |
 | `pwa` | 오프라인에서 홈·단어(7,680)·한자(2,136)·문법·퀴즈 표시, 들은 음성 재생, 설치 가능성, 설치 카드(PC·안드로이드·아이폰), 백업 불러오기 검사, 외부 요청 0건 |

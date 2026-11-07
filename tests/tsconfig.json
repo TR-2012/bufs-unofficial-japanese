@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "allowJs": true, "checkJs": true, "noEmit": true, "target": "ES2022", "module": "commonjs",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"], "types": ["node"], "strict": false, "skipLibCheck": true
+  },
+  "include": ["types.d.ts", "../tts.js", "../pwa.js", "../combo_check.js"]
+}

@@ -13,6 +13,9 @@
  *     self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.map(c => caches.delete(c)))).then(() => self.registration.unregister())));
  *   (파일을 그냥 삭제하면 이미 설치된 기기에는 남아 있으므로 위 방법을 쓴다.)
  */
+/** @type {ServiceWorkerGlobalScope} */
+// @ts-ignore  서비스 워커의 전역(self)을 서비스 워커 타입으로 본다
+const sw = self;
 const CACHE = 'bufs-v2';
 const AUDIO = 'bufs-audio-v1';
 const MAX_AUDIO = 800;
@@ -26,20 +29,20 @@ const SHELL = [
   'data/kanji.json', 'data/words.json', 'data/grammar.json', 'data/writing.json', 'data/writing_combo.json', 'data/quiz_core.json',
 ];
 
-self.addEventListener('install', (e) => {
+sw.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
       // 한 파일이 실패해도 설치 전체가 막히지 않게 하나씩 담는다
       .then((c) => Promise.all(SHELL.map((u) => c.add(new Request(u, { cache: 'reload' })).catch(() => {}))))
-      .then(() => self.skipWaiting())
+      .then(() => sw.skipWaiting())
   );
 });
 
-self.addEventListener('activate', (e) => {
+sw.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== AUDIO).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
+      .then(() => sw.clients.claim())
   );
 });
 
@@ -80,11 +83,11 @@ async function audioCacheFirst(req) {
   return res;
 }
 
-self.addEventListener('fetch', (e) => {
+sw.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== sw.location.origin) return;
   if (req.headers.has('range')) return;            // Range 요청은 브라우저에 맡긴다
   if (/\/audio\/.+\.mp3$/.test(url.pathname)) { e.respondWith(audioCacheFirst(req)); return; }
   e.respondWith(networkFirst(req));
