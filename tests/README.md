@@ -15,6 +15,7 @@ node tests/run.cjs types      # 타입 점검(JSDoc + tsc --checkJs)
 node tests/run.cjs unit       # 순수 로직 단위 테스트만(브라우저 불필요, 빠름)
 node tests/run.cjs golden     # 골든 마스터만
 node tests/run.cjs pwa        # 오프라인·설치·백업 불러오기
+node tests/run.cjs a11y       # 접근성(axe-core WCAG 2.x A·AA)
 node tests/run.cjs security   # XSS·글자 대비·위험 API
 ```
 
@@ -27,6 +28,7 @@ node tests/run.cjs security   # XSS·글자 대비·위험 API
 | `unit` | 경험치·계급·연속 출석·저장·백업 알림·설치 안내·화면 이동 같은 로직 81개를 브라우저 없이 검사(`tests/unit/`, 가짜 저장소·시각 사용) |
 | `golden` | 9개 화면 × 라이트·다크 × PC·폰, 퀴즈·작문·문법·카드·연상·필기 상호작용, 저장된 학습 기록을 기준 파일(`golden/baseline.json`)과 비교 |
 | `pwa` | 오프라인에서 홈·단어(7,680)·한자(2,136)·문법·퀴즈 표시, 들은 음성 재생, 설치 가능성, 설치 카드(PC·안드로이드·아이폰), 백업 불러오기 검사, 외부 요청 0건 |
+| `a11y` | axe-core로 9개 화면 × 라이트·다크 × PC·폰을 검사, 심각·중대 위반 0 (`--all`로 낮은 등급 목록도 출력) |
 | `security` | 악성 문자열 주입(XSS) 0건, 글자 대비, 위험 API·외부 주소 없음, 보안 헤더 |
 
 ## 화면을 일부러 바꿨다면
@@ -36,6 +38,8 @@ node tests/run.cjs security   # XSS·글자 대비·위험 API
 ```bash
 node tests/golden.cjs --update
 ```
+
+`node tests/golden.cjs --dump 파일.json`은 현재 화면 덤프만 저장합니다(변경 전후를 직접 비교할 때 사용).
 
 실패했을 때 현재 덤프가 `tests/.out/golden-current.json`에 저장됩니다(커밋하지 않음).
 

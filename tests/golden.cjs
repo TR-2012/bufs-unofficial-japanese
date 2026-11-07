@@ -89,6 +89,8 @@ async function main() {
   const { server, base } = await startServer();
   const res = await collect(base);
   server.close();
+  const dumpIdx = process.argv.indexOf('--dump');
+  if (dumpIdx > 0) { const f = process.argv[dumpIdx + 1]; fs.writeFileSync(f, JSON.stringify(res)); console.log('덤프 저장:', f); return 0; }
   const sums = {};
   for (const k of Object.keys(res)) sums[k] = md5(res[k]);
   if (update) {
