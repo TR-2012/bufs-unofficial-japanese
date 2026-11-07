@@ -20,7 +20,7 @@ JLPT 공부 자료는 시중 문제집, 유료 강의, 웹사이트 단어장이
 - 프로젝트 안내: `https://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project`
 - 라이선스: Creative Commons Attribution-ShareAlike 4.0
 
-JMdict는 큰 일본어 사전 데이터입니다. 이 저장소에서는 JMdict를 이용해 JLPT N1 만점권 후보 어휘 10,000개와 JPT 990점권 후보 어휘 20,000개를 만들 수 있게 합니다.
+JMdict는 큰 일본어 사전 데이터입니다. 이 저장소에서는 JMdict를 이용해 JLPT N1 합격권을 목표로 합니다.
 
 단, 여기서 말하는 “후보”는 공식 시험 출제 목록이라는 뜻이 아닙니다. “공부하면 도움이 되는 큰 단어 묶음”이라는 뜻입니다.
 

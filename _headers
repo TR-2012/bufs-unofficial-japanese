@@ -1,6 +1,6 @@
-# Cloudflare Pages 헤더 설정 — vercel.json과 같은 내용을 유지한다(tests/security.cjs가 일치 여부를 검사).
+# Cloudflare 헤더 설정 — tests/security.cjs가 필수 보안 헤더와 /sw.js 헤더를 검사한다.
 # 같은 이름의 헤더가 여러 규칙에 걸리면 Cloudflare는 값을 쉼표로 이어 붙인다 → 「/*」에는 Cache-Control을 두지 않는다
-# (기본값이 매번 재확인(max-age=0, must-revalidate)이라 vercel.json의 no-cache와 동작이 같다).
+# (기본값이 매번 재확인(max-age=0, must-revalidate)이라 no-cache와 동작이 같다).
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

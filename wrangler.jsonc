@@ -6,5 +6,7 @@
   "compatibility_date": "2026-11-07",
   "assets": {
     "directory": "."
-  }
+  },
+  // main이 아닌 브랜치의 빌드가 `npx wrangler preview`를 실행할 때 필요하다(없으면 빌드가 실패한다). 정식 배포에는 쓰이지 않는다.
+  "previews": {}
 }

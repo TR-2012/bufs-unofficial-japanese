@@ -498,7 +498,7 @@ S.test('_mnSaveKnown: 현재 맵을 tj.mn.known에 JSON으로 저장한다', () 
 
 /* ===================== toggleKanji / toggleWord ===================== */
 
-S.test('toggleKanji: 공개 시 목록 저장·XP+2·오늘 한자 카운트+1', () => {
+S.test('toggleKanji: 공개 시 목록 저장·XP 불변·오늘 한자 카운트+1', () => {
   const app = createApp();
   try {
     const xp0 = app.state.xp;
@@ -507,7 +507,7 @@ S.test('toggleKanji: 공개 시 목록 저장·XP+2·오늘 한자 카운트+1',
     assert.deepEqual(app.state.revealedKanji, ['日']);
     assert.equal(app.storage.getItem('tj.rev.k'), '["日"]');
     assert.equal(app.storage.getItem('tj.seen.k'), '["日"]');
-    assert.equal(app.state.xp, xp0 + 2);
+    assert.equal(app.state.xp, xp0);   // 뜻 보기만으로는 XP를 주지 않는다
     assert.equal(app.state.today.k, k0 + 1);
   } finally { app.dispose(); }
 });

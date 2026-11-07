@@ -70,20 +70,17 @@ async function main() {
       for (const [re, name] of [[/dangerouslySetInnerHTML/, 'dangerouslySetInnerHTML'], [/\beval\s*\(/, 'eval('], [/document\.write\s*\(/, 'document.write'], [/https?:\/\/(?!www\.edrdg|creativecommons)[a-z0-9.-]+\.[a-z]{2,}/i, '외부 주소']]) if (re.test(s)) bad.push(`${f}: ${name}`);
     }
     r.ok('앱 코드에 위험 API·외부 주소 없음', bad.length === 0, bad.join(', '));
-    const v = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
-    const keys = new Set(v.headers.flatMap((h) => h.headers.map((x) => x.key)));
-    r.ok('보안 헤더 설정(nosniff·Referrer-Policy·CSP)', ['X-Content-Type-Options', 'Referrer-Policy', 'Content-Security-Policy'].every((k) => keys.has(k)));
-    // Cloudflare Pages용 _headers 가 vercel.json 과 같은 헤더를 내는지 비교(「/*」의 Cache-Control만 의도적으로 제외 — _headers 머리말 참고)
-    const norm = (src) => (src === '/(.*)' ? '/*' : src.replace('(.*)', '*'));
-    const fromVercel = new Set(v.headers.flatMap((h) => h.headers.map((x) => `${norm(h.source)}|${x.key}|${x.value}`)).filter((l) => l !== '/*|Cache-Control|no-cache'));
-    const fromCf = new Set(); let cur = null;
+    // Cloudflare 헤더 파일(_headers)을 읽어 「경로|헤더|값」 목록으로 만든다
+    const headerLines = new Set(); let cur = null;
     for (const raw of fs.readFileSync(path.join(ROOT, '_headers'), 'utf8').split('\n')) {
       if (!raw.trim() || raw.trim().startsWith('#')) continue;
       if (!/^\s/.test(raw)) { cur = raw.trim(); continue; }
-      const i = raw.indexOf(':'); fromCf.add(`${cur}|${raw.slice(0, i).trim()}|${raw.slice(i + 1).trim()}`);
+      const i = raw.indexOf(':'); headerLines.add(`${cur}|${raw.slice(0, i).trim()}|${raw.slice(i + 1).trim()}`);
     }
-    const onlyV = [...fromVercel].filter((x) => !fromCf.has(x)), onlyC = [...fromCf].filter((x) => !fromVercel.has(x));
-    r.ok('_headers(Cloudflare)와 vercel.json 헤더 일치', onlyV.length === 0 && onlyC.length === 0, `vercel에만: ${onlyV.join(' ; ')} / _headers에만: ${onlyC.join(' ; ')}`);
+    const keys = new Set([...headerLines].filter((l) => l.startsWith('/*|')).map((l) => l.split('|')[1]));
+    r.ok('보안 헤더 설정(nosniff·Referrer-Policy·CSP)', ['X-Content-Type-Options', 'Referrer-Policy', 'Content-Security-Policy'].every((k) => keys.has(k)));
+    r.ok('/sw.js에 Service-Worker-Allowed: / 헤더', headerLines.has('/sw.js|Service-Worker-Allowed|/'));
+    r.ok('「/*」에는 Cache-Control을 두지 않음(Cloudflare는 같은 이름 헤더를 이어 붙임)', !keys.has('Cache-Control'));
   }
 
   await browser.close(); server.close();
