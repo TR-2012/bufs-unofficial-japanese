@@ -990,6 +990,8 @@ class Component extends DCLogic {
     // ---------- AI 누적 데이터 (localStorage 캐시) ----------
     this.state.day=this._loadDay(this.state.quizLevel);
     try{ if(!localStorage.getItem('tj.nudge.firstAt')) localStorage.setItem('tj.nudge.firstAt',String(Date.now())); }catch(e){}
+    // 저장 형식 버전: 처음이거나 옛 버전이면 필요한 변환(_migrate)을 한 뒤 현재 버전을 기록한다(기존 기록은 지우거나 바꾸지 않음).
+    try{ const sv=parseInt(localStorage.getItem('tj.schema')||'0',10); if(sv<this._schemaVersion()){ this._migrate(sv); localStorage.setItem('tj.schema',String(this._schemaVersion())); } }catch(e){}
     try{ if(navigator.storage&&navigator.storage.persist) navigator.storage.persist(); }catch(e){}   // 브라우저가 기록을 임의로 지우지 않도록 요청
     this.state.quizList=this._buildDayQuiz(this.state.day);
     this.kanjiExtra=[]; this.wordExtra=[]; this.grammarExtra={N5:[],N4:[],N3:[],N2:[],N1:[]};
@@ -1429,7 +1431,7 @@ class Component extends DCLogic {
     const S=this._seen[kind]; if(S.has(key)) return false; S.add(key); this._saveJson('tj.seen.'+kind,[...S]); return true; }
   // 학습 기록 백업: tj.* 전부를 JSON 파일로 저장 / 불러오기
   exportData(){
-    const o={app:'bufs-japanese',v:1,at:new Date().toISOString(),data:{}};
+    const o={app:'bufs-japanese',v:1,schema:this._schemaVersion(),at:new Date().toISOString(),data:{}};
     try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith('tj.')&&!k.startsWith('tj.nudge.')) o.data[k]=localStorage.getItem(k); } }catch(e){}
     const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));
     a.download='bufs-japanese-backup-'+this._ymd()+'.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>{ try{ URL.revokeObjectURL(a.href); }catch(e){} },1000);
@@ -1439,6 +1441,10 @@ class Component extends DCLogic {
   // 홈 안내: 앱 설치 카드(안드로이드·PC) · 홈 화면 추가(iOS Safari) · 백업 알림(마지막 백업 또는 첫 기록 후 7일, 「나중에」는 2일 미룸)
   _ls(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   _lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  // ---------- 저장 형식 버전 ----------
+  // tj.* 저장 형식을 바꿀 때마다 숫자를 1 올리고, _migrate에 「이전 버전 → 새 버전」 변환을 추가한다. (현재 1: 변환 없음)
+  _schemaVersion(){ return 1; }
+  _migrate(from){ /* from < 1 은 버전 기록이 없던 시절 — 형식이 같으므로 변환 없음 */ }
   _nudges(){
     const DAY=86400000, now=Date.now();
     const ua=navigator.userAgent||'', ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -1468,7 +1474,9 @@ class Component extends DCLogic {
     inp.onchange=()=>{ const f=inp.files&&inp.files[0]; if(!f) return; if(f.size>5*1024*1024){ this.setState({backupMsg:'파일이 너무 커요(5MB 이하만 불러올 수 있어요).'}); return; } const rd=new FileReader();
       rd.onload=()=>{ try{ const o=JSON.parse(rd.result); if(!o||o.app!=='bufs-japanese'||!o.data||typeof o.data!=='object'||Array.isArray(o.data)) throw 0;
           Object.keys(o.data).forEach(k=>{ if(typeof o.data[k]!=='string') throw 0; });
-          Object.keys(o.data).forEach(k=>{ if(k.startsWith('tj.')&&!k.startsWith('tj.nudge.')) localStorage.setItem(k,o.data[k]); });
+          const fileSchema=parseInt(o.schema||o.data['tj.schema']||'0',10);
+          if(fileSchema>this._schemaVersion()){ this.setState({backupMsg:'이 백업은 더 새로운 버전의 앱에서 만들어졌어요. 페이지를 새로 고쳐 최신 버전으로 연 뒤 다시 불러오세요.'}); return; }
+          Object.keys(o.data).forEach(k=>{ if(k.startsWith('tj.')&&!k.startsWith('tj.nudge.')&&k!=='tj.schema') localStorage.setItem(k,o.data[k]); });
           this._lsSet('tj.nudge.backupAt',String(Date.now()));
           this.setState({backupMsg:'불러왔어요. 화면을 새로 고칩니다…'}); setTimeout(()=>location.reload(),600);
         }catch(e){ this.setState({backupMsg:'이 앱의 백업 파일이 아니에요.'}); } };

@@ -100,6 +100,26 @@ async function main() {
     await t.ctx.close();
   }
 
+  // 4) 저장 형식 버전(tj.schema)
+  {
+    const t = await mk({ viewport: { width: 1280, height: 800 }, acceptDownloads: true }, "if(!localStorage.getItem('seeded')){localStorage.setItem('seeded','1');localStorage.setItem('tj.xp','123');localStorage.setItem('tj.mn.known','{\"日\":1}');}");
+    await t.p.goto(base); await t.p.waitForTimeout(3000);
+    const ls = (k) => t.p.evaluate((x) => localStorage.getItem(x), k);
+    r.ok('첫 실행에 tj.schema=1 기록', (await ls('tj.schema')) === '1');
+    r.ok('기존 기록(경험치·연상 암기 기록)은 그대로', (await ls('tj.xp')) === '123' && (await ls('tj.mn.known')) === '{"日":1}');
+    const [dl] = await Promise.all([t.p.waitForEvent('download'), t.p.locator('button', { hasText: '백업 파일 받기' }).first().click()]);
+    const j = JSON.parse(fs.readFileSync(await dl.path(), 'utf8'));
+    r.ok('백업 파일에 schema=1 포함', j.schema === 1 && j.data['tj.schema'] === '1');
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'bufs-'));
+    const newer = path.join(tmp, 'newer.json'); fs.writeFileSync(newer, JSON.stringify({ app: 'bufs-japanese', schema: 2, data: { 'tj.xp': '999', 'tj.schema': '2' } }));
+    const [fc] = await Promise.all([t.p.waitForEvent('filechooser'), t.p.locator('button', { hasText: '백업 불러오기' }).click()]); await fc.setFiles(newer); await t.p.waitForTimeout(800);
+    r.ok('더 새로운 버전의 백업은 거부(기록 변경 없음)', (await t.p.evaluate(() => document.body.innerText)).includes('더 새로운 버전') && (await ls('tj.xp')) === '123' && (await ls('tj.schema')) === '1');
+    const same = path.join(tmp, 'same.json'); fs.writeFileSync(same, JSON.stringify({ app: 'bufs-japanese', schema: 1, data: { 'tj.xp': '555', 'tj.schema': '1' } }));
+    const [fc2] = await Promise.all([t.p.waitForEvent('filechooser'), t.p.locator('button', { hasText: '백업 불러오기' }).click()]); await fc2.setFiles(same); await t.p.waitForTimeout(1800);
+    r.ok('같은 버전의 백업은 불러와짐', (await ls('tj.xp')) === '555' && (await ls('tj.schema')) === '1');
+    await t.ctx.close();
+  }
+
   await browser.close(); server.close();
   return r.done();
 }
