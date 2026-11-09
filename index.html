@@ -119,6 +119,19 @@
     .hh-kanji-grid { grid-template-columns: 1fr !important; }
     .hh-kanji-grid .hh-kanji-char { width: 104px !important; }
     .hh-kanji-grid .hh-kanji-char span:nth-child(2) { font-size: 62px !important; }
+    /* 필기 노트: 글자 목록은 한 줄 전체, ◀ ▶·페이지 이동은 그 아래 줄 */
+    .hh-nb-pager { flex-wrap: wrap; }
+    .hh-nb-words { flex: 1 1 100% !important; order: -1; margin-bottom: 4px; }
+    .hh-nb-info { flex-wrap: wrap; row-gap: 4px; }
+    .hh-nb-info > span:last-child { margin-left: 0 !important; flex-basis: 100%; }
+    /* 일본어 문법: 레벨(가로 한 줄) → 단원(2열) → 설명(전체 너비) 순으로 세로 배치 */
+    .hh-gram { flex-direction: column; gap: 14px !important; }
+    .hh-gram-levels { width: auto !important; }
+    .hh-gram-levelbtns { flex-direction: row !important; }
+    .hh-gram-levelbtns > button { flex: 1 1 0; min-width: 0; }
+    .hh-gram-units { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px !important; }
+    .hh-gram-detail { padding: 16px !important; }
+    .hh-gram-head { flex-wrap: wrap; }
   }
   @media (max-width: 380px) {
     .hh-word-grid { grid-template-columns: 1fr !important; }
@@ -628,9 +641,9 @@
               <span style="font-size:var(--fs-sm); color:var(--ink2);">{{ nbLevelLabel }}</span>
               <sc-for list="{{ nbLevelChips }}" as="chip" hint-placeholder-count="7"><button onClick="{{ chip.pick }}" style="{{ chip.style }}">{{ chip.label }}</button></sc-for>
             </div>
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div class="hh-nb-pager" style="display:flex; align-items:center; gap:8px;">
               <button onClick="{{ nbPrev }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px;" style-hover="border-color:var(--red);">◀</button>
-              <div style="flex:1; display:flex; gap:7px; flex-wrap:wrap;">
+              <div class="hh-nb-words" style="flex:1; display:flex; gap:7px; flex-wrap:wrap;">
                 <sc-for list="{{ nbWords }}" as="n" hint-placeholder-count="9">
                   <button onClick="{{ n.pick }}" style="{{ n.style }}">{{ n.word }}</button>
                 </sc-for>
@@ -641,7 +654,7 @@
               <button onClick="{{ nbJumpGo }}" style="background:var(--white-bg); border:2px solid var(--ink); border-radius:3px; padding:6px 11px; cursor:pointer; font-family:inherit; font-size:13px; white-space:nowrap;" style-hover="border-color:var(--red);">이동</button>
             </div>
           </div>
-          <div style="display:flex; align-items:baseline; gap:10px; margin:0 4px 10px;">
+          <div class="hh-nb-info" style="display:flex; align-items:baseline; gap:10px; margin:0 4px 10px;">
             <span style="font-family:var(--font-ja-serif); font-size:24px; font-weight:700;">{{ nbWord }}</span>
             <span style="font-size:13px; color:var(--red-text);">{{ nbReading }}</span>
             <span style="font-size:13px; color:var(--ink2);">{{ nbMeaning }}</span>
@@ -731,10 +744,10 @@
 
       <!-- ===== GRAMMAR ===== -->
       <sc-if value="{{ is.grammar }}" hint-placeholder-val="">
-        <div style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease; display:flex; gap:22px;">
-          <div style="width:150px; flex:none;">
+        <div class="hh-gram" style="max-width:1080px; margin:0 auto; animation:hh-fade .35s ease; display:flex; gap:22px;">
+          <div class="hh-gram-levels" style="width:150px; flex:none;">
             <div style="font-size:var(--fs-sm); color:var(--ink2); margin-bottom:10px; padding-left:4px;">레벨</div>
-            <div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="hh-gram-levelbtns" style="display:flex; flex-direction:column; gap:6px;">
               <sc-for list="{{ grammarLevels }}" as="g" hint-placeholder-count="5">
                 <button onClick="{{ g.pick }}" style="{{ g.style }}">{{ g.label }}</button>
               </sc-for>
@@ -744,7 +757,7 @@
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
               <span style="font-size:var(--fs-sm); color:var(--ink2);">{{ grammarLevel }} 단원 · 전체 {{ grammarUnitCount }}개</span>
             </div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-bottom:24px;">
+            <div class="hh-gram-units" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-bottom:24px;">
               <sc-for list="{{ grammarUnits }}" as="u" hint-placeholder-count="6">
                 <button onClick="{{ u.open }}" style="{{ u.style }}">
                   <div style="font-family:var(--font-ja); font-weight:700; font-size:15px; color:var(--ink);">{{ u.pattern }}</div>
@@ -754,8 +767,8 @@
             </div>
             <!-- detail -->
             <sc-if value="{{ grammarOpen }}" hint-placeholder-val="">
-              <div style="background:var(--card); border:2px solid var(--ink); border-radius:6px; padding:26px; animation:hh-fade .3s ease;">
-                <div style="display:flex; align-items:center; gap:10px;">
+              <div class="hh-gram-detail" style="background:var(--card); border:2px solid var(--ink); border-radius:6px; padding:26px; animation:hh-fade .3s ease;">
+                <div class="hh-gram-head" style="display:flex; align-items:center; gap:10px;">
                   <span style="font-family:var(--font-mono); font-size:var(--fs-sm); font-weight:700; background:var(--ink-bg); color:var(--yellow); border:2px solid var(--ink); padding:4px 9px; border-radius:0;">{{ grammarLevel }}</span>
                   <span style="font-family:var(--font-ja); font-size:24px; font-weight:700;">{{ gd.pattern }}</span>
                   <span style="font-size:14px; color:var(--ink2);">{{ gd.gloss }}</span>
