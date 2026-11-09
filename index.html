@@ -133,6 +133,8 @@
     .hh-gram-detail { padding: 16px !important; }
     .hh-gram-head { flex-wrap: wrap; }
   }
+  /* 작문 모범 답안 후리가나 */
+  .hh-ruby rt { font-size: .55em; color: var(--ink2); font-weight: 400; }
   @media (max-width: 380px) {
     .hh-word-grid { grid-template-columns: 1fr !important; }
   }
@@ -882,8 +884,14 @@
             <sc-if value="{{ modelShown }}" hint-placeholder-val="">
               <div style="margin-top:16px; padding:16px; background:var(--paper2); border:2px dashed var(--ink); border-radius:4px; animation:hh-pop .25s ease;">
                 <div style="font-size:var(--fs-sm); color:var(--red-text); font-weight:700; margin-bottom:6px;">모범 답안</div>
-                <div style="font-family:var(--font-ja); font-size:16px; color:var(--ink);">{{ writeModel }}</div>
-                <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:6px;">{{ writeModelNote }}</div>
+                <div class="hh-ruby" style="font-family:var(--font-ja); font-size:17px; color:var(--ink); line-height:2.2;"><sc-for list="{{ writeModelRuby }}" as="rb" hint-placeholder-count="3"><ruby>{{ rb.b }}<rt>{{ rb.r }}</rt></ruby></sc-for></div>
+                <sc-if value="{{ writeHasKo }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:8px; font-size:14px; color:var(--ink); line-height:1.6;"><b style="color:var(--red-text); margin-right:6px;">뜻</b>{{ writeModelKo }}</div>
+                </sc-if>
+                <sc-if value="{{ writeHasEx }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:8px; padding:10px 12px; background:var(--card); border:2px solid var(--ink); border-radius:4px; font-size:13.5px; color:var(--ink); line-height:1.7;"><b style="display:block; color:var(--red-text); font-size:var(--fs-sm); margin-bottom:2px;">해설</b>{{ writeModelEx }}</div>
+                </sc-if>
+                <div style="font-size:var(--fs-sm); color:var(--ink2); margin-top:6px;">핵심 표현 · {{ writeModelNote }}</div>
                 <sc-if value="{{ writeHasAlts }}" hint-placeholder-val="">
                   <div style="font-size:var(--fs-sm); color:var(--ink2); font-weight:700; margin-top:12px;">다른 예시</div>
                   <sc-for list="{{ writeAlts }}" as="al" hint-placeholder-count="1">
@@ -2213,6 +2221,12 @@ class Component extends DCLogic {
       writePrompt:curP.prompt,
       writeModel:curP.model,
       writeModelNote:curP.note,
+      // 모범 답안 후리가나(data의 ruby: "문자열" 또는 ["한자","よみ"]) — scripts/build_writing_ruby.mjs가 생성
+      writeModelRuby:(Array.isArray(curP.ruby)&&curP.ruby.length?curP.ruby:[curP.model||'']).map(p=>Array.isArray(p)?{b:p[0],r:p[1]}:{b:String(p),r:''}),
+      writeModelKo:curP.ko||(writeIsCombo?'':curP.prompt||''),
+      writeHasKo:!!(curP.ko||(!writeIsCombo&&curP.prompt)),
+      writeModelEx:curP.ex||'',
+      writeHasEx:!!curP.ex,
       modelShown:s.modelShown,
       writeRef:(n)=>{this._writeEl=n;},
       revealModel:()=>this.revealModel(),
