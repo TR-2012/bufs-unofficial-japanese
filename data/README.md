@@ -146,6 +146,11 @@ node convert_kanjidic.mjs kanjidic2.xml > kanji.json
 
 이 키들은 앱 로직(`index.html`의 `kanjiFile/wordFile/grammarFile/writeFile`, `writeData`)과 1:1 대응합니다.
 
+모범 답안 아래에 보이는 항목(두 파일 공통, 「모범 답안 보기」에 표시):
+- `ruby`: 후리가나. `["그대로 쓸 글자", ["漢字","かんじ"], …]` — 문자열은 읽기 없이, `[본문, 읽기]`는 본문 위에 읽기를 단다. `scripts/build_writing_ruby.mjs`가 형태소 분석기(kuromoji)로 만들고, 틀린 읽기는 그 스크립트의 `FIX`·`PHRASE_FIX` 표로 고친다. `model`을 바꾸면 다시 돌린다.
+- `ko`: 모범 답안의 한국어 뜻. 없으면 문제 문장(`prompt`)을 뜻으로 보여 준다(문장 일작·경어처럼 문제가 곧 번역인 경우).
+- `ex`: 2~3줄 해설(핵심 문법·단어·자연스러운 표현).
+
 ### `writing_combo.json` (단어 조합 작문)
 직접 작성한 N5/N4/N3/N2/N1 문제입니다(N5~N1 각 100, 총 500 — 4년 어휘 안의 단어만)(외부 교재·문제집 복제 없음). 앱이 `writeFile.combo`로 병합합니다.
 ```json
