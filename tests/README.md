@@ -16,7 +16,7 @@ node tests/run.cjs unit       # 순수 로직 단위 테스트만(브라우저 �
 node tests/run.cjs golden     # 골든 마스터만
 node tests/run.cjs pwa        # 오프라인·설치·백업 불러오기
 node tests/run.cjs a11y       # 접근성(axe-core WCAG 2.x A·AA)
-node tests/run.cjs security   # XSS·글자 대비·위험 API
+node tests/run.cjs security   # XSS·CSP·잘못된 저장값·글자 대비·위험 API
 ```
 
 ## 품질 기준표 한 번에 점검
@@ -33,12 +33,12 @@ node tests/quality.cjs --fast   # 브라우저가 필요 없는 항목만
 | 묶음 | 내용 |
 |---|---|
 | `lint` | ESLint 권장 규칙으로 앱 코드·테스트·스크립트 검사(오류·경고 0). `support.js`는 제외 |
-| `types` | `tts.js`·`pwa.js`·`combo_check.js`·`sw.js`를 TypeScript로 점검(오류 0). 앱이 window에 붙이는 전역은 `tests/types.d.ts`에 선언 |
-| `unit` | 경험치·계급·연속 출석·저장·백업 알림·설치 안내·화면 이동 같은 로직 81개를 브라우저 없이 검사(`tests/unit/`, 가짜 저장소·시각 사용) |
+| `types` | `tts.js`·`pwa.js`·`combo_check.js`·`storage_guard.js`·`sw.js`를 TypeScript로 점검(오류 0). 앱이 window에 붙이는 전역은 `tests/types.d.ts`에 선언 |
+| `unit` | 경험치·계급·연속 출석·저장·백업 알림·설치 안내·화면 이동 같은 로직과 저장값 검사기(`storage_guard.js`) 92개를 브라우저 없이 검사(`tests/unit/`, 가짜 저장소·시각 사용) |
 | `golden` | 9개 화면 × 라이트·다크 × PC·폰, 퀴즈·작문·문법·카드·연상·필기 상호작용, 저장된 학습 기록을 기준 파일(`golden/baseline.json`)과 비교 |
-| `pwa` | 오프라인에서 홈·단어(7,680)·한자(2,136)·문법·퀴즈 표시, 들은 음성 재생, 설치 가능성, 설치 카드(PC·안드로이드·아이폰), 백업 불러오기 검사, 외부 요청 0건 |
+| `pwa` | 오프라인에서 홈·단어(7,680)·한자(2,136)·문법·퀴즈 표시, 들은 음성 재생, 설치 가능성, 설치 카드(PC·안드로이드·아이폰), 백업 불러오기 검사(틀린 값은 건너뜀), 쿼리 문자열 주소가 캐시에 쌓이지 않는지, 외부 요청 0건 |
 | `a11y` | axe-core로 9개 화면 × 라이트·다크 × PC·폰을 검사, 심각·중대 위반 0 (`--all`로 낮은 등급 목록도 출력) |
-| `security` | 악성 문자열 주입(XSS) 0건, 글자 대비, 위험 API·외부 주소 없음, 보안 헤더 |
+| `security` | 악성 문자열 주입(XSS) 0건, 글자 대비, 위험 API·외부 주소 없음, 보안 헤더(CSP가 인라인·외부 스크립트를 막는지), 실제 CSP 아래에서 앱 사용 중 위반 0건, 모양이 틀린 저장값·전역 객체 오염 페이로드에도 9개 화면이 열리는지. 테스트 서버는 `_headers`를 그대로 적용한다 |
 
 ## 화면을 일부러 바꿨다면
 

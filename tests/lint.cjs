@@ -10,7 +10,7 @@ const TAG = '<script type="text/x-dc" data-dc-script>';
 const a = h.indexOf(TAG) + TAG.length;
 fs.mkdirSync(path.join(__dirname, '.out'), { recursive: true });
 fs.writeFileSync(path.join(__dirname, '.out', 'logic.js'), h.slice(a, h.indexOf('</script>', a)));
-const targets = ['tts.js', 'pwa.js', 'combo_check.js', 'sw.js', 'tests/.out/logic.js', 'tests/*.cjs', 'tests/unit/*.cjs', 'scripts/*.mjs'];
+const targets = ['tts.js', 'pwa.js', 'combo_check.js', 'storage_guard.js', 'sw.js', 'tests/.out/logic.js', 'tests/*.cjs', 'tests/unit/*.cjs', 'scripts/*.mjs'];
 // .bin/eslint는 Windows에서 eslint.cmd라 spawnSync로 바로 실행되지 않는다 → node로 JS 진입점을 직접 실행한다.
 const bin = path.join(__dirname, 'node_modules', 'eslint', 'bin', 'eslint.js');
 const r = spawnSync(process.execPath, [bin, '-c',path.join(__dirname, 'eslint.config.mjs'), ...(process.argv.slice(2)), ...targets], { cwd: root, stdio: 'inherit' });

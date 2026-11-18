@@ -744,4 +744,107 @@ S.test('_nudges: snooze가 미래면 due가 막힌다', () => {
   } finally { app.dispose(); }
 });
 
+/* ===================== storage_guard.js (저장값 검사기) ===================== */
+
+const TJStore = require('../../storage_guard.js');
+const { logicSource } = require('./harness.cjs');
+// JSON으로는 읽히지만 모양이 틀린 값. 오염 페이로드는 글 그대로 둔다(객체 리터럴로 쓰면 뜻이 달라진다).
+const WRONG_SHAPES = ['5', '{}', '"x"', '[{}]', 'null', '{bad', '{"__proto__":{"polluted":[1]}}', '{"constructor":{"keys":[1]}}'];
+const NOT_POLLUTED = () => ({}).polluted === undefined && typeof Object.keys === 'function';
+
+S.test('TJStore.readTextList: 글자 배열만 받고, 틀린 모양은 빈 배열', () => {
+  assert.deepEqual(TJStore.readTextList('["日","月"]'), ['日', '月']);
+  assert.deepEqual(TJStore.readTextList('["日",5,null,{"a":1}]'), ['日']);
+  assert.deepEqual(TJStore.readTextList(null), []);
+  for (const raw of WRONG_SHAPES) assert.deepEqual(TJStore.readTextList(raw), [], raw);
+});
+
+S.test('TJStore.readPlainObject: 일반 객체는 그대로, 나머지는 빈 객체', () => {
+  assert.deepEqual(TJStore.readPlainObject('{"日":1}'), { 日: 1 });
+  for (const raw of ['5', '"x"', '[{}]', 'null', '{bad']) assert.deepEqual(TJStore.readPlainObject(raw), {}, raw);
+});
+
+S.test('TJStore.readToday: 오늘 날짜이고 칸이 숫자일 때만 받는다', () => {
+  assert.deepEqual(TJStore.readToday('{"d":"2026-11-7","k":1,"w":0,"q":2}', '2026-11-7'), { d: '2026-11-7', k: 1, w: 0, q: 2 });
+  assert.equal(TJStore.readToday('{"d":"2026-11-6","k":1}', '2026-11-7'), null);
+  assert.equal(TJStore.readToday('{"d":"2026-11-7","k":"abc"}', '2026-11-7'), null);
+  assert.equal(TJStore.readToday('{"d":"2026-11-7","q":{"x":1}}', '2026-11-7'), null);
+  for (const raw of WRONG_SHAPES) assert.equal(TJStore.readToday(raw, '2026-11-7'), null, raw);
+});
+
+S.test('TJStore.readRecordList: 식별 필드가 글자인 항목만, 타입이 맞는 필드만 남긴다', () => {
+  const raw = '[{"char":"試","on":"シ","strokes":13,"kun":5,"meaning":["x"],"extra":{"a":1}},{"on":"シ"},{"char":5},"x"]';
+  assert.deepEqual(TJStore.readRecordList(raw, 'char'), [{ char: '試', on: 'シ', strokes: 13 }]);
+  const word = '[{"word":"試験","reading":"しけん","cognate":true,"practical":1}]';
+  assert.deepEqual(TJStore.readRecordList(word, 'word'), [{ word: '試験', reading: 'しけん', cognate: true, practical: 1 }]);
+  for (const raw2 of WRONG_SHAPES) assert.deepEqual(TJStore.readRecordList(raw2, 'char'), [], raw2);
+});
+
+S.test('TJStore.readGrammarExtra: 정해진 급수만 읽고 단원 모양을 맞춘다', () => {
+  const raw = '{"N1":[{"pattern":"〜ものの","gloss":"~이지만","rules":["a",5],"examples":[{"jp":"x","kr":5}],"checks":5},{"gloss":"패턴 없음"}],"N9":[{"pattern":"x"}],"N2":5}';
+  const got = TJStore.readGrammarExtra(raw);
+  assert.deepEqual(got.N1, [{ pattern: '〜ものの', gloss: '~이지만', explain: '', rules: ['a'], examples: [{ jp: 'x', kr: '' }], checks: [] }]);
+  assert.deepEqual(Object.keys(got), ['N5', 'N4', 'N3', 'N2', 'N1']);
+  assert.deepEqual(got.N2, []);
+  for (const raw2 of WRONG_SHAPES) assert.deepEqual(TJStore.readGrammarExtra(raw2), { N5: [], N4: [], N3: [], N2: [], N1: [] }, raw2);
+});
+
+S.test('TJStore.readWriteExtra: 정해진 탭·하위만 읽는다', () => {
+  const raw = '{"sentence":{"basic":[{"prompt":"p","model":"m","ruby":[1]},{"model":"문제 없음"}],"zzz":[{"prompt":"x"}]},"keigo":5,"other":{"a":[{"prompt":"x"}]}}';
+  const got = TJStore.readWriteExtra(raw);
+  assert.deepEqual(got.sentence.basic, [{ prompt: 'p', model: 'm' }]);
+  assert.deepEqual(Object.keys(got), ['sentence', 'keigo', 'free', 'biz']);
+  assert.deepEqual(Object.keys(got.sentence), ['basic', 'mid', 'adv']);
+  assert.deepEqual(got.keigo, { sonkei: [], kenjo: [], settai: [] });
+});
+
+S.test('TJStore: __proto__·constructor 키가 든 값을 읽어도 전역 객체가 오염되지 않는다', () => {
+  for (const raw of ['{"__proto__":{"polluted":[1]}}', '{"constructor":{"keys":[1]}}', '{"sentence":{"__proto__":{"polluted":[1]}}}']) {
+    TJStore.readWriteExtra(raw); TJStore.readGrammarExtra(raw); TJStore.readPlainObject(raw); TJStore.readRecordList('[' + raw + ']', 'char');
+    assert.ok(NOT_POLLUTED(), raw);
+  }
+});
+
+S.test('TJStore.splitBackupData: 맞는 값은 받고, 틀린 값·모르는 키는 건너뛴다', () => {
+  const good = { 'tj.xp': '42', 'tj.dark': '1', 'tj.quiz.level': 'N3', 'tj.day.N3': '7', 'tj.seen.ws': '["a"]', 'tj.mn.known': '{"日":1}' };
+  const bad = { 'tj.rev.k': '5', 'tj.solved': '-1', 'tj.dark2': '1', 'tj.day.N9': '1', 'tj.seen.zz': '[]', 'tj.quiz.level2': 'N3' };
+  const ignored = { 'tj.nudge.backupAt': '1', 'tj.schema': '1', other: 'x' };
+  const got = TJStore.splitBackupData({ ...good, ...bad, ...ignored });
+  assert.deepEqual(got.accepted, Object.entries(good));
+  assert.deepEqual(got.skipped, Object.keys(bad));
+});
+
+S.test('TJStore: 앱 코드에 나오는 모든 tj.* 키를 백업 검사가 알고 있다(새 키를 만들면 storage_guard.js에도 등록)', () => {
+  const literals = [...new Set([...logicSource().matchAll(/'(tj\.[A-Za-z0-9_.]*)'/g)].map((m) => m[1]))];
+  const complete = literals.filter((k) => !k.endsWith('.') && !k.startsWith('tj.nudge.') && k !== 'tj.schema');
+  assert.ok(complete.length >= 12, '키를 충분히 찾지 못함: ' + complete.length);
+  assert.deepEqual(complete.filter((k) => !TJStore.isKnownKey(k)), []);
+  for (const kind of ['k', 'w', 'm', 'g', 'wm', 'ws']) assert.ok(TJStore.isKnownKey('tj.seen.' + kind), kind);
+  for (const level of ['N5', 'N4', 'N3', 'N2', 'N1']) assert.ok(TJStore.isKnownKey('tj.day.' + level), level);
+});
+
+S.test('앱: 모양이 틀린 저장값으로도 만들어지고, 열기만 해서는 저장값을 바꾸지 않는다', () => {
+  const keys = ['tj.rev.k', 'tj.rev.w', 'tj.seen.k', 'tj.mn.known', 'tj.today', 'tj.kanji.extra', 'tj.word.extra', 'tj.grammar.extra', 'tj.write.extra'];
+  for (const raw of WRONG_SHAPES) {
+    const app = createApp({ storage: Object.fromEntries(keys.map((k) => [k, raw])) });
+    try {
+      assert.deepEqual(app.state.revealedKanji, [], raw);
+      assert.deepEqual(app.kanjiExtra, [], raw);
+      assert.deepEqual(Object.keys(app.writeExtra), ['sentence', 'keigo', 'free', 'biz'], raw);
+      for (const k of keys) assert.equal(app.storage.getItem(k), raw, k + ' = ' + raw);
+      assert.ok(NOT_POLLUTED(), raw);
+    } finally { app.dispose(); }
+  }
+});
+
+S.test('_visitStreak: n이 숫자가 아니면 0으로 보고 숫자를 돌려준다', () => {
+  const app = createApp();
+  try {
+    app.storage.setItem('tj.streak', JSON.stringify({ last: ymd(), n: [{}] }));
+    assert.equal(app._visitStreak(), 1);
+    app.storage.setItem('tj.streak', JSON.stringify({ last: ymdAt(Date.now() - DAY), n: 'abc' }));
+    assert.equal(app._visitStreak(), 1);
+  } finally { app.dispose(); }
+});
+
 S.run().then((r) => process.exit(r.fail ? 1 : 0));

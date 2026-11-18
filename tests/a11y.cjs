@@ -1,7 +1,8 @@
 /* 접근성 테스트 — axe-core(WCAG 2.x A·AA 규칙)를 9개 화면 × 라이트·다크 × PC·폰에서 실행한다.
  * 통과 기준: 심각(critical)·중대(serious) 위반 0건. 낮은 등급(moderate·minor)은 목록만 출력한다. */
 const { startServer, loadPlaywright, reporter, MENUS, goto, launchOptions } = require('./lib.cjs');
-const AXE = require.resolve('axe-core/axe.min.js', { paths: [__dirname] });
+const fs = require('node:fs');
+const AXE_SOURCE = fs.readFileSync(require.resolve('axe-core/axe.min.js', { paths: [__dirname] }), 'utf8');
 const SHOW = process.argv.includes('--all');
 
 async function main() {
@@ -15,7 +16,8 @@ async function main() {
     const p = await ctx.newPage();
     await p.addInitScript((t) => localStorage.setItem('tj.dark', t === 'dark' ? '1' : '0'), theme);
     await p.goto(base); await p.waitForTimeout(2500);
-    await p.addScriptTag({ path: AXE });
+    // <script> 태그로 넣으면 인라인 스크립트라 CSP에 막힌다 → 테스트 도구 쪽에서 직접 실행한다
+    await p.evaluate(AXE_SOURCE);
     for (const m of MENUS) {
       await goto(p, m);
       const res = await p.evaluate(async () => await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa'] }, resultTypes: ['violations'] }));

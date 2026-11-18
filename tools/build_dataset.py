@@ -25,12 +25,11 @@ RAW_DIR = DATA_DIR / "raw"
 GENERATED_DIR = DATA_DIR / "generated"
 SEED_DIR = DATA_DIR / "seed"
 
+# https만 쓴다. 평문 http는 중간에서 내용을 바꿔치기할 수 있다.
 JMDICT_URLS = [
-    "http://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz",
     "https://ftp.edrdg.org/pub/Nihongo/JMdict_e.gz",
 ]
 KANJIDIC2_URLS = [
-    "http://ftp.edrdg.org/pub/Nihongo/kanjidic2.xml.gz",
     "https://ftp.edrdg.org/pub/Nihongo/kanjidic2.xml.gz",
 ]
 EDRDG_LICENSE = "CC BY-SA 4.0"

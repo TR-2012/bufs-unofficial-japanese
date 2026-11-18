@@ -77,7 +77,7 @@ suite(6, '접근성(axe-core)', 'a11y', true);
 /* 9: 구조 — 앱 JS 파일 600줄 이하 */
 {
   const LIMIT = 600;
-  const files = { 'tts.js': lines(read('tts.js')), 'pwa.js': lines(read('pwa.js')), 'combo_check.js': lines(read('combo_check.js')), 'sw.js': lines(read('sw.js')), 'index.html 인라인 로직': inlineLogicLines() };
+  const files = { 'tts.js': lines(read('tts.js')), 'pwa.js': lines(read('pwa.js')), 'combo_check.js': lines(read('combo_check.js')), 'storage_guard.js': lines(read('storage_guard.js')), 'sw.js': lines(read('sw.js')), 'index.html 인라인 로직': inlineLogicLines() };
   const over = Object.entries(files).filter(([, n]) => n > LIMIT);
   const detail = Object.entries(files).map(([f, n]) => `${f} ${n}`).join(' · ') + ' (제외: support.js — 별도 도구가 만든 화면 런타임)';
   add(9, `구조(앱 JS 파일당 ${LIMIT}줄 이하)`, over.length === 0, over.length ? `초과: ${over.map(([f, n]) => `${f} ${n}줄`).join(', ')} / ${detail}` : detail);

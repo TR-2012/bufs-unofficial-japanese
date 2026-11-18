@@ -16,13 +16,13 @@
 /** @type {ServiceWorkerGlobalScope} */
 // @ts-ignore  서비스 워커의 전역(self)을 서비스 워커 타입으로 본다
 const sw = self;
-const CACHE = 'bufs-v2';
+const CACHE = 'bufs-v3';
 const AUDIO = 'bufs-audio-v1';
 const MAX_AUDIO = 800;
 const NET_TIMEOUT = 4000;
 
 const SHELL = [
-  './', 'index.html', 'support.js', 'tts.js', 'combo_check.js', 'pwa.js', 'haruko.jpg',
+  './', 'index.html', 'support.js', 'tts.js', 'combo_check.js', 'storage_guard.js', 'pwa.js', 'haruko.jpg',
   'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon-180.png',
   'vendor/react-18.3.1.min.js', 'vendor/react-dom-18.3.1.min.js',
@@ -46,6 +46,12 @@ sw.addEventListener('activate', (e) => {
   );
 });
 
+// 쿼리 문자열이 붙은 주소(?x=1, ?x=2 …)는 저장하지 않는다. 주소마다 사본이 쌓여 저장 공간이 끝없이 늘고,
+// 공간이 모자라면 브라우저가 학습 기록까지 지울 수 있다. 꺼낼 때는 ignoreSearch로 찾으므로 오프라인 동작은 같다.
+function isCacheableShellResponse(req, res) {
+  return Boolean(res && res.ok && res.type === 'basic' && !new URL(req.url).search);
+}
+
 function networkFirst(req) {
   return new Promise((resolve) => {
     let settled = false;
@@ -55,7 +61,7 @@ function networkFirst(req) {
     }, NET_TIMEOUT);
     fetch(req).then((res) => {
       clearTimeout(timer);
-      if (res && res.ok && res.type === 'basic') {
+      if (isCacheableShellResponse(req, res)) {
         const copy = res.clone();
         caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
       }
