@@ -5,4 +5,5 @@ interface Window {
   harukoVoiceKey: (text: string) => string;
   harukoSpeak: (text: string, opts?: { ephemeral?: boolean }) => Promise<boolean>;
   TJCombo: any;                         // combo_check.js
+  TJStore: any;                         // storage_guard.js
 }

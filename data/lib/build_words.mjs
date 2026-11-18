@@ -4,8 +4,9 @@
 //         ③ JMdict의 모든 한자 표기형을 카드로(이형 표기 포함) → 약 22만
 //         ④ 부족분은 JMnedict 고유명사(인명·지명·회사)로 25만까지 보충
 //   분류: level(초등~대학원) = JLPT 환산, field(15개 분야) = JMdict 분야 태그 환산
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
-import { execSync } from 'node:child_process';
+import { readFileSync, writeFileSync, readdirSync, existsSync, rmSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { devNull } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { WORDS_KO } from './words_extra_ko.mjs';
@@ -15,21 +16,29 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 const DATA = join(__dir, '..');
 const findFile = (re) => readdirSync(DATA).find(f => re.test(f));
 
+const RELEASES_URL = 'https://github.com/scriptin/jmdict-simplified/releases';
+// 릴리스 이름은 네트워크에서 받은 값이고 주소·파일 이름에 들어간다 → 버전에 쓰이는 글자만 허용한다
+const SAFE_RELEASE_TAG = /^[0-9A-Za-z][0-9A-Za-z.+_-]*$/;
+
 // 대용량 원본(KANJIDIC2 한국어 음 + JMdict)이 없으면 최신 릴리스에서 자동 내려받기
 function ensureBigSources() {
   const need = [/^kanjidic2-all-.*\.json$/, /^jmdict-eng-3.*\.json$/];
   if (need.every(re => findFile(re))) return;
   let tag;
   try {
-    const url = execSync('curl -sSL -o /dev/null -w "%{url_effective}" "https://github.com/scriptin/jmdict-simplified/releases/latest"', { encoding: 'utf8' });
+    // 명령은 셸 문자열이 아니라 인자 배열로 넘긴다(네트워크에서 온 값이 셸 명령으로 해석되지 않게)
+    const url = execFileSync('curl', ['-sSL', '-o', devNull, '-w', '%{url_effective}', RELEASES_URL + '/latest'], { encoding: 'utf8' });
     tag = url.trim().split('/').pop();
   } catch { throw new Error('원본 다운로드 실패: 네트워크 불가. data/README.md의 수동 다운로드 안내를 참고하세요.'); }
+  if (!SAFE_RELEASE_TAG.test(tag)) throw new Error(`원본 다운로드 실패: 릴리스 이름이 예상과 다릅니다(${JSON.stringify(tag)}). data/README.md의 수동 다운로드 안내를 참고하세요.`);
   const enc = encodeURIComponent(tag);
+  const tmpZip = join(DATA, 'tmp.zip');
   const assets = [`kanjidic2-all-${tag}.json.zip`, `jmdict-eng-${tag}.json.zip`, `jmnedict-all-${tag}.json.zip`];
   for (const a of assets) {
     process.stderr.write(`내려받는 중: ${a} … `);
-    execSync(`curl -sSL --retry 3 -o "${join(DATA, 'tmp.zip')}" "https://github.com/scriptin/jmdict-simplified/releases/download/${enc}/${a}"`, { stdio: 'ignore' });
-    execSync(`cd "${DATA}" && unzip -o -q tmp.zip && rm -f tmp.zip`, { stdio: 'ignore' });
+    execFileSync('curl', ['-sSL', '--retry', '3', '-o', tmpZip, `${RELEASES_URL}/download/${enc}/${a}`], { stdio: 'ignore' });
+    execFileSync('unzip', ['-o', '-q', 'tmp.zip'], { cwd: DATA, stdio: 'ignore' });
+    rmSync(tmpZip, { force: true });
     process.stderr.write('완료\n');
   }
 }

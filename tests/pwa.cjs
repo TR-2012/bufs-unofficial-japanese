@@ -2,10 +2,44 @@
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { startServer, loadPlaywright, reporter, goto, launchOptions } = require('./lib.cjs');
+const { startServer, watchCsp, TEMPLATE_HANDLER_BLOCK, loadPlaywright, reporter, goto, launchOptions } = require('./lib.cjs');
 
 const FAKE = `window.__fire=()=>{const e=new Event('beforeinstallprompt');e.prompt=()=>{window.__prompted=(window.__prompted||0)+1;return Promise.resolve()};e.userChoice=Promise.resolve({outcome:'accepted'});window.dispatchEvent(e)};`;
 const cards = (p) => p.evaluate(() => ({ install: document.body.innerText.includes('앱으로 설치해서'), a2hs: document.body.innerText.includes('홈 화면에 추가해서') }));
+
+const QUERY_REQUESTS = 5;
+const RELOAD_WAIT_MS = 6500;   // 건너뛴 항목 안내 3초 + 새로 고친 화면이 뜨는 시간
+
+/* 쿼리 문자열이 다른 주소를 여러 번 받아도 캐시에 사본이 쌓이지 않고, 오프라인에서는 그 주소로도 앱이 열린다 */
+async function checkQueryNotCached(r, ctx, p, base) {
+  await p.evaluate(async (count) => { for (let i = 0; i < count; i++) await fetch('./?x=' + i); }, QUERY_REQUESTS);
+  await p.waitForTimeout(800);
+  const withQuery = await p.evaluate(async () => {
+    const name = (await caches.keys()).find((k) => k.startsWith('bufs-v'));
+    return (await (await caches.open(name)).keys()).map((q) => q.url).filter((u) => u.includes('?'));
+  });
+  r.ok('쿼리 문자열이 붙은 주소는 캐시에 쌓이지 않음', withQuery.length === 0, withQuery.slice(0, 3).join(', '));
+  await ctx.setOffline(true);
+  await p.goto(base + '?x=1'); await p.waitForTimeout(4500);
+  r.ok('오프라인에서 쿼리 문자열이 붙은 주소로도 앱 표시', (await p.evaluate(() => document.body.innerText)).includes('BUFS 비공식'));
+}
+
+/* 백업 파일에 모양이 틀린 값·모르는 키가 섞여 있으면 그것만 건너뛴다(앱이 열리지 않게 되는 것을 막는다) */
+async function checkPartialImport(r, p, pick, write) {
+  const ls = (k) => p.evaluate((x) => localStorage.getItem(x), k);
+  const body = () => p.evaluate(() => document.body.innerText);
+  const unusable = write('unusable.json', { app: 'bufs-japanese', data: { 'tj.rev.k': '5', 'tj.unknown': 'x' } });
+  await pick(unusable);
+  r.ok('쓸 수 있는 값이 없는 백업은 아무것도 쓰지 않음', (await body()).includes('불러올 수 있는 기록이 없어요') && (await ls('tj.rev.k')) === null && (await ls('tj.unknown')) === null);
+
+  const pollution = '{"__proto__":{"polluted":[1]},"constructor":{"keys":[1]}}';
+  const mixed = write('mixed.json', { app: 'bufs-japanese', data: { 'tj.xp': '42', 'tj.rev.k': '5', 'tj.unknown': 'x', 'tj.write.extra': pollution } });
+  await pick(mixed);
+  r.ok('섞인 백업: 맞는 값만 넣고 건너뛴 개수를 알림', (await body()).includes('2개는 건너뛰었어요') && (await ls('tj.xp')) === '42' && (await ls('tj.rev.k')) === null && (await ls('tj.unknown')) === null);
+  await p.waitForTimeout(RELOAD_WAIT_MS);
+  const after = await p.evaluate(() => (document.body.innerText.includes('BUFS 비공식') ? '' : '앱 안 열림 ') + (({}).polluted === undefined && typeof Object.keys === 'function' ? '' : '전역 객체 오염'));
+  r.ok('섞인 백업을 불러온 뒤에도 앱이 열리고 전역 객체 오염 없음', after === '', after);
+}
 
 async function main() {
   const { chromium, devices } = loadPlaywright();
@@ -28,6 +62,7 @@ async function main() {
     const p = await ctx.newPage(); const ext = []; const errs = [];
     p.on('request', (q) => { const u = q.url(); if (!u.startsWith(origin) && !/^(data|blob):/.test(u)) ext.push(u); });
     p.on('pageerror', (e) => errs.push(e.message.slice(0, 90)));
+    const violations = await watchCsp(p);
     await p.goto(base); await p.waitForTimeout(3500);
     r.ok('첫 방문에 앱 표시', (await p.evaluate(() => document.body.innerText)).includes('BUFS 비공식'));
     const homeText = await p.evaluate(() => document.body.innerText);
@@ -53,6 +88,10 @@ async function main() {
     const again = await p.evaluate(async () => await window.harukoSpeak('机の上にペンや消しゴムがあります。'));
     r.ok('들어 본 음성은 오프라인에서 재생', again === true);
     r.ok('오프라인 중 콘솔 오류 0', errs.length === 0, errs.join(' | '));
+    await ctx.setOffline(false);
+    await checkQueryNotCached(r, ctx, p, base);
+    const blocked = violations.filter((line) => !line.startsWith(TEMPLATE_HANDLER_BLOCK));
+    r.ok('서비스 워커·오프라인 사용 중 CSP 위반 0건', blocked.length === 0, [...new Set(blocked)].slice(0, 4).join(' | '));
     await ctx.close();
   }
 
@@ -100,6 +139,7 @@ async function main() {
     const pick = async (f) => { const [fc] = await Promise.all([t.p.waitForEvent('filechooser'), t.p.locator('button', { hasText: '백업 불러오기' }).click()]); await fc.setFiles(f); await t.p.waitForTimeout(800); };
     await pick(files.big); r.ok('5MB 초과 파일 거부', (await t.p.evaluate(() => document.body.innerText)).includes('너무 커요') && (await t.p.evaluate(() => localStorage.getItem('tj.xp'))) === null);
     await pick(files.bad); r.ok('형식이 틀린 파일 거부', (await t.p.evaluate(() => document.body.innerText)).includes('이 앱의 백업 파일이 아니에요') && (await t.p.evaluate(() => localStorage.getItem('tj.xp'))) === null);
+    await checkPartialImport(r, t.p, pick, write);
     await pick(files.ok); await t.p.waitForTimeout(1800); r.ok('정상 파일은 불러와짐', (await t.p.evaluate(() => localStorage.getItem('tj.xp'))) === '777');
     await t.ctx.close();
   }

@@ -26,11 +26,11 @@ const has = (p) => files.includes(p);
 /* 필수 파일: 서비스 워커 SHELL 목록 + 앱 실행·고지 파일 */
 const sw = read('sw.js');
 const shell = [...(sw.match(/const SHELL = \[([\s\S]*?)\];/) || ['', ''])[1].matchAll(/'([^']+)'/g)].map((m) => m[1]).filter((p) => p !== './');
-const required = [...new Set([...shell, 'index.html', 'support.js', 'tts.js', 'pwa.js', 'combo_check.js', 'sw.js', 'manifest.webmanifest', 'haruko.jpg', '_headers', 'NOTICE.md', 'LICENSE'])];
+const required = [...new Set([...shell, 'index.html', 'support.js', 'tts.js', 'pwa.js', 'combo_check.js', 'storage_guard.js', 'sw.js', 'manifest.webmanifest', 'haruko.jpg', '_headers', 'NOTICE.md', 'LICENSE'])];
 const missing = required.filter((p) => !has(p));
 r.ok(`필수 파일 ${required.length}개가 업로드 목록에 포함`, missing.length === 0, '빠진 파일: ' + missing.join(', '));
 
-const devLeak = ['tests/run.cjs', 'scripts/build_voice.mjs', 'data/lib/build.mjs', 'docs/ARCHITECTURE.md', 'wrangler.jsonc', 'README.md', '.github/workflows/test.yml', 'CLAUDE.md'].filter(has);
+const devLeak = ['tests/run.cjs', 'scripts/build_voice.mjs', 'data/lib/build.mjs', 'docs/ARCHITECTURE.md', 'wrangler.jsonc', 'README.md', '.github/workflows/test.yml', 'CLAUDE.md', '.gitattributes', 'data/README.md', 'data/convert_jmdict.mjs', 'data/schema/kanji.schema.json', 'data/seed/grammar.tsv', 'data/manifest.json', 'data/quiz_core_deny.json'].filter(has);
 r.ok('개발·문서·설정 파일은 업로드에서 제외', devLeak.length === 0, '올라가는 파일: ' + devLeak.join(', '));
 r.ok(`업로드 파일 수 ${files.length}개 ≤ 20,000(Cloudflare 정적 배포 한도)`, files.length <= 20000);
 const big = files.filter((p) => fs.statSync(path.join(ROOT, p)).size > 25 * 1024 * 1024);

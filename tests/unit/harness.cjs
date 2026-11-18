@@ -39,7 +39,7 @@ function createApp(opts = {}) {
     static now() { return now; }
   }
   set('localStorage', storage);
-  set('window', { matchMedia: () => ({ matches: !!opts.dark }), addEventListener() {}, removeEventListener() {}, navigator: {} });
+  set('window', { matchMedia: () => ({ matches: !!opts.dark }), addEventListener() {}, removeEventListener() {}, navigator: {}, TJStore: require(path.join(ROOT, 'storage_guard.js')) });
   set('document', { documentElement: { classList: { add: (c) => classes.add(c), remove: (c) => classes.delete(c), toggle: (c, on) => (on ? classes.add(c) : classes.delete(c)), contains: (c) => classes.has(c) } }, createElement: () => ({ click() {}, remove() {}, style: {} }), body: { appendChild() {} }, addEventListener() {} });
   set('navigator', { userAgent: opts.ua || 'node', platform: 'linux', maxTouchPoints: 0, storage: {} });
   set('location', { hash: opts.hash || '', reload() {} });

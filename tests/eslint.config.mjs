@@ -11,7 +11,7 @@ const rules = {
 export default [
   { ignores: ['**/node_modules/**', 'tests/.out/*.json', 'tests/golden/**'] },
   // 브라우저에서 도는 앱 코드
-  { files: ['tts.js', 'pwa.js', 'combo_check.js', 'tests/.out/logic.js'], languageOptions: { ecmaVersion: 2022, sourceType: 'script', globals: { ...globals.browser, React: 'readonly', DCLogic: 'readonly', StreamableLogic: 'readonly' } }, rules },
+  { files: ['tts.js', 'pwa.js', 'combo_check.js', 'storage_guard.js', 'tests/.out/logic.js'], languageOptions: { ecmaVersion: 2022, sourceType: 'script', globals: { ...globals.browser, React: 'readonly', DCLogic: 'readonly', StreamableLogic: 'readonly' } }, rules },
   // 서비스 워커
   { files: ['tests/.out/logic.js'], rules: { 'no-unused-vars': ['warn', { args: 'none', caughtErrors: 'none', varsIgnorePattern: '^Component$' }] } },
   { files: ['sw.js'], languageOptions: { ecmaVersion: 2022, sourceType: 'script', globals: { ...globals.serviceworker } }, rules },

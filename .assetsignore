@@ -16,3 +16,19 @@ README.md
 CONTRIBUTING.md
 .wrangler
 CLAUDE.md
+
+# 작업 도구가 만드는 폴더 — 로컬에서 배포하면 저장소 사본 전체가 공개되므로 반드시 제외한다
+.claude
+__pycache__
+.gitattributes
+
+# data/ 안의 빌드용 파일 — 앱은 data/*.json 6개(sw.js의 SHELL 목록)만 쓴다
+data/raw
+data/README.md
+data/.gitignore
+data/convert_jmdict.mjs
+data/convert_kanjidic.mjs
+data/schema
+data/seed
+data/manifest.json
+data/quiz_core_deny.json
